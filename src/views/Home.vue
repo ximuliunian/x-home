@@ -18,7 +18,7 @@
 <script setup>
 import {inject} from "vue";
 import Motto from "@/components/home/sidebar/Motto.vue";
-import Directory from "@/components/home/sidebar/directory.vue";
+import Directory from "@/components/home/sidebar/Directory.vue";
 import Tags from "@/components/home/sidebar/Tags.vue";
 import Avatar from "@/components/home/sidebar/Avatar.vue";
 import Welcome from "@/components/home/main/Top.vue";
