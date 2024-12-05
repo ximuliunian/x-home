@@ -1,0 +1,44 @@
+name: generate snake
+
+on:
+  # run automatically every 6 hours
+  schedule:
+    - cron: "0 8 * * 1"
+
+  # allows to manually run the job at any time
+  workflow_dispatch:
+
+  # run on every push on the master or main branch
+  push:
+    branches:
+      - main
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          ref: main  # Ensure we're working on the main branch
+
+      # generates a snake game from a github user (<github_user_name>) contributions graph, output a svg animation at <svg_out_path>
+      - name: Generate github-contribution.svg
+        uses: Platane/snk@v3
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          outputs: public/img/github-contribution.svg
+
+      # Add, commit, and push the generated file to the main branch
+      - name: Commit and push generated file
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add public/img/github-contribution.svg
+          git commit -m "Update github-contribution.svg" || echo "No changes to commit"
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

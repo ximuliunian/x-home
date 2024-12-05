@@ -1,0 +1,16 @@
+:root {
+    /* 响应式触发宽度 */
+    --responsive-trigger-width: 800px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 隐藏滚动条样式 */
+::-webkit-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
