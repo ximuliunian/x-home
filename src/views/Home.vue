@@ -11,6 +11,7 @@
       <Welcome/>
       <Router v-if="false"/>
       <SiteNavs/>
+      <Skills/>
     </div>
   </div>
 </template>
@@ -24,6 +25,7 @@ import Avatar from "@/components/home/sidebar/Avatar.vue";
 import Welcome from "@/components/home/main/Top.vue";
 import Router from "@/components/Router.vue";
 import SiteNavs from "@/components/home/main/SiteNavs.vue";
+import Skills from "@/components/home/main/Skills.vue";
 // 全局配置
 const config = inject("config");
 </script>

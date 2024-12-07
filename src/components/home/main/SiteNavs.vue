@@ -1,6 +1,6 @@
 <template>
-  <Section icon="icon-sys-nav" title="站内导航">
-    <div v-if="config.siteNavs.enable" class="sites">
+  <Section v-if="config.siteNavs.enable" icon="icon-sys-nav" title="站内导航">
+    <div class="sites">
       <Container v-for="(item, key) in config.siteNavs.info" :key="key" class="site" close-title close-width
                  @click="openLink(item.url)">
         <div style="display: flex;align-items: center;">

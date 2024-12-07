@@ -54,6 +54,7 @@ imageLoad.onload = () => {
 /* 容器 */
 .container {
   padding-top: 2vw;
+  padding-bottom: 40px;
 }
 
 /* 页脚 */

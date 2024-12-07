@@ -31,9 +31,53 @@ VITE_KEYWORDS =
 
 这里面存放就是展示的信息了 (￣y▽,￣)╭ ，文件里面基本都有注释，看着改就行了，下面挑一些需要说的
 
-在一些配置中看到存在 `enable` 的话代表这个模块是可以关闭的，一般默认是 `true`，改成 `false` 就可以把对应的模块关了
+## 开关
+
+在一些配置中看到存在 `enable` 的话代表这个模块是可以关闭的，比如侧边栏的座右铭。一般默认是 `true`，改成 `false` 就可以把对应的模块关了
+
+![image-20241207233506183](.github/md.image/image-20241207233506183.png)
+
+## 静态资源
 
 一般所填充的静态资源都是存在于 `public` 文件夹下面，设置静态资源相对路径的时候 `/` 代表 `public` 文件夹，`/` 后面的路径是相对于 `public` 文件夹的，比如要设置的是 `public` 文件夹下面的 `img` 文件夹，那么就是 `/img`
+
+## 社交链接
+
+这个就谈谈 `info` 中的配置：
+
+```javascript
+{
+    name: 'GitHub',
+    icon: 'icon-GitHub',
+    url: 'https://github.com/ximuliunian'
+}
+```
+
+name：展示的名字
+
+icon：iconfont图标库软件，[#具体点我](#图标选择)
+
+url：这是点击按钮需要跳转的链接
+
+## 站点内部
+
+参考社交链接……
+
+## 技术栈
+
+这个是用的 skillicons 这个项目
+
+官网：https://skillicons.dev
+
+GitHub：https://github.com/tandpfun/skill-icons
+
+GitCode：https://gitcode.com/gh_mirrors/sk/skill-icons
+
+这个项目收录了很多常用的技术栈图标，具体有什么图标可以通过jin上面的链接查看一番（建议使用GitCode国内快）。具体详情什么的这里不做赘述。使用的时候进入项目找到图标对应的关键字，如下图：
+
+![image-20241207234847615](.github/md.image/image-20241207234847615.png)
+
+然后把关键字加入 list 配置中即可
 
 ## 图标选择
 
@@ -41,8 +85,15 @@ VITE_KEYWORDS =
 
 1. 进入 [iconfont](https://www.iconfont.cn) 选择需要的图标添加入库，选择完之后添加到项目中（没有就创建一个）
    - 创建项目：其他都随意，字体格式 彩色、WOFF、WOFF2、TTF 都选上然后点新建
+
+     ![image-20241207235059229](.github/md.image/image-20241207235059229.png)
+
 2. 添加到项目中后修改一下图标名字什么的，然后点击项目名称下面的三个选项中的 Symbol 选项，之后下面会出现一个链接
+
+   ![image-20241207235130534](.github/md.image/image-20241207235130534.png)
+
 3. 进入到链接内复制里面全部的内容然后找到本项目的 `public/js/icon.js` 文件，把复制的内容替换掉文件中的内容。不要替换错了 `public/system/` 目录下也有一个相同的文件
+
 4. 最后在需要使用图标的地方的 icon 选项内使用自己的即可
 
 ``` javascript

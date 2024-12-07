@@ -91,6 +91,24 @@ export const config = {
         ]
     },
 
+    // 技术栈
+    skills: {
+        enable: true,
+        info: {
+            // 主题 - light:亮色 dark:暗色
+            theme: 'dark',
+            // 技术栈图标
+            list: [
+                'idea', 'git', 'maven', 'java', 'spring',
+                'windows', 'python', 'vue', 'vite', 'vscode',
+                'mysql', 'redis', 'html', 'ubuntu', 'css',
+                'linux', 'js', 'github', 'docker', 'nodejs',
+                'nginx', 'markdown', 'githubactions', 'vim', 'cloudflare',
+                'kafka', 'rabbitmq'
+            ]
+        }
+    },
+
     // ICP 备案展示
     icp: {
         enable: true,
