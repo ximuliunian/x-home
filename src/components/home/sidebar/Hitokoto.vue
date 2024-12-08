@@ -38,8 +38,10 @@ onMounted(() => {
 // 执行逻辑
 function run(hitokoto) {
   typewriter(hitokoto.hitokoto);
+  const regex = /^《.*》$/;
+  let from = regex.test(hitokoto.from) ? hitokoto.from : `《${hitokoto.from}》`;
   let who = hitokoto.from_who ? hitokoto.from_who : '';
-  hitokotoFrom.value = `《${hitokoto.from}》${who}`;
+  hitokotoFrom.value = `${from} ${who}`;
 }
 
 // 获取一言
@@ -52,7 +54,6 @@ function getHitokoto(isRunDirectly) {
         }
         localStorage.setItem('hitokoto', JSON.stringify(data));
       })
-      .catch(console.error)
 }
 
 // 打字机效果
