@@ -3,6 +3,7 @@
     <div class="aside">
       <Avatar/>
       <motto/>
+      <Hitokoto/>
       <Tags/>
       <Directory v-if="false"/>
     </div>
@@ -26,6 +27,7 @@ import Welcome from "@/components/home/main/Top.vue";
 import Router from "@/components/Router.vue";
 import SiteNavs from "@/components/home/main/SiteNavs.vue";
 import Skills from "@/components/home/main/Skills.vue";
+import Hitokoto from "@/components/home/sidebar/Hitokoto.vue";
 // 全局配置
 const config = inject("config");
 </script>
