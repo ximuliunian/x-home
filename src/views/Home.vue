@@ -5,6 +5,7 @@
       <motto/>
       <Hitokoto/>
       <Tags/>
+      <DateTime/>
       <Directory v-if="false"/>
     </div>
 
@@ -12,6 +13,7 @@
       <Welcome/>
       <Router v-if="false"/>
       <SiteNavs/>
+      <Projects/>
       <Skills/>
     </div>
   </div>
@@ -28,6 +30,8 @@ import Router from "@/components/Router.vue";
 import SiteNavs from "@/components/home/main/SiteNavs.vue";
 import Skills from "@/components/home/main/Skills.vue";
 import Hitokoto from "@/components/home/sidebar/Hitokoto.vue";
+import Projects from "@/components/home/main/Projects.vue";
+import DateTime from "@/components/home/sidebar/DateTime.vue";
 // 全局配置
 const config = inject("config");
 </script>

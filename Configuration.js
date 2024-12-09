@@ -91,6 +91,19 @@ export const config = {
         ]
     },
 
+    // 项目
+    projects: {
+        enable: true,
+        info: [
+            {
+                id: 'xmln-home',
+                name: 'Xmln-Home',
+                icon: 'icon-jiangbing',
+                description: '本站同款个人主页'
+            },
+        ]
+    },
+
     // 技术栈
     skills: {
         enable: true,

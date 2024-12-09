@@ -41,6 +41,7 @@ function openLink(url) {
 
   .social-link {
     width: 19%;
+    transition: width 0.3s;
 
     .link-card {
       display: flex;

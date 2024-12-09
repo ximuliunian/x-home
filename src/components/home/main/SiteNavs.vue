@@ -8,6 +8,7 @@
           <span style="margin-left: 10px">{{ item.name }}</span>
         </div>
       </Container>
+      <i v-for="i in 3" class="placeholder"></i>
     </div>
   </Section>
 </template>
@@ -37,16 +38,28 @@ function openLink(url) {
 /* 站点 */
 .site {
   width: 24%;
+  transition: width 0.3s;
   margin-bottom: 10px;
   font-weight: bold;
   color: #2a2727;
   cursor: pointer;
 }
 
+/* 占位符 */
+.placeholder {
+  width: 24%;
+}
+
 /* 当屏幕宽度小于 800 时 */
 @media only screen and (max-width: 800px) {
   /* 站点 */
   .site {
+    width: 49%;
+    transition: width 0.3s;
+  }
+
+  /* 占位符 */
+  .placeholder {
     width: 49%;
   }
 }
