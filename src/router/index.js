@@ -14,7 +14,7 @@ const router = createRouter({
         }, {
             path: '/timeline',
             name: 'timeline',
-            component: () => import('../views/Timeline.vue')
+            component: () => import('../views/Timeline/Index.vue')
         }
     ]
 })

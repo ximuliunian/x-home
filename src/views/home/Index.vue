@@ -10,7 +10,7 @@
 
     <div class="main">
       <Welcome/>
-      <Router v-if="false"/>
+      <Router/>
       <SiteNavs/>
       <Projects/>
       <Skills/>

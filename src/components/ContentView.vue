@@ -8,7 +8,7 @@
 import {computed} from 'vue';
 import Image from "@/components/Image.vue";
 
-const props = defineProps(["content"]);
+const props = defineProps(["content", "imgWidth", "imgHeight"]);
 
 let contentComputed = computed(() => {
   let c = String(props.content)
@@ -27,7 +27,12 @@ let contentComputed = computed(() => {
 
 function getAttributes(c) {
   if (c.isModule) {
-    return {src: c.content, alt: '假装这里有一张图片'};
+    return {
+      src: c.content,
+      alt: '假装这里有一张图片',
+      width: props.imgWidth,
+      height: props.imgHeight
+    };
   }
   return {};
 }
@@ -48,12 +53,6 @@ h1 {
   font-size: 25px;
   height: 35px;
   line-height: normal;
-}
-
-img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
 }
 
 h2 {

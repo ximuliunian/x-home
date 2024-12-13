@@ -4,7 +4,13 @@
     <div class="mask-layer"></div>
   </div>
   <div class="container">
-    <router-view/>
+    <router-view v-slot="{ Component }">
+      <transition name="fade">
+        <keep-alive>
+          <component :is="Component"/>
+        </keep-alive>
+      </transition>
+    </router-view>
   </div>
   <footer class="siteInfo">
     <span> <a href="https://github.com/ximuliunian/xmln-home">曦暮流年 © {{ year }}</a> </span>
@@ -51,6 +57,29 @@ imageLoad.onload = () => {
 </script>
 
 <style scoped>
+.fade-enter-from {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+.fade-enter-to {
+  opacity: 1;
+}
+
+.fade-leave-active, .fade-enter-active {
+  transition: all 0.5s ease-out;
+}
+
+.fade-leave-from {
+  transform: translateX(0%);
+  opacity: 1;
+}
+
+.fade-leave-to {
+  opacity: 0;
+}
+
+
 /* 容器 */
 .container {
   padding-top: 2vw;

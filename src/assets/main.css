@@ -1,6 +1,4 @@
 :root {
-    /* 响应式触发宽度 */
-    --responsive-trigger-width: 800px;
 }
 
 * {
@@ -8,6 +6,10 @@
     padding: 0;
     box-sizing: border-box;
     user-select: none;
+}
+
+html {
+    scroll-behavior: smooth; /* 滚动样式 */
 }
 
 img {

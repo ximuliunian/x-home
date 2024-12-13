@@ -1,7 +1,8 @@
 <template>
-  <div v-show="isFullScreen" class="placeholder"></div>
+  <img v-show="isFullScreen" :alt="alt || '假装这里有一张图片'" :src="src" :style="{width: width, height: height}"
+       class="placeholder"/>
   <div :class="isFullScreen ? 'fullScreen' : 'reveal'" @click="toggleFullScreen">
-    <img :alt="alt || '假装这里有一张图片'" :src="src">
+    <img :alt="alt || '假装这里有一张图片'" :src="src" :style="{width: width, height: height}"/>
   </div>
 </template>
 
@@ -15,6 +16,14 @@ defineProps({
   },
   alt: {
     type: String
+  },
+  width: {
+    type: String,
+    default: 'auto'
+  },
+  height: {
+    type: String,
+    default: 'auto'
   }
 })
 
@@ -31,13 +40,12 @@ const toggleFullScreen = () => {
 /* 占位 */
 .placeholder {
   visibility: hidden;
-  height: 50vh;
 }
 
 /* 图片基本样式 */
 img {
-  max-width: 90vw;
-  max-height: 90vh;
+  max-width: 100%;
+  max-height: 100%;
   width: auto;
   height: auto;
   object-fit: cover;
@@ -67,7 +75,6 @@ img {
 
 /* 非全屏样式 */
 .reveal img {
-  width: 100%;
   animation: zoomOut 0.3s ease-in-out forwards;
 }
 

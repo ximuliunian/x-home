@@ -4,7 +4,7 @@
       <Icon :height="icon.height" :icon="icon.home" :width="icon.width"/>
       主页
     </RouterLink>
-    <RouterLink v-if="isShow(['/comment'])" to="/comment">
+    <RouterLink v-if="false && isShow(['/comment'])" to="/comment">
       <Icon :height="icon.height" :icon="icon.comment" :width="icon.width"/>
       留言板
     </RouterLink>
