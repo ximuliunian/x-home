@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import Section from "@/components/home/Section.vue";
+import Section from "@/components/Section.vue";
 import {computed, inject, onMounted, ref} from "vue";
 // 全部配置
 const config = inject('config')

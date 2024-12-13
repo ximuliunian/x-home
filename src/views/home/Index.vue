@@ -20,16 +20,16 @@
 
 <script setup>
 import {inject} from "vue";
-import Motto from "@/components/home/sidebar/Motto.vue";
-import Tags from "@/components/home/sidebar/Tags.vue";
-import Avatar from "@/components/home/sidebar/Avatar.vue";
-import Welcome from "@/components/home/main/Top.vue";
+import Motto from "@/views/home/sidebar/Motto.vue";
+import Tags from "@/views/home/sidebar/Tags.vue";
+import Avatar from "@/views/home/sidebar/Avatar.vue";
+import Welcome from "@/views/home/main/Top.vue";
 import Router from "@/components/Router.vue";
-import SiteNavs from "@/components/home/main/SiteNavs.vue";
-import Skills from "@/components/home/main/Skills.vue";
-import Hitokoto from "@/components/home/sidebar/Hitokoto.vue";
-import Projects from "@/components/home/main/Projects.vue";
-import DateTime from "@/components/home/sidebar/DateTime.vue";
+import SiteNavs from "@/views/home/main/SiteNavs.vue";
+import Skills from "@/views/home/main/Skills.vue";
+import Hitokoto from "@/views/home/sidebar/Hitokoto.vue";
+import Projects from "@/views/home/main/Projects.vue";
+import DateTime from "@/views/home/sidebar/DateTime.vue";
 // 全局配置
 const config = inject("config");
 </script>

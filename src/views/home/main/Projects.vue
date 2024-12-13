@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import Section from "@/components/home/Section.vue";
+import Section from "@/components/Section.vue";
 import {inject} from "vue";
 import Container from "@/components/Container.vue";
 import Icon from "@/components/Icon.vue";
