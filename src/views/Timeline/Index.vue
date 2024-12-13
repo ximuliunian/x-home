@@ -1,7 +1,7 @@
 <template>
   <div class="timeline">
     <Router id="top"/>
-    <ul class="line">
+    <ul v-if="configTimeline.length > 0" class="line">
       <li v-for="item in configTimeline" class="card">
         <div class="time">{{ item.date }}</div>
         <div class="content">
@@ -9,6 +9,9 @@
         </div>
       </li>
     </ul>
+    <div v-else class="cover">
+      <div>暂时什么都还没有哦</div>
+    </div>
     <a id="pastTop" href="#top" title="回到顶部">↑</a>
   </div>
 </template>
@@ -22,6 +25,24 @@ const configTimeline = inject('configTimeline')
 </script>
 
 <style scoped>
+/* 覆盖 */
+.cover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+
+  div {
+    font-size: 30px;
+    font-weight: bolder;
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+    background-color: rgba(110, 110, 110, 0.3);
+    padding: 10px;
+    border-radius: 10px;
+  }
+}
+
 /* 回到顶部 */
 #pastTop {
   position: fixed;
