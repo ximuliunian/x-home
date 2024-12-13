@@ -4,7 +4,7 @@
 
     <div v-if="config.social.enable" class="social-links">
       <container v-for="(item, key) in config.social.info" :key="key" class="social-link" close-title
-                 close-width @click="openLink(item.url)">
+                 close-width @click="openLink(item.url, true)">
         <div class="link-card">
           <icon :icon="item.icon" height="30px" width="30px"/>
           <span style="margin-left: 5px">{{ item.name }}</span>
@@ -22,13 +22,11 @@
 import {inject} from "vue";
 import Container from "@/components/Container.vue";
 import Icon from "@/components/Icon.vue";
+import commonlyFunctions from "@/composition/commonlyFunctions.js";
+// 通用函数
+const {openLink} = commonlyFunctions();
 // 全局配置
 const config = inject("config");
-
-// 新页面打开链接
-function openLink(url) {
-  window.open(url, '_blank');
-}
 </script>
 
 <style scoped>

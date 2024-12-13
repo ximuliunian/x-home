@@ -31,12 +31,12 @@ export const config = {
 
     // 背景图片（至少得有一张）
     background_image: [
-        '/background/1.png',
-        '/background/2.png',
-        '/background/3.png',
-        '/background/4.png',
-        '/background/5.png',
-        '/background/6.png'
+        '/img/background/1.png',
+        '/img/background/2.png',
+        '/img/background/3.png',
+        '/img/background/4.png',
+        '/img/background/5.png',
+        '/img/background/6.png'
     ],
 
     // 社交链接
@@ -96,9 +96,9 @@ export const config = {
         enable: true,
         info: [
             {
-                id: 'xmln-home',
                 name: 'Xmln-Home',
                 icon: 'icon-jiangbing',
+                url: 'https://github.com/ximuliunian/xmln-home',
                 description: '本站同款个人主页'
             },
         ]
@@ -109,7 +109,7 @@ export const config = {
         enable: true,
         info: {
             // 主题 - light:亮色 dark:暗色
-            theme: 'dark',
+            theme: 'light',
             // 技术栈图标
             list: [
                 'idea', 'git', 'maven', 'java', 'spring',
@@ -117,7 +117,7 @@ export const config = {
                 'mysql', 'redis', 'html', 'ubuntu', 'css',
                 'linux', 'js', 'github', 'docker', 'nodejs',
                 'nginx', 'markdown', 'githubactions', 'vim', 'cloudflare',
-                'kafka', 'rabbitmq'
+                'kafka', 'rabbitmq', "elasticsearch"
             ]
         }
     },

@@ -2,7 +2,7 @@
   <Section v-if="config.projects.enable" icon="icon-sys-project" title="项目">
     <div class="projects">
       <Container v-for="(item, key) in config.projects.info" :key="key" class="project" close-title
-                 close-width>
+                 close-width @click="openLink(item.url, true)">
         <div class="title">
           <Icon :icon="item.icon" height="30px" width="30px"/>
           <span style="margin-left: 5px">{{ item.name }}</span>
@@ -19,7 +19,10 @@ import Section from "@/components/home/Section.vue";
 import {inject} from "vue";
 import Container from "@/components/Container.vue";
 import Icon from "@/components/Icon.vue";
-
+import commonlyFunctions from "@/composition/commonlyFunctions.js";
+// 通用函数
+const {openLink} = commonlyFunctions();
+// 全局配置
 const config = inject('config')
 </script>
 
