@@ -1,5 +1,5 @@
 <template>
-  <container v-if="config.tags.enable" :height="height" :title="title" :width="width">
+  <container :height="height" :title="title" :width="width">
     <span
         v-for="(item, index) in barrageList"
         :key="index"
@@ -42,12 +42,12 @@ const containerHeight = 160;
 // 创建弹幕元素
 function createBarrage() {
   // 获取弹幕数据
-  let index = randomInt(0, config.tags.info.length - 1);
+  let index = randomInt(0, config.tags.length - 1);
   while (index === lastIndex) {
-    index = randomInt(0, config.tags.info.length - 1);
+    index = randomInt(0, config.tags.length - 1);
   }
   lastIndex = index;
-  const text = config.tags.info[index];
+  const text = config.tags[index];
 
   // 获取展示位置
   let position = randomInt(0, (containerHeight - 30));

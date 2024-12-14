@@ -1,19 +1,19 @@
 <template>
   <div class="home">
     <div class="aside">
-      <Avatar/>
-      <motto/>
-      <Hitokoto/>
-      <Tags/>
-      <DateTime/>
+      <Avatar v-if="config.enable.home.avatar"/>
+      <motto v-if="config.enable.home.motto"/>
+      <Hitokoto v-if="config.enable.home.hitokoto"/>
+      <Tags v-if="config.enable.home.tags"/>
+      <DateTime v-if="config.enable.home.dateTime"/>
     </div>
 
     <div class="main">
       <Welcome/>
       <Router/>
-      <SiteNavs/>
-      <Projects/>
-      <Skills/>
+      <SiteNavs v-if="config.enable.home.siteNavs"/>
+      <Projects v-if="config.enable.home.projects"/>
+      <Skills v-if="config.enable.home.skills"/>
     </div>
   </div>
 </template>

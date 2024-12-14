@@ -4,11 +4,11 @@
       <Icon :height="icon.height" :icon="icon.home" :width="icon.width"/>
       主页
     </RouterLink>
-    <RouterLink v-if="false && isShow(['/comment'])" to="/comment">
+    <RouterLink v-if="config.enable.router.comments && isShow(['/comments'])" to="/comments">
       <Icon :height="icon.height" :icon="icon.comment" :width="icon.width"/>
       留言板
     </RouterLink>
-    <RouterLink v-if="isShow(['/timeline'])" to="/timeline">
+    <RouterLink v-if="config.enable.router.timeline && isShow(['/timeline'])" to="/timeline">
       <Icon :height="icon.height" :icon="icon.timeline" :width="icon.width"/>
       时间线
     </RouterLink>
@@ -17,6 +17,9 @@
 
 <script setup>
 import Icon from "@/components/Icon.vue";
+import {inject} from "vue";
+
+const config = inject("config");
 
 // 判断是否显示
 function isShow(condition) {

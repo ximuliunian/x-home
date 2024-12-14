@@ -14,7 +14,7 @@
   </div>
   <footer class="siteInfo">
     <span> <a href="https://github.com/ximuliunian/xmln-home">曦暮流年 © {{ year }}</a> </span>
-    <span v-if="config.icp.enable && icp"> | <a href="https://beian.miit.gov.cn">{{ icp }}</a> </span>
+    <span v-if="icp"> | <a href="https://beian.miit.gov.cn">{{ icp }}</a> </span>
   </footer>
 </template>
 <script setup>
@@ -34,8 +34,8 @@ let loadingFlag = ref(false);
 // ICP备案号
 const icp = computed(() => {
   const hostname = location.hostname;
-  for (let i = 0; i < config.icp.info.length; i++) {
-    const item = config.icp.info[i];
+  for (let i = 0; i < config.icp.length; i++) {
+    const item = config.icp[i];
     if (hostname.endsWith(item.domain)) {
       return item.info;
     }

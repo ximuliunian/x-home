@@ -33,9 +33,9 @@ VITE_KEYWORDS =
 
 ## 开关
 
-在一些配置中看到存在 `enable` 的话代表这个模块是可以关闭的，比如侧边栏的座右铭。一般默认是 `true`，改成 `false` 就可以把对应的模块关了
+有这么一个配置，它里面可以控制页面元素是否进行展示。像下图，如果把 `avater` 设置为 `false` 那么头像将不会再页面上进行渲染
 
-![image-20241207233506183](.github/md.image/image-20241207233506183.png)
+![image-20241214173715067](.github/md.image/image-20241214173715067.png)
 
 ## 静态资源
 
@@ -151,12 +151,46 @@ GitCode：https://gitcode.com/gh_mirrors/sk/skill-icons
 
 这个因为我有这个需求，在对应的站点展示或者不展示对应的ICP号。`domain` 里面填写顶级域（如：`xxx.com`），后面的 `info` 填写对应的备案号
 
+## 留言板配置
+
+这个留言板的评论系统我是集成的 Giscus 这个项目，它的原理就是利用 GitHub 的 [Discussions](https://docs.github.com/cn/discussions) 功能，这里不做过多的赘述，可以自行查找资料。使用的时候跟着他的官网内的教程就可以了。
+
+官网：[giscus.app](https://giscus.app/zh-CN)
+
+首先你得有创建一个公共仓库，如果你有仓库的话不创建也行，只要你的仓库是公共的即可。然后你得需要保证你的 GitHub 安装了它的插件
+
+插件地址：[github.com/apps/giscus](https://github.com/apps/giscus)
+
+安装好之后进入插件的配置，里面有一个 Repository access 的选项，到时候看着选一下
+
+![image-20241214190804117](.github/md.image/image-20241214190804117.png)
+
+第一个选项是所有仓库都可以使用这个插件，第二个选项是指定的仓库可以使用，看着选就行了。选完仓库后进入他的官网填写它的所需的内容
+
+![image-20241214191049124](.github/md.image/image-20241214191049124.png)
+
+![image-20241214191108789](.github/md.image/image-20241214191108789.png)
+
+选完之后划拉到最下面的 `启用 giscus` 的选项下，会看到下图内容，只需要把红框内的内容依次复制到配置文件中的配置中即可
+
+![image-20241214191406815](.github/md.image/image-20241214191406815.png)
+
+data-repo = 仓库
+data-repo-id = 仓库ID
+data-category = 分类
+data-category-id = 分类ID
+
+> 记住，千万要改，不然发个评论就发到我这里来了
+
 # GitHub贪吃蛇贡献图
 
-这个脚本已经写好了（路径：`.github\workflows\main.yml`），什么都不用改。它的执行流程就是每当当前仓库有提交的时候会执行一次，然后就是会在每周一早上八点执行一次。
+这个脚本已经写好了（路径：`.github\workflows\main.yml`），什么都不用动什么都不用改，上传到GitHub即可使用。它的执行流程就是每当当前仓库有提交的时候会执行一次，然后就是会在每周一早上八点执行一次。
 
 它执行完成后会提交一个svg文件（`github-contribution.svg`）到 `public/img/` 目录下
 
-> 注意：使用这个得修改一下Workflow权限，不然会执行失败
-> 
+> 注意：
+>
+> 1. 贡献图只能在GitHub中使用生成
+> 2. 使用这个得修改一下Workflow权限，不然会执行失败
+>
 > 修改权限：依次点击仓库的 Settings -> Actions -> General 拉到最下面 找到 "Workflow permissions" 选择 Read and write permissions 点击保存

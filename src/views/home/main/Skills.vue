@@ -1,5 +1,5 @@
 <template>
-  <Section v-if="config.skills.enable" icon="icon-sys-skills" title="技术栈">
+  <Section icon="icon-sys-skills" title="技术栈">
     <img :src="srcLike" alt="技术栈" style="max-width: 100%;"/>
   </Section>
 </template>
@@ -15,7 +15,7 @@ const url = 'https://skillicons.dev/icons';
 const perline = ref(17);
 // 拼接参数
 let srcLike = computed(() => {
-  return `${url}?i=${config.skills.info.list.join(',')}&theme=${config.skills.info.theme}&perline=${perline.value}`
+  return `${url}?i=${config.skills.list.join(',')}&theme=${config.skills.theme}&perline=${perline.value}`
 });
 
 onMounted(() => {

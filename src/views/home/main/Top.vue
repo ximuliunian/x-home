@@ -1,9 +1,9 @@
 <template>
   <div class="top">
-    <div class="welcome">Hello, I' m <span>{{ config.name }}</span></div>
+    <div v-if="config.enable.home.welcome" class="welcome">Hello, I' m <span>{{ config.name }}</span></div>
 
-    <div v-if="config.social.enable" class="social-links">
-      <container v-for="(item, key) in config.social.info" :key="key" class="social-link" close-title
+    <div v-if="config.enable.home.social" class="social-links">
+      <container v-for="(item, key) in config.social" :key="key" class="social-link" close-title
                  close-width @click="openLink(item.url, true)">
         <div class="link-card">
           <icon :icon="item.icon" height="30px" width="30px"/>
@@ -12,7 +12,7 @@
       </container>
     </div>
 
-    <div class="github-contribution">
+    <div v-if="config.enable.home.githubContribution" class="github-contribution">
       <img alt="github contribution" src="/img/github-contribution.svg" width="100%"/>
     </div>
   </div>

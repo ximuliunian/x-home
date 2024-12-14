@@ -1,8 +1,8 @@
 <template>
-  <container v-if="config.motto.enable" height="auto" title="座右铭" width="100%">
+  <container height="auto" title="座右铭" width="100%">
     <div class="motto-content">
-      <span class="motto-content-top">{{ config.motto.info.top }}</span>
-      <span class="motto-content-bottom">{{ config.motto.info.bottom }}</span>
+      <span class="motto-content-top">{{ config.motto.top }}</span>
+      <span class="motto-content-bottom">{{ config.motto.bottom }}</span>
     </div>
   </container>
 </template>

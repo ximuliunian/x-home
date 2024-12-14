@@ -1,7 +1,7 @@
 <template>
-  <Section v-if="config.projects.enable" icon="icon-sys-project" title="项目">
+  <Section icon="icon-sys-project" title="项目">
     <div class="projects">
-      <Container v-for="(item, key) in config.projects.info" :key="key" class="project" close-title
+      <Container v-for="(item, key) in config.projects" :key="key" class="project" close-title
                  close-width @click="openLink(item.url, true)">
         <div class="title">
           <Icon :icon="item.icon" height="30px" width="30px"/>
