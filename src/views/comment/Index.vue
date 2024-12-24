@@ -11,11 +11,11 @@
       <div class="giscus"></div>
       <component
           is="script"
-          :data-category="config.comment.giscus.category"
-          :data-category-id="config.comment.giscus.categoryId"
-          :data-repo="config.comment.giscus.repo"
-          :data-repo-id="config.comment.giscus.repoId"
-          :data-theme="config.comment.giscus.theme || 'light'"
+          :data-category="config.giscus.category"
+          :data-category-id="config.giscus.categoryId"
+          :data-repo="config.giscus.repo"
+          :data-repo-id="config.giscus.repoId"
+          :data-theme="config.giscus.theme || 'light'"
           async
           crossorigin="anonymous"
           data-emit-metadata="0"

@@ -8,9 +8,9 @@
       <Icon :height="icon.height" :icon="icon.comment" :width="icon.width"/>
       留言板
     </RouterLink>
-    <RouterLink v-if="config.enable.router.timeline && isShow(['/timeline'])" to="/timeline">
-      <Icon :height="icon.height" :icon="icon.timeline" :width="icon.width"/>
-      时间线
+    <RouterLink v-if="config.enable.router.gossip && isShow(['/gossip'])" to="/gossip">
+      <Icon :height="icon.height" :icon="icon.gossip" :width="icon.width"/>
+      闲言碎语
     </RouterLink>
   </div>
 </template>
@@ -35,7 +35,7 @@ function isShow(condition) {
 let icon = {
   home: 'icon-sys-home',
   comment: 'icon-sys-comment',
-  timeline: 'icon-sys-timeline',
+  gossip: 'icon-sys-gossip',
 
   width: '25px',
   height: '25px',

@@ -1,6 +1,7 @@
 # 前言
 
-这个项目的诞生是因为网络上找不到心仪的主页，总觉得跟预期稍有偏差 (⊙x⊙;)。刚好咱有那么一点点的前端能力，嗦以决定自己写一个…… o((>ω< ))o
+这个项目的诞生是因为网络上找不到心仪的主页，总觉得跟预期稍有偏差 (⊙x⊙;)。刚好咱有那么一点点的前端能力，嗦以决定自己写一个……
+o((>ω< ))o
 
 项目使用 Vue3 + Vite 构建，克隆下来后可以现在本地跑一下试试看
 
@@ -39,7 +40,8 @@ VITE_KEYWORDS =
 
 ## 静态资源
 
-一般所填充的静态资源都是存在于 `public` 文件夹下面，设置静态资源相对路径的时候 `/` 代表 `public` 文件夹，`/` 后面的路径是相对于 `public` 文件夹的，比如要设置的是 `public` 文件夹下面的 `img` 文件夹，那么就是 `/img`
+一般所填充的静态资源都是存在于 `public` 文件夹下面，设置静态资源相对路径的时候 `/` 代表 `public` 文件夹，`/`
+后面的路径是相对于 `public` 文件夹的，比如要设置的是 `public` 文件夹下面的 `img` 文件夹，那么就是 `/img`
 
 ## 社交链接
 
@@ -79,63 +81,22 @@ GitCode：https://gitcode.com/gh_mirrors/sk/skill-icons
 
 然后把关键字加入 list 配置中即可
 
-# 配置文件（ ConfigurationTimeline.js ）
-
-这个配置文件中存放的是时间线中的内容，数据结构如下：
-
-```js
-[
-    {
-        date: "日期 - 1",
-        content: ["展示内容"]
-    }, {
-        date: "日期 - 2",
-        content: ["展示内容"]
-    },{
-        // ...
-    }
-]
-```
-
-在配置文件中，对于展示内容需要使用一些简单的语法格式，项目会自动编译成 HTML 代码，目前所支持的格式有
-
-| 格式      | 标签                                         |
-| --------- | -------------------------------------------- |
-| "h1:xxx"  | 一级标题                                     |
-| "h2:xxx"  | 二级标题                                     |
-| "h3:xxx"  | 三级标题                                     |
-| "p:xxx"   | 正常文本                                     |
-| "img:xxx" | 图片内容，xxx 为图片链接（也可以是相对路径） |
-
-例子：
-
-```js
-{
-    date: "9527年2月5日",
-    content: [
-        "p:今天是个好日子",
-        "p:希望明天不要是一个坏天气",
-        "img:xxxxxxx"
-    ]
-}
-```
-
-
-
 ## 图标选择
 
-在配置社交链接或者其他地方会看到 `icon`的配置（avatar_status里面的不算），图标可以去 [iconfont](https://www.iconfont.cn) 中进行挑选，步骤如下：
+在配置社交链接或者其他地方会看到 `icon`的配置（avatar_status里面的不算），图标可以去 [iconfont](https://www.iconfont.cn)
+中进行挑选，步骤如下：
 
 1. 进入 [iconfont](https://www.iconfont.cn) 选择需要的图标添加入库，选择完之后添加到项目中（没有就创建一个）
-   - 创建项目：其他都随意，字体格式 彩色、WOFF、WOFF2、TTF 都选上然后点新建
+    - 创建项目：其他都随意，字体格式 彩色、WOFF、WOFF2、TTF 都选上然后点新建
 
-     ![image-20241207235059229](.github/md.image/image-20241207235059229.png)
+      ![image-20241207235059229](.github/md.image/image-20241207235059229.png)
 
 2. 添加到项目中后修改一下图标名字什么的，然后点击项目名称下面的三个选项中的 Symbol 选项，之后下面会出现一个链接
 
    ![image-20241207235130534](.github/md.image/image-20241207235130534.png)
 
-3. 进入到链接内复制里面全部的内容然后找到本项目的 `public/js/icon.js` 文件，把复制的内容替换掉文件中的内容。不要替换错了 `public/system/` 目录下也有一个相同的文件
+3. 进入到链接内复制里面全部的内容然后找到本项目的 `public/js/icon.js`
+   文件，把复制的内容替换掉文件中的内容。不要替换错了 `public/system/` 目录下也有一个相同的文件
 
 4. 最后在需要使用图标的地方的 icon 选项内使用自己的即可
 
@@ -151,9 +112,10 @@ GitCode：https://gitcode.com/gh_mirrors/sk/skill-icons
 
 这个因为我有这个需求，在对应的站点展示或者不展示对应的ICP号。`domain` 里面填写顶级域（如：`xxx.com`），后面的 `info` 填写对应的备案号
 
-## 留言板配置
+# 评论配置
 
-这个留言板的评论系统我是集成的 Giscus 这个项目，它的原理就是利用 GitHub 的 [Discussions](https://docs.github.com/cn/discussions) 功能，这里不做过多的赘述，可以自行查找资料。使用的时候跟着他的官网内的教程就可以了。
+这个项目的评论系统我是集成的 Giscus 这个项目，它的原理就是利用 GitHub
+的 [Discussions](https://docs.github.com/cn/discussions) 功能，这里不做过多的赘述，可以自行查找资料。使用的时候跟着他的官网内的教程就可以了。
 
 官网：[giscus.app](https://giscus.app/zh-CN)
 
@@ -184,7 +146,8 @@ data-category-id = 分类ID
 
 # GitHub贪吃蛇贡献图
 
-这个脚本已经写好了（路径：`.github\workflows\main.yml`），什么都不用动什么都不用改，上传到GitHub即可使用。它的执行流程就是每当当前仓库有提交的时候会执行一次，然后就是会在每周一早上八点执行一次。
+这个脚本已经写好了（路径：`.github\workflows\main.yml`
+），什么都不用动什么都不用改，上传到GitHub即可使用。它的执行流程就是每当当前仓库有提交的时候会执行一次，然后就是会在每周一早上八点执行一次。
 
 它执行完成后会提交一个svg文件（`github-contribution.svg`）到 `public/img/` 目录下
 
@@ -193,4 +156,49 @@ data-category-id = 分类ID
 > 1. 贡献图只能在GitHub中使用生成
 > 2. 使用这个得修改一下Workflow权限，不然会执行失败
 >
-> 修改权限：依次点击仓库的 Settings -> Actions -> General 拉到最下面 找到 "Workflow permissions" 选择 Read and write permissions 点击保存
+> 修改权限：依次点击仓库的 Settings -> Actions -> General 拉到最下面 找到 "Workflow permissions" 选择 Read and write
+> permissions 点击保存
+
+# 配置文件（ GossipContent.js ）
+
+这个配置文件中存放的是闲言碎语中的内容，数据结构如下：
+
+```js
+[
+    {
+        date: "日期 - 1",
+        content: ["展示内容"]
+    }, {
+        date: "日期 - 2",
+        content: ["展示内容"]
+    },{
+        // ...
+    }
+]
+```
+
+在配置文件中，对于展示内容需要使用一些简单的语法格式，项目会自动编译成 HTML 代码，目前所支持的格式有
+
+| 格式        | 标签                       |
+|-----------|--------------------------|
+| "h1:xxx"  | 一级标题                     |
+| "h2:xxx"  | 二级标题                     |
+| "h3:xxx"  | 三级标题                     |
+| "p:xxx"   | 正常文本                     |
+| "img:xxx" | 图片内容，xxx 为图片链接（也可以是相对路径） |
+
+例子：
+
+```js
+{
+    date: "9527年2月5日",
+        content
+:
+    [
+        "p:今天是个好日子",
+        "p:希望明天不要是一个坏天气",
+        "img:xxxxxxx"
+    ]
+}
+```
+

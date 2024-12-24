@@ -1,8 +1,8 @@
 <template>
   <div class="timeline">
     <Router id="top"/>
-    <ul v-if="configTimeline.length > 0" class="line">
-      <li v-for="item in configTimeline" class="card">
+    <ul v-if="gossipContent.length > 0" class="line">
+      <li v-for="item in gossipContent" class="card">
         <div class="time">{{ item.date }}</div>
         <div class="content">
           <ContentView v-for="c in item.content" :content="c"/>
@@ -18,10 +18,8 @@
 
 <script setup>
 import Router from "@/components/Router.vue";
-import {inject} from "vue";
 import ContentView from "@/components/ContentView.vue";
-
-const configTimeline = inject('configTimeline')
+import gossipContent from "../../../GossipContent.js";
 </script>
 
 <style scoped>
@@ -64,9 +62,10 @@ const configTimeline = inject('configTimeline')
 /* 内容 */
 .content {
   width: 100%;
-  background-color: rgba(110, 110, 110, 0.3);
+  background-color: rgb(22 22 22 / 30%);;
   padding: 5px;
   border-radius: 0 10px 10px 10px;
+  color: #fff;
 
   img {
     width: 80%;

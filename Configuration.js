@@ -5,7 +5,7 @@ export const config = {
         // 路由
         router: {
             comments: true,  // 留言板
-            timeline: true,  // 时间轴
+            gossip: true,  // 闲言碎语
         },
         // 主页
         home: {
@@ -140,18 +140,19 @@ export const config = {
         title: '留言板',
         // 介绍
         description: '少年，江湖之路漫长且未知，今朝有幸相逢，便是缘定一线。何不借此际会，留下一语豪言，以铭此情此景？',
-        // 留言数据
-        giscus: {
-            // 仓库
-            repo: 'ximuliunian/blog',
-            // 仓库ID
-            repoId: 'R_kgDOGuKRyg',
-            // 分类
-            category: 'Announcements',
-            // 分类ID
-            categoryId: 'DIC_kwDOGuKRys4CVf53',
-            // 主题
-            theme: 'light_protanopia',
-        }
+    },
+
+    // 评论配置
+    giscus: {
+        // 仓库
+        repo: 'ximuliunian/blog',
+        // 仓库ID
+        repoId: 'R_kgDOGuKRyg',
+        // 分类
+        category: 'Announcements',
+        // 分类ID
+        categoryId: 'DIC_kwDOGuKRys4CVf53',
+        // 主题
+        theme: 'light_protanopia',
     }
 }

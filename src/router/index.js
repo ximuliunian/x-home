@@ -14,16 +14,19 @@ const router = createRouter({
             name: 'comments',
             component: () => import('../views/comment/Index.vue')
         }, {
-            path: '/timeline',
-            name: 'timeline',
-            component: () => import('@/views/timeline/Index.vue')
+            path: '/gossip',
+            name: 'gossip',
+            component: () => import('@/views/gossip/Index.vue')
         }
     ]
 })
 
+// 匿名路由
+const anonymousRoute = ['home']
+
 router.beforeEach((to, from, next) => {
     // 如果去主页直接放行
-    if (to.name === 'home' || config.enable.router[to.name]) next();
+    if (anonymousRoute.includes(to.name) || config.enable.router[to.name]) next();
     else next({name: 'home'})
 })
 
