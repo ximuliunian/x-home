@@ -57,16 +57,17 @@ imageLoad.onload = () => {
 </script>
 
 <style scoped>
-.fade-enter-from {
+.fade-enter-from{
   opacity: 0;
-  transform: translateX(-100%);
+  transform: translateX(-50%);
 }
 
-.fade-enter-to {
+.fade-enter-to{
+  transform: translateX(0%);
   opacity: 1;
 }
 
-.fade-leave-active, .fade-enter-active {
+.fade-leave-active,.fade-enter-active {
   transition: all 0.5s ease-out;
 }
 
@@ -75,7 +76,8 @@ imageLoad.onload = () => {
   opacity: 1;
 }
 
-.fade-leave-to {
+.fade-leave-to{
+  transform: translateX(50%);
   opacity: 0;
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "xmln-home",
-  "version": "0.8.0",
+  "version": "0.8.3",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,12 +10,13 @@
   },
   "dependencies": {
     "axios": "^1.7.9",
-    "pinia": "^2.1.7",
-    "vue": "^3.4.29",
-    "vue-router": "^4.3.3"
+    "pinia": "^2.2.6",
+    "vue": "^3.5.13",
+    "vue-router": "^4.4.5"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.0.5",
-    "vite": "^5.3.1"
+    "@vitejs/plugin-vue": "^5.2.1",
+    "vite": "^6.0.1",
+    "vite-plugin-vue-devtools": "^7.6.5"
   }
 }
