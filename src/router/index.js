@@ -1,6 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router'
 
-import {config} from '../../Configuration.js'
+import {config} from '../../config/Configuration.js'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,7 +17,11 @@ const router = createRouter({
             path: '/gossip',
             name: 'gossip',
             component: () => import('@/views/gossip/Index.vue')
-        }
+        }, {
+            path: '/friendLinks',
+            name: 'friendLinks',
+            component: () => import('@/views/friendLinks/Index.vue')
+        },
     ]
 })
 

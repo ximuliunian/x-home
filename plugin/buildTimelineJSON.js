@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import {config} from "../Configuration.js";
+import {config} from "../config/Configuration.js";
 
 
 // 自定义 Vite 插件生成时间轴 JSON 静态文件

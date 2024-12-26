@@ -1,8 +1,7 @@
 <template>
-  <img v-show="isFullScreen" :alt="alt || '假装这里有一张图片'" :src="src" :style="{width: width, height: height}"
-       class="placeholder"/>
+  <img v-show="isFullScreen" :alt="alt" :src="src" :style="{width: width, height: height}" class="placeholder"/>
   <div :class="isFullScreen ? 'fullScreen' : 'reveal'" @click="toggleFullScreen">
-    <img :alt="alt || '假装这里有一张图片'" :src="src" :style="{width: width, height: height}"/>
+    <img :alt="alt" :src="src" :style="{width: isFullScreen ? 'auto' : width, height: isFullScreen ? 'auto' : height}"/>
   </div>
 </template>
 
@@ -15,7 +14,8 @@ defineProps({
     required: true
   },
   alt: {
-    type: String
+    type: String,
+    default: '假装这里有一张图片'
   },
   width: {
     type: String,
@@ -44,8 +44,8 @@ const toggleFullScreen = () => {
 
 /* 图片基本样式 */
 img {
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 90%;
+  max-height: 90%;
   width: auto;
   height: auto;
   object-fit: cover;

@@ -1,6 +1,7 @@
 <template>
   <div class="timeline">
-    <Router id="top"/>
+    <PastTop/>
+    <Router/>
     <ul v-if="gossipContent.length > 0" class="line">
       <li v-for="item in gossipContent" class="card">
         <div class="time">{{ item.date }}</div>
@@ -12,14 +13,14 @@
     <div v-else class="cover">
       <div>暂时什么都还没有哦</div>
     </div>
-    <a id="pastTop" href="#top" title="回到顶部">↑</a>
   </div>
 </template>
 
 <script setup>
 import Router from "@/components/Router.vue";
 import ContentView from "@/components/ContentView.vue";
-import gossipContent from "../../../GossipContent.js";
+import gossipContent from "../../../config/GossipContent.js";
+import PastTop from "@/components/PastTop.vue";
 </script>
 
 <style scoped>
@@ -39,24 +40,6 @@ import gossipContent from "../../../GossipContent.js";
     padding: 10px;
     border-radius: 10px;
   }
-}
-
-/* 回到顶部 */
-#pastTop {
-  position: fixed;
-  width: 30px;
-  height: 30px;
-  bottom: 30px;
-  right: 10px;
-  background-color: white;
-  text-decoration: none;
-  text-align: center;
-  line-height: 30px;
-  font-weight: bolder;
-  font-size: 20px;
-  color: black;
-  border-radius: 10px;
-  transition: background-color 0.5s, color 0.5s;
 }
 
 /* 内容 */

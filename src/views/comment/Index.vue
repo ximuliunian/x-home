@@ -1,5 +1,6 @@
 <template>
   <div class="comment">
+    <PastTop/>
     <div :style="{backgroundImage: 'url(' + config.comment.cover + ')'}" class="header">
       <div>
         <h1>{{ config.comment.title }}</h1>
@@ -33,6 +34,7 @@
 <script setup>
 import Router from "@/components/Router.vue";
 import {inject} from "vue";
+import PastTop from "@/components/PastTop.vue";
 
 const config = inject('config')
 </script>

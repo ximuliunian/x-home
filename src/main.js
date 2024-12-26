@@ -1,5 +1,5 @@
 import './assets/main.css'
-import {config} from '../Configuration.js'
+import {config} from '../config/Configuration.js'
 
 import {createApp} from 'vue'
 import {createPinia} from 'pinia'

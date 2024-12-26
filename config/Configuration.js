@@ -6,6 +6,7 @@ export const config = {
         router: {
             comments: true,  // 留言板
             gossip: true,  // 闲言碎语
+            friendLinks: true,  // 友链
         },
         // 主页
         home: {
@@ -154,5 +155,13 @@ export const config = {
         categoryId: 'DIC_kwDOGuKRys4CVf53',
         // 主题
         theme: 'light_protanopia',
+    },
+
+    // 闲言碎语配置
+    gossip: {
+        // 外传（别人是否可以拉取我的内容）
+        public: true,
+        // 内显（是否展示别人的内容）
+        internalDisplay: true
     }
 }
