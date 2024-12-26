@@ -6,7 +6,7 @@
         友人帐
       </h1>
       <div class="description-content">
-        <ContentView v-for="c in friendLinks.description" :content="c" img-height="200px"/>
+        <ContentView v-for="c in friendLinks.description" :content="c" img-height="200px" img-inline-block/>
       </div>
     </div>
     <Router/>

@@ -3,6 +3,7 @@
   <div :class="isFullScreen ? 'fullScreen' : 'reveal'" @click="toggleFullScreen">
     <img :alt="alt" :src="src" :style="{width: isFullScreen ? 'auto' : width, height: isFullScreen ? 'auto' : height}"/>
   </div>
+  <br v-if="!InlineBlock">
 </template>
 
 <script setup>
@@ -24,6 +25,10 @@ defineProps({
   height: {
     type: String,
     default: 'auto'
+  },
+  InlineBlock: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -44,8 +49,8 @@ const toggleFullScreen = () => {
 
 /* 图片基本样式 */
 img {
-  max-width: 90%;
-  max-height: 90%;
+  max-width: 100%;
+  max-height: 100%;
   width: auto;
   height: auto;
   object-fit: cover;
@@ -70,10 +75,16 @@ img {
 }
 
 .fullScreen img {
+  max-width: 90%;
+  max-height: 90%;
   animation: zoomIn 0.3s ease-in-out forwards;
 }
 
 /* 非全屏样式 */
+.reveal {
+  display: inline-block;
+}
+
 .reveal img {
   animation: zoomOut 0.3s ease-in-out forwards;
 }

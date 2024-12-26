@@ -8,7 +8,12 @@
 import {computed} from 'vue';
 import Image from "@/components/Image.vue";
 
-const props = defineProps(["content", "imgWidth", "imgHeight"]);
+const props = defineProps({
+  content: String,
+  imgWidth: String,
+  imgHeight: String,
+  imgInlineBlock: Boolean
+});
 
 let contentComputed = computed(() => {
   let c = String(props.content)
@@ -20,18 +25,20 @@ let contentComputed = computed(() => {
 
   return {
     type: split[0] === 'img' ? Image : split[0],
-    isModule: split[0] === 'img',
+    isModule: split[0],
     content: split[1]
   };
 });
 
+// 获取标签上属性
 function getAttributes(c) {
-  if (c.isModule) {
+  if (c.isModule === 'img') {
     return {
       src: c.content,
       alt: '假装这里有一张图片',
       width: props.imgWidth,
-      height: props.imgHeight
+      height: props.imgHeight,
+      InlineBlock: props.imgInlineBlock
     };
   }
   return {};
