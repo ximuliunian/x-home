@@ -6,7 +6,7 @@
       <li v-for="item in gossipContent" class="card">
         <div class="time">{{ item.date }}</div>
         <div class="content">
-          <ContentView v-for="c in item.content" :content="c"/>
+          <ContentView :contents="item.content"/>
         </div>
       </li>
     </ul>
@@ -18,7 +18,7 @@
 
 <script setup>
 import Router from "@/components/Router.vue";
-import ContentView from "@/components/ContentView.vue";
+import ContentView from "@/components/contentView/ContentView.vue";
 import gossipContent from "../../../config/GossipContent.js";
 import PastTop from "@/components/PastTop.vue";
 </script>

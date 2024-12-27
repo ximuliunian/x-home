@@ -43,7 +43,7 @@ const config = inject('config')
 /* 内容 */
 .content {
   margin-top: 10px;
-  background-color: rgba(255, 255, 240);
+  background-color: var(--milky-white);
   border-radius: 10px;
   padding: 10px;
 }
