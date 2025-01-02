@@ -1,42 +1,102 @@
 <template>
-  <component v-for="content in contents" :is="getType(content)" v-bind="getAttributes(content)">
-    {{ getType(content) === 'Image' ? null : splitContent(content).content }}
+  <component v-for="content in contentList" :is="getElementType(content.tag)" v-bind="content.attributes">
+    {{ content.text }}
   </component>
 </template>
 
 <script setup>
 import Image from "@/components/contentView/Image.vue";
+import {onMounted, ref} from "vue";
+import LiView from "@/components/contentView/LiView.vue";
 
 const props = defineProps({
-  contents: Array,
+  contents: {
+    type: Array,
+    required: true
+  },
   imgWidth: String,
   imgHeight: String,
   imgInlineBlock: Boolean
 });
 
-// 获取类型
+// 展示内容列表
+let contentList = ref([]);
+
+onMounted(() => {
+  for (let i = 0; i < props.contents.length; i++) {
+    let content = props.contents[i];
+    // 渲染元素
+    let el = {
+      tag: getType(content),
+      text: getContent(content)
+    }
+
+    // 处理有/无序列表
+    if (LiView === getElementType(content)) {
+      // 构建属性元素
+      el.attributes = {
+        type: el.tag,
+        contents: []
+      };
+      // 接着现有的i继续循环直到循环结束或者下一个标签和构建的属性标签不一致
+      for (; i < props.contents.length && el.tag === getType(props.contents[i]); i++) {
+        el.attributes.contents.push(getContent(props.contents[i]));
+      }
+      // 提交
+      i--;
+      addContent(el)
+      continue
+    }
+
+    el.attributes = getAttributes(content)
+    addContent(el);
+  }
+})
+
+
+// 添加对象到列表
+function addContent(content) {
+  contentList.value.push(content);
+}
+
+// 获取内容
+function getContent(content) {
+  return splitContent(content).content;
+}
+
+// 获取标签原始类型
 function getType(content) {
-  let c = splitContent(content);
+  return splitContent(content).type;
+}
+
+// 获取元素类型
+function getElementType(content) {
+  let c = getType(content);
 
   let type;
-  switch (c.type) {
+  switch (c) {
     case 'img':
       type = Image;
       break;
 
+    case 'ol':
+    case 'ul':
+      type = LiView;
+      break;
+
     default:
-      type = c.type;
+      type = c;
   }
   return type;
 }
 
 // 获取标签上属性
 function getAttributes(content) {
-  let c = splitContent(content);
-  switch (c.type) {
-    case 'img':
+  let type = getElementType(content);
+  switch (type) {
+    case Image:
       return {
-        src: c.content,
+        src: getContent(content),
         alt: '假装这里有一张图片',
         width: props.imgWidth,
         height: props.imgHeight,
