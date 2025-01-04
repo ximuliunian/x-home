@@ -24,6 +24,8 @@ const title = '标签';
 const width = '100%';
 // 高度
 const height = '160px';
+// 弹幕生成时间
+const barrageTime = 1500;
 
 // 全局配置
 const config = inject('config');
@@ -73,7 +75,7 @@ onMounted(() => {
 
   setInterval(() => {
     createBarrage();
-  }, 2000); // 每2秒生成一条新弹幕
+  }, barrageTime);
 
   // 切换窗口时清空弹幕
   window.onblur = (e) => {
@@ -102,7 +104,7 @@ onMounted(() => {
 
 @keyframes moveLeft {
   from {
-    left: 100%;
+    left: 105%;
     transform: translateX(0);
   }
   to {
