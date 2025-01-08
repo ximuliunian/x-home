@@ -1,4 +1,5 @@
 <template>
+  <PastTop/>
   <div class="friendLinks">
     <div class="description">
       <h1 style="border-bottom: 3px dashed #ccc; padding-bottom: 10px">
@@ -11,6 +12,20 @@
     </div>
 
     <Router/>
+
+    <Section :title="item.sort" :icon="item.icon" v-for="(item, key) in list" :key="key">
+      <div class="links-container">
+        <div class="links" :style="{backgroundColor: list.bgColor}" v-for="(list, index) in item.list" :key="index"
+             @click="openLink(list.url, true)">
+          <img :src="list.avatar" alt="假装有一张图片">
+          <div class="info">
+            <span>{{ list.name }}</span>
+            <span>{{ list.desc }}</span>
+          </div>
+        </div>
+        <i v-for="i in 2" class="placeholder"></i>
+      </div>
+    </Section>
 
     <div class="description">
       <h1 style="border-bottom: 3px dashed #ccc; padding-bottom: 10px">
@@ -90,12 +105,89 @@ import Router from "@/components/Router.vue";
 import Icon from "@/components/Icon.vue";
 import ContentView from "@/components/contentView/ContentView.vue";
 import {friendLinks} from "../../../config/FriendLinks.js";
-import {inject} from "vue";
+import {inject, onMounted, reactive} from "vue";
+import Section from "@/components/Section.vue";
+import PastTop from "@/components/PastTop.vue";
+import commonlyFunctions from "@/composition/commonlyFunctions.js";
+import {getNotSorted, getSorted} from "@/api/friendLinkAPI.js";
 
+const {openLink} = commonlyFunctions();
+// 全局配置
 const config = inject("config");
+// 友链列表
+const list = reactive([]);
+
+onMounted(() => {
+  // 先看看没有分类的列表存不存在
+  getNotSorted().then(resp => {
+    list.unshift({
+      sort: '小伙伴们',
+      icon: 'icon-sys-ya',
+      list: resp
+    })
+  })
+  // 遍历所有分类
+  friendLinks.links.forEach(link => {
+    getSorted(link.sort).then(resp => {
+      link.list = resp
+      list.push(link)
+    })
+  })
+});
+
+
 </script>
 
 <style scoped>
+/* 信息 */
+.info {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+
+  span:first-child {
+    font-weight: bold;
+  }
+}
+
+/* 占位符 */
+.placeholder {
+  width: 33%;
+}
+
+/* 链接 */
+.links {
+  width: 33%;
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #8d8d8d;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #595959;
+  background-color: var(--milky-white);
+
+  &:hover {
+    background-color: #8d8d8d;
+    color: #fff;
+  }
+
+  img {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+  }
+}
+
+/* 链接容器 */
+.links-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
 /* 表格容器 */
 .table-container {
   overflow-x: auto;
@@ -154,5 +246,23 @@ th, td {
 .friendLinks {
   width: 80%;
   margin: 0 auto;
+}
+
+/* 当屏幕宽度小于 800 时 */
+@media only screen and (max-width: 800px) {
+  .links {
+    width: 49%;
+  }
+
+  .placeholder {
+    width: 49%;
+  }
+}
+
+/* 当屏幕宽度小于 500 时 */
+@media only screen and (max-width: 500px) {
+  .links {
+    width: 100%;
+  }
 }
 </style>

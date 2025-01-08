@@ -15,7 +15,7 @@ export const friendLinks = {
             url: "https://www.ximuliunian.top",  // 链接
             avatar: "https://www.ximuliunian.top/img/avatar.png",  // 头像
             desc: "懒惰往往是创新的催化剂",  // 简介
-            bgColor: "#7ce8b4",  // 背景颜色
+            bgColor: "#8bfdd4"  // 背景颜色
         },
         // 申请要求
         require: [
@@ -28,11 +28,6 @@ export const friendLinks = {
             "p:填写完成之后在下方进行留言，至于本站信息就在上面表格之中"
         ],
     },
-    // 友链列表
-    links: [
-        {
-            title: "第一批",
-            icon: "icon-GitHub",
-        }
-    ]
+    // 友链分类列表
+    links: []
 }

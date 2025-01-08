@@ -15,7 +15,7 @@ o((>ω< ))o
 
 # 配置文件（.env）
 
-这里面存放的是站点的基本信息 (●'◡'●)
+位置在根目录下，这里面存放的是站点的基本信息 (●'◡'●)
 
 ``` env
 # 站点标题
@@ -27,6 +27,8 @@ VITE_DESCRIPTION =
 # 站点关键字
 VITE_KEYWORDS =
 ```
+
+> 除了这个 `.env` 配置文件之外，其他的项目配置都在根目录的 ` config` 文件夹下
 
 # 配置文件（Configuration.js）
 
@@ -75,7 +77,7 @@ GitHub：https://github.com/tandpfun/skill-icons
 
 GitCode：https://gitcode.com/gh_mirrors/sk/skill-icons
 
-这个项目收录了很多常用的技术栈图标，具体有什么图标可以通过jin上面的链接查看一番（建议使用GitCode国内快）。具体详情什么的这里不做赘述。使用的时候进入项目找到图标对应的关键字，如下图：
+这个项目收录了很多常用的技术栈图标，具体有什么图标可以通过上面的链接查看一番（建议使用GitCode国内快）。具体详情什么的这里不做赘述。使用的时候进入项目找到图标对应的关键字，如下图：
 
 ![image-20241207234847615](.github/md.image/image-20241207234847615.png)
 
@@ -194,11 +196,76 @@ data-category-id = 分类ID
 ```js
 {
     date: "9527年2月5日",
-        content: [
-        	"p:今天是个好日子",
-        	"p:希望明天不要是一个坏天气",
-        	"img:xxxxxxx"
-    	]
+    content: [
+    	"p:今天是个好日子",
+     	"p:希望明天不要是一个坏天气",
+       	"img:xxxxxxx"
+    ]
 }
 ```
 
+# 配置文件（ FriendLinks.js）
+
+这个是友人帐（友链）的配置文件。这个配置中有两个模块分别控制着友链界面的介绍内容和分类
+
+```js
+export const friendLinks = {
+    apply: {
+        description: [
+            "p:使用本站特定语法书写介绍内容"
+        ],
+        scheme: {
+            name: "昵称",
+            url: "本站链接",
+            avatar: "头像",
+            desc: "个人介绍或者座右铭",
+            bgColor: "背景颜色"
+        },
+        require: [
+            "p:使用本站特定语法书写要求内容"
+        ],
+    },
+    links: [
+        {
+            sort: "分类名-1",
+            icon: "icon-xxx"
+        }, {
+            sort: "分类名-2",
+            icon: "icon-xxx"
+        }
+    ]
+}
+```
+
+`apply` 主要控制着展示的内容在这里面最需要说的就是 `scheme` 内容。它是用来帮助交换友链的，这里面填写本站信息，然后别人就可以根据这些信息填写友链
+
+然后就是 `links` 这个里面放着的是友链的分类这个没什么说的要多少分类添加多少即可
+
+## 添加友链
+
+在配置文件夹（config）下有一个 `friendLink` 的文件夹，在这个文件夹中创建 JSON 文件按照以下格式，那么在构建项目的时候会自己生成对应的信息。格式如下：
+
+```json
+{
+  "sorts": "测试",
+  "name": "曦暮流年",
+  "url": "https://www.ximuliunian.top",
+  "avatar": "https://www.ximuliunian.top/img/avatar.png",
+  "desc": "懒惰往往是创新的催化剂",
+  "bgColor": "#8bfdd4"
+}
+```
+
+| 字段    | 是否必填 | 介绍                                                         |
+| ------- | -------- | ------------------------------------------------------------ |
+| sorts   | 否       | 当前友链的分类，填写分类名即可（就是在配置文件中写的分类名）。<br />如果不写或者写的分类配置文件中没有那么都会归类到 “小伙伴们” 一栏 |
+| name    | 是       | 昵称                                                         |
+| url     | 是       | 网站链接                                                     |
+| avatar  | 是       | 头像链接                                                     |
+| desc    | 是       | 介绍或者座右铭                                               |
+| bgColor | 否       | 友链卡片背景颜色                                             |
+
+按照以上信息在目录中创建对应json文件即可
+
+- json文件随便命名没有要求
+- 可以创建多个文件夹，如：`friendLink > dir1`、`friendLink > dir2` 目录的深度不会影响友链的展示

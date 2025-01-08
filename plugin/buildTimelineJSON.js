@@ -3,7 +3,7 @@ import path from 'path';
 import {config} from "../config/Configuration.js";
 
 
-// 自定义 Vite 插件生成时间轴 JSON 静态文件
+// 生成时间轴 JSON 静态文件
 export default () => {
     // 输出目录
     const outputDir = path.resolve(__dirname, '../dist/api');
