@@ -78,24 +78,7 @@
     </div>
 
     <div class="description">
-      <div class="giscus"></div>
-      <component
-          is="script"
-          :data-category="config.giscus.category"
-          :data-category-id="config.giscus.categoryId"
-          :data-repo="config.giscus.repo"
-          :data-repo-id="config.giscus.repoId"
-          :data-theme="config.giscus.theme || 'light'"
-          async
-          crossorigin="anonymous"
-          data-emit-metadata="0"
-          data-input-position="top"
-          data-lang="zh-CN"
-          data-mapping="pathname"
-          data-reactions-enabled="1"
-          data-strict="0"
-          src="https://giscus.app/client.js">
-      </component>
+      <comment/>
     </div>
   </div>
 </template>
@@ -110,6 +93,7 @@ import Section from "@/components/Section.vue";
 import PastTop from "@/components/PastTop.vue";
 import commonlyFunctions from "@/composition/commonlyFunctions.js";
 import {getNotSorted, getSorted} from "@/api/friendLinkAPI.js";
+import Comment from "@/components/comment.vue";
 
 const {openLink} = commonlyFunctions();
 // 全局配置
@@ -238,7 +222,7 @@ th, td {
 .description {
   background-color: var(--milky-white);
   border-radius: 10px;
-  padding: 10px;
+  padding: 15px;
   margin: 20px 0;
 }
 

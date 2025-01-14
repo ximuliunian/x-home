@@ -9,24 +9,7 @@
     </div>
     <Router/>
     <div class="content">
-      <div class="giscus"></div>
-      <component
-          is="script"
-          :data-category="config.giscus.category"
-          :data-category-id="config.giscus.categoryId"
-          :data-repo="config.giscus.repo"
-          :data-repo-id="config.giscus.repoId"
-          :data-theme="config.giscus.theme || 'light'"
-          async
-          crossorigin="anonymous"
-          data-emit-metadata="0"
-          data-input-position="top"
-          data-lang="zh-CN"
-          data-mapping="pathname"
-          data-reactions-enabled="1"
-          data-strict="0"
-          src="https://giscus.app/client.js">
-      </component>
+      <comment/>
     </div>
   </div>
 </template>
@@ -35,7 +18,8 @@
 import Router from "@/components/Router.vue";
 import {inject} from "vue";
 import PastTop from "@/components/PastTop.vue";
-
+import Comment from "@/components/comment.vue";
+// 全局配置
 const config = inject('config')
 </script>
 
@@ -45,7 +29,7 @@ const config = inject('config')
   margin-top: 10px;
   background-color: var(--milky-white);
   border-radius: 10px;
-  padding: 10px;
+  padding: 15px;
 }
 
 /* 头部 */
