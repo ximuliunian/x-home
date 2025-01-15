@@ -154,7 +154,7 @@ onMounted(() => {
   background-color: var(--milky-white);
 
   &:hover {
-    background-color: #8d8d8d;
+    background-color: #8d8d8d !important;
     color: #fff;
   }
 
