@@ -30,6 +30,9 @@ export const config = {
     // 头像
     avatar: 'img/avatar.png',
 
+    // 介绍
+    description: '懒惰往往是创新的催化剂',
+
     // 座右铭
     motto: {
         top: '能躺着绝不坐着,',

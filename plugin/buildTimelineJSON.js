@@ -30,6 +30,8 @@ export default () => {
             name: config.name,
             // 头像
             avatar: config.avatar,
+            // 介绍
+            description: config.description,
             // 评论
             giscus: {
                 repo: config.giscus.repo,

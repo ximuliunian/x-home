@@ -6,10 +6,14 @@
       <span id="text">{{ config.avatar_status.text }}</span>
     </div>
   </div>
+  <container close-title>
+    {{ config.description }}
+  </container>
 </template>
 
 <script setup>
 import {inject} from "vue";
+import Container from "@/components/Container.vue";
 
 const config = inject('config')
 </script>

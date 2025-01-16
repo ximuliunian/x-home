@@ -5,8 +5,8 @@
       :repoId="config.giscus.repoId"
       :category="config.giscus.category"
       :categoryId="config.giscus.categoryId"
-      mapping="pathname"
-      term="Welcome to component!"
+      :mapping="mapping"
+      :term="term"
       inputPosition="top"
       :theme="config.giscus.theme || 'light'"
       lang="zh-CN"
@@ -19,8 +19,15 @@ import Giscus from "@giscus/vue";
 import {inject} from "vue";
 // 全局配置
 const config = inject('config')
-</script>
 
+const props = defineProps({
+  mapping: {
+    type: String,
+    default: 'pathname'
+  },
+  term: String
+})
+</script>
 
 <style scoped>
 

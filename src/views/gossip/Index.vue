@@ -4,7 +4,13 @@
     <Router/>
     <ul v-if="gossipContent.length > 0" class="line">
       <li v-for="item in gossipContent" class="card">
-        <div class="time">{{ item.date }}</div>
+        <div class="articleInfo">
+          <div class="author">
+            <img src="https://www.ximuliunian.top/img/avatar.png">
+            <span>曦暮流年</span>
+          </div>
+          <div class="time">{{ item.date }}</div>
+        </div>
         <div class="content">
           <ContentView :contents="item.content"/>
         </div>
@@ -57,10 +63,40 @@ import PastTop from "@/components/PastTop.vue";
 
 /* 时间 */
 .time {
-  display: inline-block;
+  display: flex;
+  align-items: center;
   padding: 5px;
-  border-radius: 10px 10px 0px 0;
+  border-radius: 0 10px 0 0;
   background-color: rgba(255, 255, 255, 0.36);
+}
+
+/* 作者 */
+.author {
+  display: flex;
+  align-items: center;
+  max-width: 50%;
+  padding: 5px;
+  border-radius: 10px 0 0 0;
+  border-right: 2px dashed rgba(0, 0, 0, 0.31);
+  background-color: rgba(255, 255, 255, 0.36);
+
+  img {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+  }
+
+  span {
+    margin-left: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* 文章信息 */
+.articleInfo {
+  display: flex;
 }
 
 /* 时间线 */
@@ -91,5 +127,7 @@ import PastTop from "@/components/PastTop.vue";
 .timeline {
   margin: 0 auto;
   width: 80%;
+  min-width: 300px;
+  padding: 5px;
 }
 </style>
