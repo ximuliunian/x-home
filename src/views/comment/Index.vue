@@ -9,7 +9,7 @@
     </div>
     <Router/>
     <div class="content">
-      <comment/>
+      <Comment/>
     </div>
   </div>
 </template>

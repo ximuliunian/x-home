@@ -78,7 +78,7 @@
     </div>
 
     <div class="description">
-      <comment/>
+      <Comment/>
     </div>
   </div>
 </template>
@@ -118,8 +118,6 @@ onMounted(() => {
     })
   })
 });
-
-
 </script>
 
 <style scoped>

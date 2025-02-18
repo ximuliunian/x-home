@@ -1,14 +1,14 @@
-name: generate snake
+name: Generate Contribution Grid Snake
 
 on:
-  # run automatically every 6 hours
+  # 每6小时自动运行一次
   schedule:
-    - cron: "0 8 * * 1"
+    - cron: "0 */6 * * *"
 
-  # allows to manually run the job at any time
+  # 允许手动触发工作流
   workflow_dispatch:
 
-  # run on every push on the master or main branch
+  # 在 main 分支上的每次推送时运行
   push:
     branches:
       - main
@@ -19,26 +19,26 @@ jobs:
     timeout-minutes: 10
 
     steps:
-      # Checkout the repository
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      # 克隆 main 分支代码到工作目录
+      - name: Checkout main branch code
+        uses: actions/checkout@v3
         with:
-          ref: main  # Ensure we're working on the main branch
+          fetch-depth: 0  # 确保获取完整的提交历史
 
-      # generates a snake game from a github user (<github_user_name>) contributions graph, output a svg animation at <svg_out_path>
-      - name: Generate github-contribution.svg
-        uses: Platane/snk@v3
+      # 生成贡献图 SVG 动画并保存到指定路径
+      - name: Generate github-contribution-grid-snake.svg
+        uses: Platane/snk/svg-only@v2
         with:
           github_user_name: ${{ github.repository_owner }}
-          outputs: public/img/github-contribution.svg
+          outputs: ./public/img/github-contribution.svg  # 保存到指定路径
 
-      # Add, commit, and push the generated file to the main branch
-      - name: Commit and push generated file
+      # 提交并推送整个项目到 output 分支
+      - name: Commit and push the entire project to the output branch
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add public/img/github-contribution.svg
-          git commit -m "Update github-contribution.svg" || echo "No changes to commit"
-          git push origin main
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Update contribution grid snake" || echo "No changes to commit"
+          git push origin main:output || echo "No changes to push"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

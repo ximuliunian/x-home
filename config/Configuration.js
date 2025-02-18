@@ -96,6 +96,10 @@ export const config = {
             url: 'https://blog.ximuliunian.top',
             icon: 'icon-blog'
         }, {
+            name: '笔记',
+            url: 'https://notes.ximuliunian.top',
+            icon: 'icon-notes'
+        }, {
             name: '网页导航',
             url: 'https://nav.ximuliunian.top',
             icon: 'icon-nav'
@@ -137,7 +141,7 @@ export const config = {
 
     // ICP 备案展示
     icp: [
-        {domain: 'xmln.top', info: '豫ICP备2024053500号'},
+        { domain: 'xmln.top', info: '豫ICP备2024053500号' },
     ],
 
     // 留言板

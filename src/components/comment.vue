@@ -10,7 +10,11 @@
       inputPosition="top"
       :theme="config.giscus.theme || 'light'"
       lang="zh-CN"
+      crossorigin="anonymous"
       loading="lazy"
+      emit-metadata="0"
+      reactions-enabled="1"
+      async
   />
 </template>
 
