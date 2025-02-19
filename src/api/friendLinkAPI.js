@@ -1,9 +1,9 @@
 import request from "@/composition/request.js";
 
 // 获取没有分类的友链列表
-export function getNotSorted() {
+export function getFriendLink() {
     return request({
-        url: '/friendLinks/notSorted.json',
+        url: '/friendLinks/friendLink.json',
         method: 'get'
     })
 }

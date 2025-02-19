@@ -29,5 +29,10 @@ export const friendLinks = {
         ],
     },
     // 友链分类列表
-    links: []
+    links: [
+        {
+            sort: "测试",
+            icon: "icon-github"
+        }
+    ]
 }

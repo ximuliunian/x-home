@@ -1,16 +1,14 @@
-import {fileURLToPath, URL} from 'node:url';
-import {defineConfig} from 'vite';
+import { fileURLToPath, URL } from 'node:url';
+import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import buildTimelineJSON from "./plugin/buildTimelineJSON.js";
-import buildFriendLinksJSON from "./plugin/buildFriendLinksJSON.js";
+import buildDataJSON from './plugin/buildDataJSON.js';
 
 
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [
         vue(),
-        buildTimelineJSON(), // 构建时间轴json
-        buildFriendLinksJSON(), // 构建友链json
+        buildDataJSON(), // 构建数据json
     ],
     resolve: {
         alias: {

@@ -15,7 +15,7 @@
 
     <Section :title="item.sort" :icon="item.icon" v-for="(item, key) in list" :key="key">
       <div class="links-container">
-        <div class="links" :style="{backgroundColor: list.bgColor}" v-for="(list, index) in item.list" :key="index"
+        <div class="links" :style="{ backgroundColor: list.bgColor }" v-for="(list, index) in item.list" :key="index"
              @click="openLink(list.url, true)">
           <img :src="list.avatar" alt="假装有一张图片">
           <div class="info">
@@ -88,11 +88,11 @@ import Router from "@/components/Router.vue";
 import Icon from "@/components/Icon.vue";
 import ContentView from "@/components/contentView/ContentView.vue";
 import {friendLinks} from "../../../config/FriendLinks.js";
-import {inject, onMounted, reactive} from "vue";
+import {inject, onMounted, reactive, ref} from "vue";
 import Section from "@/components/Section.vue";
 import PastTop from "@/components/PastTop.vue";
 import commonlyFunctions from "@/composition/commonlyFunctions.js";
-import {getNotSorted, getSorted} from "@/api/friendLinkAPI.js";
+import {getFriendLink, getSorted} from "@/api/friendLinkAPI.js";
 import Comment from "@/components/comment.vue";
 
 const {openLink} = commonlyFunctions();
@@ -100,24 +100,41 @@ const {openLink} = commonlyFunctions();
 const config = inject("config");
 // 友链列表
 const list = reactive([]);
+// 分组
+const links = ref({});
 
 onMounted(() => {
-  // 先看看没有分类的列表存不存在
-  getNotSorted().then(resp => {
-    list.unshift({
-      sort: '小伙伴们',
-      icon: 'icon-sys-ya',
-      list: resp
-    })
-  })
   // 遍历所有分类
-  friendLinks.links.forEach(link => {
-    getSorted(link.sort).then(resp => {
-      link.list = resp
-      list.push(link)
-    })
+  links.notSorted = {sort: '小伙伴们', icon: 'icon-sys-ya', list: []}
+  friendLinks.links.forEach(link => links[link.sort] = {...link, list: []})
+
+  getFriendLink().then(respFriendLink => {
+    for (const e of respFriendLink) {
+      getSorted(e).then(resp => {
+        let sort = e.split('.')[0].split('-')[0];
+        addList(sort, resp, list.some(fl => fl.sort == sort))
+      })
+    }
   })
 });
+
+// 添加元素到list
+function addList(sort, array, isCreate) {
+  // 判断这个分类是否已经存在
+  if (isCreate) {
+    // 存在则加入
+    for (let listKey in list) {
+      if (list[listKey].sort == sort) {
+        list[listKey].list.push(...array);
+      }
+    }
+  } else {
+    // 不存在则创建
+    let e = links[sort];
+    e.list.push(...array);
+    list.push(e);
+  }
+}
 </script>
 
 <style scoped>
@@ -176,22 +193,29 @@ onMounted(() => {
 }
 
 .table-container::-webkit-scrollbar {
-  -ms-overflow-style: auto; /* IE and Edge */
-  scrollbar-width: auto; /* Firefox */
-  height: 8px; /* 滚动条高度 */
+  -ms-overflow-style: auto;
+  /* IE and Edge */
+  scrollbar-width: auto;
+  /* Firefox */
+  height: 8px;
+  /* 滚动条高度 */
 }
 
 .table-container::-webkit-scrollbar-track {
-  background: #f1f1f1; /* 滚动条轨道背景色 */
+  background: #f1f1f1;
+  /* 滚动条轨道背景色 */
 }
 
 .table-container::-webkit-scrollbar-thumb {
-  background: #888; /* 滚动条滑块背景色 */
-  border-radius: 4px; /* 滑块圆角 */
+  background: #888;
+  /* 滚动条滑块背景色 */
+  border-radius: 4px;
+  /* 滑块圆角 */
 }
 
 .table-container::-webkit-scrollbar-thumb:hover {
-  background: #555; /* 滑块悬停时的背景色 */
+  background: #555;
+  /* 滑块悬停时的背景色 */
 }
 
 /* 表格 */
@@ -202,7 +226,8 @@ table {
   min-width: 100%;
 }
 
-th, td {
+th,
+td {
   padding: 8px 15px;
   text-align: left;
   border-bottom: 1px solid #ddd;
