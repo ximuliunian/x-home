@@ -92,8 +92,9 @@ import {inject, onMounted, reactive, ref} from "vue";
 import Section from "@/components/Section.vue";
 import PastTop from "@/components/PastTop.vue";
 import commonlyFunctions from "@/composition/commonlyFunctions.js";
-import {getFriendLink, getSorted} from "@/api/friendLinkAPI.js";
+import {getSorted} from "@/api/friendLinkAPI.js";
 import Comment from "@/components/comment.vue";
+import {getFriendLink} from "@/api/rootAPI.js";
 
 const {openLink} = commonlyFunctions();
 // 全局配置

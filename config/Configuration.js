@@ -167,12 +167,4 @@ export const config = {
         // 主题
         theme: 'light_protanopia',
     },
-
-    // 闲言碎语配置
-    gossip: {
-        // 外传（别人是否可以拉取我的内容）
-        public: true,
-        // 内显（是否展示别人的内容）
-        internalDisplay: true
-    }
 }

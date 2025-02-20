@@ -2,13 +2,16 @@ import fs from 'fs';
 import path from 'path';
 import {config} from '../config/Configuration';
 import {friendLinks} from '../config/FriendLinks';
+import {gossipConfig} from "../config/GossipConfiguration.js";
 
 // API 生成目录
 const apiDir = {
     // 根目录
     root: path.resolve(__dirname, '../dist/api'),
     // 友链
-    friendLinks: path.resolve(__dirname, '../dist/api/friendLinks')
+    friendLinks: path.resolve(__dirname, '../dist/api/friendLinks'),
+    // 闲言碎语
+    gossip: path.resolve(__dirname, '../dist/api/gossip'),
 }
 
 // 分裂阈值
@@ -33,8 +36,37 @@ export default () => {
 
             // 构建友链配置
             buildFriendLinksConfig();
+
+            // 构建闲言碎语配置
+            buildGossipConfig();
         }
     };
+}
+
+// 闲言碎语配置
+function buildGossipConfig() {
+    // 入口
+    const main = [];
+    const publicMain = [];
+
+    findAndReadJsonFiles('../config/gossip/', object => {
+        const info = object.info;
+
+        // 跳过空ID
+        if (info.id == null || info.id === '') return;
+        const fileName = `${info.id}.json`;
+
+        main.push(fileName)
+
+        // 添加外传内容入口
+        if (info.public === undefined) info.public = true;
+        if (!info.public) publicMain.push(fileName)
+
+        writeFile(apiDir.gossip, fileName, object)
+    })
+
+    writeFile(apiDir.root, 'gossip.json', {...gossipConfig, list: main})
+    writeFile(apiDir.root, 'publicGossip.json', {...gossipConfig, list: publicMain})
 }
 
 // 友链配置
@@ -43,7 +75,8 @@ function buildFriendLinksConfig() {
     const sorts = new Set(friendLinks.links.map(link => link.sort));
 
     // 查找并读取所有JSON文件
-    const jsonFilesWithContent = findAndReadJsonFiles('../config/friendLink/');
+    const jsonFilesWithContent = [];
+    findAndReadJsonFiles('../config/friendLink/', object => jsonFilesWithContent.push(object))
 
     // 分类
     const notSorted = [];
@@ -71,9 +104,10 @@ function buildFriendLinksConfig() {
             if (array.length >= splitNum) {
                 // 如果达到了阈值，那么对其分裂
                 for (let i = 0; i < array.length; i += splitNum) {
-                    fileName = `${fileName}-${i / splitNum}.json`;
-                    writeFile(apiDir.friendLinks, fileName, array.slice(i, i + splitNum));
-                    main.push(fileName);
+                    let fn = `${fileName}-${i / splitNum}.json`;
+                    console.log(array.slice(i, i + splitNum).length, array.length)
+                    writeFile(apiDir.friendLinks, fn, array.slice(i, i + splitNum));
+                    main.push(fn);
                 }
             } else {
                 writeFile(apiDir.friendLinks, `${fileName}.json`, array);
@@ -87,7 +121,7 @@ function buildFriendLinksConfig() {
     // 写入 JSON 文件
     Object.keys(sorted).forEach(key => splitList(sorted[key], key));
     // 写入入口文件
-    writeFile(apiDir.friendLinks, 'friendLink.json', main);
+    writeFile(apiDir.root, 'friendLinks.json', main);
 }
 
 // 主目录配置
@@ -113,7 +147,7 @@ function buildMainConfig() {
 }
 
 // 递归查找并读取 JSON 文件
-function findAndReadJsonFiles(dir, arrayOfFiles = []) {
+function findAndReadJsonFiles(dir, fun) {
     // 获取需要查找的目录
     dir = path.resolve(__dirname, dir);
     const files = fs.readdirSync(dir);
@@ -125,19 +159,17 @@ function findAndReadJsonFiles(dir, arrayOfFiles = []) {
         // 判断是否是目录
         if (stats.isDirectory()) {
             // 去下一层目录查找
-            arrayOfFiles = findAndReadJsonFiles(name, arrayOfFiles);
+            findAndReadJsonFiles(name, fun);
         } else if (path.extname(name).toLowerCase() === '.json') {
             try {
                 // 读取JSON文件并转换成JS对象然后添加到数组中
                 const data = fs.readFileSync(name, 'utf8');
-                arrayOfFiles.push(JSON.parse(data));
+                fun(JSON.parse(data))
             } catch (error) {
                 console.error(`读取或解析错误 - ${name}:`, error.message);
             }
         }
     });
-    // 返回所有所有内容
-    return arrayOfFiles;
 }
 
 // 文件写入
