@@ -54,16 +54,42 @@ function buildGossipConfig() {
 
         // 跳过空ID
         if (info.id == null || info.id === '') return;
-        const fileName = `${info.id}.json`;
 
-        main.push(fileName)
+        main.push(info.id)
 
         // 添加外传内容入口
         if (info.public === undefined) info.public = true;
-        if (!info.public) publicMain.push(fileName)
+        if (!info.public) publicMain.push(info.id)
 
-        writeFile(apiDir.gossip, fileName, object)
+        // 完成版
+        writeFile(apiDir.gossip, `${info.id}.json`, object)
+
+        // 阉割版
+        object.content = [...object.content.slice(0, 2), "p:......"]
+        writeFile(apiDir.gossip, `${info.id}-cut.json`, object)
     })
+
+    // xxxx.xx.xx-xx 类型排序
+    function sort(list) {
+        list.sort((a, b) => {
+            const [dateA, numA] = a.split('-');
+            const [dateB, numB] = b.split('-');
+
+            // 将日期转换为 YYYYMMDD 格式以便比较
+            const dateValueA = dateA.replace(/\./g, '');
+            const dateValueB = dateB.replace(/\./g, '');
+
+            // 比较日期
+            if (dateValueA > dateValueB) return -1;
+            if (dateValueA < dateValueB) return 1;
+
+            // 如果日期相同，比较后面的数字
+            return parseInt(numB) - parseInt(numA);
+        });
+    }
+
+    sort(main)
+    sort(publicMain)
 
     writeFile(apiDir.root, 'gossip.json', {...gossipConfig, list: main})
     writeFile(apiDir.root, 'publicGossip.json', {...gossipConfig, list: publicMain})
@@ -107,11 +133,11 @@ function buildFriendLinksConfig() {
                     let fn = `${fileName}-${i / splitNum}.json`;
                     console.log(array.slice(i, i + splitNum).length, array.length)
                     writeFile(apiDir.friendLinks, fn, array.slice(i, i + splitNum));
-                    main.push(fn);
+                    main.push(`${fileName}-${i / splitNum}`);
                 }
             } else {
                 writeFile(apiDir.friendLinks, `${fileName}.json`, array);
-                main.push(`${fileName}.json`);
+                main.push(fileName);
             }
         }
     }
