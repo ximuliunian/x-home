@@ -19,7 +19,15 @@ const router = createRouter({
             path: '/gossip',
             name: 'gossip',
             component: () => import('@/views/gossip/Index.vue'),
-            meta: {title: '闲言碎语'}
+            meta: {title: '闲言碎语'},
+            children: [
+                {
+                    path: 'info',
+                    name: 'gossipInfo',
+                    component: () => import('@/views/gossip/info/Index.vue'),
+                    meta: {title: '闲言碎语'}
+                }
+            ]
         }, {
             path: '/friendLinks',
             name: 'friendLinks',
@@ -38,6 +46,13 @@ router.beforeEach((to, from, next) => {
         document.title = import.meta.env.VITE_TITLE + ' - ' + to.meta.title
         next();
     } else {
+        // TODO 判断是不是从 gossip 到 gossipInfo 的
+        if (to.name === 'gossipInfo' && from.name === 'gossip') {
+            next()
+            return
+        }
+
+        // 跳转到主页
         document.title = import.meta.env.VITE_TITLE + ' - ' + to.meta.title
         next({name: 'home'})
     }

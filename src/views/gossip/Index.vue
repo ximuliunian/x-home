@@ -14,6 +14,10 @@
         <div class="content">
           <ContentView :contents="item.content"/>
         </div>
+        <div class="content-bottom">
+          <icon icon="icon-sys-pinglun" width="25px" height="25px" class="icon"
+                @click="routerPush('gossipInfo',{a:1})"/>
+        </div>
       </li>
     </ul>
     <div v-else class="cover">
@@ -27,9 +31,36 @@ import Router from "@/components/Router.vue";
 import ContentView from "@/components/contentView/ContentView.vue";
 import gossipContent from "../../../config/GossipContent.js";
 import PastTop from "@/components/PastTop.vue";
+import Icon from "@/components/Icon.vue";
+import {useRouter} from "vue-router";
+
+// 路由
+const router = useRouter();
+
+// 路由跳转
+function routerPush(name, params) {
+  router.push({
+    name: 'gossipInfo',
+    params: {...params}
+  })
+}
 </script>
 
 <style scoped>
+/* 内容底部 */
+.content-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-radius: 0 0 10px 10px;
+  background-color: rgba(110, 110, 110, 0.5);
+
+  .icon {
+    cursor: pointer;
+    margin: 5px;
+  }
+}
+
 /* 覆盖 */
 .cover {
   display: flex;
@@ -53,7 +84,7 @@ import PastTop from "@/components/PastTop.vue";
   width: 100%;
   background-color: rgb(22 22 22 / 30%);;
   padding: 5px;
-  border-radius: 0 10px 10px 10px;
+  border-radius: 0 10px 0 0;
   color: #fff;
 
   img {
