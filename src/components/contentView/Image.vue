@@ -1,7 +1,8 @@
 <template>
   <img v-show="isFullScreen" :alt="alt" :src="src" :style="{width: width, height: height}" class="placeholder"/>
   <div :class="isFullScreen ? 'fullScreen' : 'reveal'" @click="toggleFullScreen">
-    <img :alt="alt" :src="src" :style="{width: isFullScreen ? 'auto' : width, height: isFullScreen ? 'auto' : height}"/>
+    <img :alt="alt" :src="src"
+         :style="{width: isFullScreen ? 'auto' : width, height: isFullScreen ? 'auto' : height, display: 'block'}"/>
   </div>
   <br v-if="!InlineBlock">
 </template>

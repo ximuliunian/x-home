@@ -16,7 +16,7 @@
         </div>
         <div class="content-bottom">
           <icon icon="icon-sys-pinglun" width="25px" height="25px" class="icon"
-                @click="routerPush('gossipInfo',{a:1})"/>
+                @click="routerPush('gossipInfo',{id:'xmln.top_2025.1.15-0'})"/>
         </div>
       </li>
     </ul>
@@ -39,10 +39,7 @@ const router = useRouter();
 
 // 路由跳转
 function routerPush(name, params) {
-  router.push({
-    name: 'gossipInfo',
-    params: {...params}
-  })
+  router.push({name: name, query: {...params}});
 }
 </script>
 
