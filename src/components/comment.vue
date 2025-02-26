@@ -1,10 +1,10 @@
 <template>
   <Giscus
       id="comments"
-      :repo="config.giscus.repo"
-      :repoId="config.giscus.repoId"
-      :category="config.giscus.category"
-      :categoryId="config.giscus.categoryId"
+      :repo="repo || config.giscus.repo"
+      :repoId="repoId || config.giscus.repoId"
+      :category="category || config.giscus.category"
+      :categoryId="categoryId || config.giscus.categoryId"
       :mapping="mapping"
       :term="term"
       inputPosition="top"
@@ -29,7 +29,11 @@ const props = defineProps({
     type: String,
     default: 'pathname'
   },
-  term: String
+  repo: String,
+  repoId: String,
+  category: String,
+  categoryId: String,
+  term: String,
 })
 </script>
 

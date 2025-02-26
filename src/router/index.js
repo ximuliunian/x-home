@@ -42,7 +42,7 @@ router.beforeEach((to, from, next) => {
         document.title = import.meta.env.VITE_TITLE + ' - ' + to.meta.title
         next();
     } else {
-        if (to.name === 'gossipInfo' && from.name === 'gossip') {
+        if (to.name === 'gossipInfo' && config.enable.router.gossip) {
             next()
             return
         }

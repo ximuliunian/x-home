@@ -16,7 +16,7 @@
         </div>
         <div class="content-bottom">
           <icon icon="icon-sys-pinglun" width="25px" height="25px" class="icon"
-                @click="routerPush('gossipInfo',{id:'xmln.top_2025.1.15-0'})"/>
+                @click="routerPush('gossipInfo',buildQuery())"/>
         </div>
       </li>
     </ul>
@@ -38,8 +38,23 @@ import {useRouter} from "vue-router";
 const router = useRouter();
 
 // 路由跳转
-function routerPush(name, params) {
-  router.push({name: name, query: {...params}});
+function routerPush(name, query) {
+  router.push({name: name, query: {...query}});
+}
+
+// 构建传递数据
+const buildQuery = () => {
+  return {
+    id: '2025.1.15-0',
+    url: 'https://www.xmln.top',
+    name: '曦暮流年',
+    avatar: 'https://www.ximuliunian.top/img/avatar.png',
+    description: '懒惰往往是创新的催化剂',
+    giscus_repo: "ximuliunian/blog",
+    giscus_repoId: "R_kgDOGuKRyg",
+    giscus_category: "Announcements",
+    giscus_categoryId: "DIC_kwDOGuKRys4CVf53"
+  }
 }
 </script>
 
