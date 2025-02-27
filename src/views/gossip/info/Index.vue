@@ -13,9 +13,12 @@
       </button>
     </div>
 
-    <div class="content">
+    <div class="content" v-if="gossipContentFlag">
+      <p>内容正在努力加载中......</p>
+    </div>
+    <div class="content" v-else>
       <ContentView :contents="gossipContent.content"/>
-      <span>—— {{ '2025年2月27日' }}</span>
+      <p style="text-align: right">—— {{ gossipContent.date }}</p>
     </div>
 
     <div class="comment">
@@ -36,7 +39,7 @@ import ContentView from "@/components/contentView/ContentView.vue";
 import Comment from "@/components/comment.vue";
 import CommentEnum from "@/enums/commentEnum.js";
 import PastTop from "@/components/PastTop.vue";
-import {onMounted, reactive} from "vue";
+import {onMounted, reactive, ref} from "vue";
 import {useRouter} from "vue-router";
 import CommonlyFunctions from "@/composition/commonlyFunctions.js";
 import {getGossip} from "@/api/gossipAPI.js";
@@ -60,6 +63,7 @@ let queryData = reactive({
 
 // 内容
 let gossipContent = reactive({})
+let gossipContentFlag = ref(true)
 
 // 路由
 const router = useRouter()
@@ -76,7 +80,11 @@ onMounted(() => {
 })
 
 // 获取文本内容
-const getGossipContent = () => getGossip(queryData.id).then(resp => gossipContent = resp)
+const getGossipContent = () => getGossip(queryData.id).then(resp => {
+  gossipContent = resp
+  if (resp.info.id == null || resp.info.id === '' || resp.info.id === undefined) return
+  gossipContentFlag.value = false
+})
 
 
 // 路由参数初始化

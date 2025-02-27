@@ -11,6 +11,7 @@
 <script setup>
 import Container from "@/components/Container.vue";
 import {onMounted, ref} from "vue";
+import localStorage from "@/composition/localStorage.js";
 
 // 内容
 let hitokotoContent = ref('');
@@ -19,11 +20,10 @@ let hitokotoFrom = ref('');
 
 onMounted(() => {
   // 从本地获取一言
-  let hitokoto = localStorage.getItem('hitokoto');
+  let hitokoto = localStorage.getContent(localStorage.menu.HITOKOTO);
 
   // 如果不为空的话优先使用本地的数据
   if (hitokoto) {
-    hitokoto = JSON.parse(hitokoto);
     run(hitokoto);
   } else {
     // 如果为空的话从接口获取
@@ -52,7 +52,7 @@ function getHitokoto(isRunDirectly) {
         if (isRunDirectly) {
           run(data);
         }
-        localStorage.setItem('hitokoto', JSON.stringify(data));
+        localStorage.setContent(localStorage.menu.HITOKOTO, data);
       })
 }
 

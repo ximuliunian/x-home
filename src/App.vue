@@ -18,7 +18,8 @@
 <script setup>
 import useLCG from "@/composition/useLCG.js";
 import Loading from "@/components/loading.vue";
-import {computed, inject, ref} from "vue";
+import {computed, inject, onMounted, ref} from "vue";
+import {localStorageInit} from "@/composition/localStorage.js";
 
 // 全局配置
 const config = inject('config')
@@ -28,6 +29,11 @@ const year = new Date().getFullYear();
 const {randomInt} = useLCG();
 // 加载动画开关
 let loadingFlag = ref(false);
+
+onMounted(() => {
+  // 本地存储初始化
+  localStorageInit()
+})
 
 // ICP备案号
 const icp = computed(() => {
