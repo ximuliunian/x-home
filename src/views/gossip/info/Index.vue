@@ -14,7 +14,8 @@
     </div>
 
     <div class="content">
-      <ContentView :contents="gossipContent[0].content"/>
+      <ContentView :contents="gossipContent.content"/>
+      <span>—— {{ '2025年2月27日' }}</span>
     </div>
 
     <div class="comment">
@@ -33,12 +34,12 @@
 import Icon from "@/components/Icon.vue";
 import ContentView from "@/components/contentView/ContentView.vue";
 import Comment from "@/components/comment.vue";
-import gossipContent from "../../../../config/GossipContent.js";
 import CommentEnum from "@/enums/commentEnum.js";
 import PastTop from "@/components/PastTop.vue";
 import {onMounted, reactive} from "vue";
 import {useRouter} from "vue-router";
 import CommonlyFunctions from "@/composition/commonlyFunctions.js";
+import {getGossip} from "@/api/gossipAPI.js";
 
 // 地址栏传参
 let queryData = reactive({
@@ -57,6 +58,9 @@ let queryData = reactive({
   }
 })
 
+// 内容
+let gossipContent = reactive({})
+
 // 路由
 const router = useRouter()
 
@@ -67,7 +71,13 @@ const {openLink} = CommonlyFunctions()
 onMounted(() => {
   // 获取路由参数
   initQueryData()
+  // 获取文本内容
+  getGossipContent()
 })
+
+// 获取文本内容
+const getGossipContent = () => getGossip(queryData.id).then(resp => gossipContent = resp)
+
 
 // 路由参数初始化
 const initQueryData = () => {
