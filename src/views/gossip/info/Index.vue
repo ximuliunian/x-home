@@ -7,7 +7,7 @@
         <span>{{ queryData.user.name }}&emsp13;&bullet;&emsp13;{{ queryData.user.description }}</span>
       </div>
 
-      <button class="header-right" @click="openLink(queryData.url, true)">
+      <button class="header-right" @click="commonlyFunctions.openLink(queryData.url, true)">
         前往主页
         <Icon icon="icon-sys-qianwang" width="25px" height="25px" style="margin-left: 5px"/>
       </button>
@@ -41,7 +41,7 @@ import CommentEnum from "@/enums/commentEnum.js";
 import PastTop from "@/components/PastTop.vue";
 import {onMounted, reactive, ref} from "vue";
 import {useRouter} from "vue-router";
-import CommonlyFunctions from "@/composition/commonlyFunctions.js";
+import commonlyFunctions from "@/composition/commonlyFunctions.js";
 import {getGossip} from "@/api/gossipAPI.js";
 
 // 地址栏传参
@@ -67,10 +67,6 @@ let gossipContentFlag = ref(true)
 
 // 路由
 const router = useRouter()
-
-// 通用工具
-const {openLink} = CommonlyFunctions()
-
 
 onMounted(() => {
   // 获取路由参数

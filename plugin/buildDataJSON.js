@@ -47,7 +47,6 @@ export default () => {
 function buildGossipConfig() {
     // 入口
     const main = [];
-    const publicMain = [];
 
     findAndReadJsonFiles('../config/gossip/', object => {
         const info = object.info;
@@ -56,10 +55,6 @@ function buildGossipConfig() {
         if (info.id == null || info.id === '') return;
 
         main.push(info.id)
-
-        // 添加外传内容入口
-        if (info.public === undefined) info.public = true;
-        if (!info.public) publicMain.push(info.id)
 
         // 完成版
         writeFile(apiDir.gossip, `${info.id}.json`, object)
@@ -89,10 +84,8 @@ function buildGossipConfig() {
     }
 
     sort(main)
-    sort(publicMain)
 
     writeFile(apiDir.root, 'gossip.json', {...gossipConfig, list: main})
-    writeFile(apiDir.root, 'publicGossip.json', {...gossipConfig, list: publicMain})
 }
 
 // 友链配置

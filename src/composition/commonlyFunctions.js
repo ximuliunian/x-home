@@ -22,13 +22,10 @@ function sort(list) {
         // 如果日期相同，比较后面的数字
         return parseInt(numB) - parseInt(numA);
     });
-    console.log(list)
 }
 
 // 导出
-export default () => {
-    return {
-        openLink,
-        sort
-    }
+export default {
+    openLink,
+    sort
 }

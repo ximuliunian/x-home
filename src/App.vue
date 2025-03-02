@@ -20,6 +20,7 @@ import useLCG from "@/composition/useLCG.js";
 import Loading from "@/components/loading.vue";
 import {computed, inject, onMounted, ref} from "vue";
 import {localStorageInit} from "@/composition/localStorage.js";
+import gossip from "@/composition/gossip.js";
 
 // 全局配置
 const config = inject('config')
@@ -33,6 +34,9 @@ let loadingFlag = ref(false);
 onMounted(() => {
   // 本地存储初始化
   localStorageInit()
+
+  // 初始化访问数据
+  gossip.initQueryData()
 })
 
 // ICP备案号

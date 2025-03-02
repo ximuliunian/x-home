@@ -16,7 +16,7 @@
     <Section :title="item.sort" :icon="item.icon" v-for="(item, key) in list" :key="key">
       <div class="links-container">
         <div class="links" :style="{ backgroundColor: list.bgColor }" v-for="(list, index) in item.list" :key="index"
-             @click="openLink(list.url, true)">
+             @click="commonlyFunctions.openLink(list.url, true)">
           <img :src="list.avatar" alt="假装有一张图片">
           <div class="info">
             <span>{{ list.name }}</span>
@@ -96,7 +96,6 @@ import {getSorted} from "@/api/friendLinkAPI.js";
 import Comment from "@/components/comment.vue";
 import {getFriendLink} from "@/api/rootAPI.js";
 
-const {openLink} = commonlyFunctions();
 // 全局配置
 const config = inject("config");
 // 友链列表

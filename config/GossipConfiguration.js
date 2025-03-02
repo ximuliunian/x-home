@@ -17,12 +17,12 @@ export const gossipConfig = {
          * 0 - 可以展示所有人的内容
          * 1 - 只能展示我关联的人的内容
          * 2 - 只能展示我关联的人的内容
-         * 3 - 只能展示我和我相互关联的人的内容
+         * 3 - 只能展示和我相互关联的人的内容
          * */
         internalDisplay: 0
     },
-    // 关联链接
+    // 关联链接（开头需带 https:// 结尾不带 /）
     links: [
-        "https://www.xmln.top"
+        "https://091bdef4.xmln-home.pages.dev"
     ]
 }

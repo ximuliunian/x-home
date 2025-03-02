@@ -4,19 +4,16 @@ const NAMESPACE = 'xmln_home'
 
 // 空间命名枚举
 const ModelMenu = {
-    HITOKOTO: 'hitokoto',
-    GOSSIP: 'gossip',
-    GOSSIP_SETTING: 'gossip_setting',
+    HITOKOTO: 'HITOKOTO',   // 一言
+
+    GOSSIP_CONTENT_LIST: 'GOSSIP_CONTENT_LIST',   // 闲言碎语内容列表
+    GOSSIP_SETTING: 'GOSSIP_SETTING',   // 闲言碎语设置
+    GOSSIP_PUBLIC_BOOL: 'GOSSIP_PUBLIC_BOOL',   // 对方是否关联了我
+
 }
 
 // 空间命名初始化
 const initContent = {
-    [ModelMenu.GOSSIP]: {
-        // 友人链接
-        links: [],
-        // 公开信息
-        publicGossip: []
-    },
     [ModelMenu.GOSSIP_SETTING]: {
         // 只看域主
         onlyLookDomainMaster: false,
