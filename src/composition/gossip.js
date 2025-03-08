@@ -6,46 +6,80 @@ import commonlyFunctions from "@/composition/commonlyFunctions.js";
 import localStorage from "@/composition/localStorage.js";
 // 初始化访问数据
 const initQueryData = async () => {
-    const host = location.host;
+    // 清空外传缓存
+    localStorage.setContent(localStorage.menu.GOSSIP_PUBLIC_BOOL, {})
+
 
     const rawData = reactive({}); // 原始数据
 
+    let flag = false;   // 判断域主的闲言碎语主文件是否请求下来了
 
-    // 请求包括自己在内的所有人的闲言闲语主文件
-    await getGossipMain().then(resp => {
+    // 请求域主的主文件
+    getGossipMain().then(resp => {
         if (typeof resp !== 'object') return
-        rawData[host] = resp
+        rawData[location.host] = resp
+        flag = true;
+        handleGossipContentListData(rawData)
     })
-    for (const link of gossipConfig.links) {
-        await getGossipMainByUrl(link).then(resp => {
-            if (typeof resp !== 'object') return
-            rawData[new URL(link).host] = resp
-        })
-    }
 
-    const contentList = reactive([]); // 渲染数据
+    // 请求域主关联的人的主文件
+    gossipConfig.links.forEach(link => getGossipMainByUrl(link).then(resp => {
+        if (typeof resp !== 'object') return
+        rawData[new URL(link).host] = resp
+        // 主文件没请求下来不需要处理数据
+        if (flag) handleGossipContentListData(rawData)
+    }))
+
+}
+
+// 处理闲言碎语内容数据
+function handleGossipContentListData(data) {
+    // 渲染数据
+    const contentList = localStorage.getContent(localStorage.menu.GOSSIP_CONTENT_LIST) || [];
+    let gossipPublic = localStorage.getContent(localStorage.menu.GOSSIP_PUBLIC_BOOL) || {};
 
     // 过滤出渲染数据
-    for (const key in rawData) {
-        rawData[key].list.forEach(item => {
-            contentList.push(`${item}-${key}`)
+    for (const key in data) {
+        const d = data[key];
+
+        // 如果条件成立，则需要去人家的关联人列表中看看自己是否存在
+        if (d.settings.public === 1) {
+            // 看看有没有缓存
+            if (gossipPublic[key]) {
+                // 如果缓存的开关是 false，则代表 “我” 不在人家的关联人列表中
+                if (!gossipPublic[key].flag) continue
+            } else {
+
+                let flag = true;
+                for (let link in d.links) {
+                    if (new URL(link).host === location.host) {
+                        flag = false;
+                        break
+                    }
+                }
+
+                // 如果循环下来开关还是 true 则代表 “我” 不在请求人的关联人列表中
+                if (flag) {
+                    gossipPublic[key] = {flag: false}
+                    continue
+                } else gossipPublic[key] = {flag: true}
+
+                localStorage.setContent(localStorage.menu.GOSSIP_PUBLIC_BOOL, gossipPublic)
+            }
+        }
+
+        d.list.forEach(item => {
+            const searchElement = `${item}-${key}`;
+            if (contentList.includes(searchElement)) return
+            contentList.push(searchElement)
         })
     }
 
     // 排序并保存到本地
     commonlyFunctions.sort(contentList)
     localStorage.setContent(localStorage.menu.GOSSIP_CONTENT_LIST, contentList)
-
-    const publicIndex = reactive({}); // 外传索引
-
-    // 过滤出所需外传信息
-    for (const key in rawData) {
-        publicIndex[key] = rawData[key].links.indexOf(host)
-    }
-    localStorage.setContent(localStorage.menu.GOSSIP_PUBLIC_BOOL, publicIndex)
-
-    // TODO 根据闲言碎语配置文件重新编写逻辑
 }
+
 
 // 导出
 export default {
