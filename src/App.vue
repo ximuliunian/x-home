@@ -35,6 +35,9 @@ onMounted(() => {
   // 本地存储初始化
   localStorageInit()
 
+  // 初始化用户信息列表
+  gossip.initUserInfoData()
+
   // 初始化访问数据
   gossip.initQueryData()
 })
