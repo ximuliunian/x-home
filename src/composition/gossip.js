@@ -15,7 +15,7 @@ const initQueryData = async () => {
     // 请求域主的主文件
     getGossipMain().then(resp => {
         if (typeof resp !== 'object') return
-        rawData[location.host] = resp
+        rawData[location.origin] = resp
         flag = true;
         handleGossipContentListData(rawData)
     })
@@ -23,7 +23,7 @@ const initQueryData = async () => {
     // 请求域主关联的人的主文件
     gossipConfig.links.forEach(link => getGossipMainByUrl(link).then(resp => {
         if (typeof resp !== 'object') return
-        rawData[new URL(link).host] = resp
+        rawData[new URL(link).origin] = resp
         // 主文件没请求下来不需要处理数据
         if (flag) handleGossipContentListData(rawData)
     }))
@@ -93,7 +93,7 @@ const initUserInfoData = () => {
     gossipConfig.links.forEach(link => getMainByUrl(link).then(resp => {
         if (typeof resp !== 'object') return
         resp.avatar = `${link}/${resp.avatar}`
-        userInfo[new URL(link).host] = resp
+        userInfo[new URL(link).origin] = resp
         localStorage.setContent(localStorage.menu.GOSSIP_USER_LIST, userInfo)
     }))
 }

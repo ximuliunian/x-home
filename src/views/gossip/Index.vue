@@ -2,12 +2,12 @@
   <div class="timeline">
     <PastTop/>
     <Router/>
-    <ul v-if="gossipContent.length > 0" class="line">
-      <li v-for="item in gossipContent" class="card">
+    <ul v-if="gossipContentList.length > 0" class="line">
+      <li v-for="item in gossipContentList" class="card">
         <div class="articleInfo">
           <div class="author">
-            <img src="https://www.ximuliunian.top/img/avatar.png">
-            <span>曦暮流年</span>
+            <img :src="gossipUserList[item.info.host].avatar" alt="假装有一张图片">
+            <span>{{ gossipUserList[item.info.host].name }}</span>
           </div>
           <div class="time">{{ item.date }}</div>
         </div>
@@ -16,7 +16,7 @@
         </div>
         <div class="content-bottom">
           <icon icon="icon-sys-pinglun" width="25px" height="25px" class="icon"
-                @click="routerPush('gossipInfo',buildQuery())"/>
+                @click="routerPush('gossipInfo',buildQuery(item.info.host, item.info.id))"/>
         </div>
       </li>
     </ul>
@@ -29,13 +29,55 @@
 <script setup>
 import Router from "@/components/Router.vue";
 import ContentView from "@/components/contentView/ContentView.vue";
-import gossipContent from "../../../config/GossipContent.js";
 import PastTop from "@/components/PastTop.vue";
 import Icon from "@/components/Icon.vue";
 import {useRouter} from "vue-router";
+import {onMounted, reactive} from "vue";
+import localStorage from "@/composition/localStorage.js";
+import {getGossipCutByUrl} from "@/api/gossipAPI.js";
+
+// 本地列表信息
+const gossipList = localStorage.getContent(localStorage.menu.GOSSIP_CONTENT_LIST);
+
+// 本地用户信息
+const gossipUserList = localStorage.getContent(localStorage.menu.GOSSIP_USER_LIST);
+
+// 列表内容
+const gossipContentList = reactive([]);
 
 // 路由
 const router = useRouter();
+
+// 生命周期
+onMounted(() => {
+  // 请求内容列表
+  requestContentList()
+})
+
+// 请求内容列表
+function requestContentList() {
+  if (!gossipList) return
+  gossipList.forEach(item => {
+    const itemT = item.split("-")
+    // ID
+    const id = `${itemT[0]}-${itemT[1]}`;
+    // 主机
+    const host = () => {
+      let T = itemT[2];
+      for (let i = 3; i < itemT.length; i++) {
+        T += `-${itemT[i]}`
+      }
+      return T
+    }
+    // 请求内容
+    getGossipCutByUrl(id, host()).then(resp => {
+      if (typeof resp !== 'object') return
+      resp.info.host = host();
+      gossipContentList.push(resp)
+      console.log(gossipContentList)
+    })
+  })
+}
 
 // 路由跳转
 function routerPush(name, query) {
@@ -43,17 +85,18 @@ function routerPush(name, query) {
 }
 
 // 构建传递数据
-const buildQuery = () => {
+const buildQuery = (host, id) => {
+  const user = gossipUserList[host];
   return {
-    id: '2025.1.15-0',
-    url: 'https://www.xmln.top',
-    name: '曦暮流年',
-    avatar: 'https://www.ximuliunian.top/img/avatar.png',
-    description: '懒惰往往是创新的催化剂',
-    giscus_repo: "ximuliunian/blog",
-    giscus_repoId: "R_kgDOGuKRyg",
-    giscus_category: "Announcements",
-    giscus_categoryId: "DIC_kwDOGuKRys4CVf53"
+    id: id,
+    url: host,
+    name: user.name,
+    avatar: user.avatar,
+    description: user.description,
+    giscus_repo: user.giscus.repo,
+    giscus_repoId: user.giscus.repoId,
+    giscus_category: user.giscus.category,
+    giscus_categoryId: user.giscus.categoryId
   }
 }
 </script>

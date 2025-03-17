@@ -42,7 +42,7 @@ import PastTop from "@/components/PastTop.vue";
 import {onMounted, reactive, ref} from "vue";
 import {useRouter} from "vue-router";
 import commonlyFunctions from "@/composition/commonlyFunctions.js";
-import {getGossip} from "@/api/gossipAPI.js";
+import {getGossip, getGossipByUrl} from "@/api/gossipAPI.js";
 
 // 地址栏传参
 let queryData = reactive({
@@ -76,11 +76,21 @@ onMounted(() => {
 })
 
 // 获取文本内容
-const getGossipContent = () => getGossip(queryData.id).then(resp => {
-  gossipContent = resp
-  if (resp.info.id == null || resp.info.id === '' || resp.info.id === undefined) return
-  gossipContentFlag.value = false
-})
+const getGossipContent = () => {
+  if (location.host === new URL(queryData.url).host) {
+    getGossip(queryData.id).then(resp => {
+      gossipContent = resp
+      if (resp.info.id == null || resp.info.id === '' || resp.info.id === undefined) return
+      gossipContentFlag.value = false
+    })
+  } else {
+    getGossipByUrl(queryData.id, queryData.url).then(resp => {
+      gossipContent = resp
+      if (resp.info.id == null || resp.info.id === '' || resp.info.id === undefined) return
+      gossipContentFlag.value = false
+    })
+  }
+}
 
 
 // 路由参数初始化
