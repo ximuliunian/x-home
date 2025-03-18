@@ -21,7 +21,8 @@ const router = createRouter({
             meta: {title: '闲言碎语'},
             children: [
                 {path: '', name: 'gossip', component: () => import('@/views/gossip/Index.vue')},
-                {path: 'info', name: 'gossipInfo', component: () => import('@/views/gossip/info/Index.vue')}
+                {path: 'info', name: 'gossipInfo', component: () => import('@/views/gossip/info/Index.vue')},
+                {path: 'shield', name: 'gossipShield', component: () => import('@/views/gossip/shield/Index.vue')}
             ]
         },
         {
@@ -42,7 +43,8 @@ router.beforeEach((to, from, next) => {
         document.title = import.meta.env.VITE_TITLE + ' - ' + to.meta.title
         next();
     } else {
-        if (to.name === 'gossipInfo' && config.enable.router.gossip) {
+        const gossipNames = ['gossipInfo', 'gossipShield']
+        if (gossipNames.includes(to.name) && config.enable.router.gossip) {
             next()
             return
         }

@@ -8,8 +8,8 @@ const ModelMenu = {
 
     GOSSIP_CONTENT_LIST: 'GOSSIP_CONTENT_LIST',   // 闲言碎语内容列表
     GOSSIP_USER_LIST: 'GOSSIP_USER_LIST',   // 闲言碎语用户列表
-    GOSSIP_SETTING: 'GOSSIP_SETTING',   // 闲言碎语设置
     GOSSIP_PUBLIC_BOOL: 'GOSSIP_PUBLIC_BOOL',   // 对方是否关联了我
+    GOSSIP_SHIELD: 'GOSSIP_SHIELD',   // 频闭列表
 
 }
 

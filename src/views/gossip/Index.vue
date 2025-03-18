@@ -1,9 +1,8 @@
 <template>
   <div class="timeline">
-    <PastTop/>
     <Router/>
     <ul v-if="gossipContentList.length > 0" class="line">
-      <li v-for="item in gossipContentList" class="card">
+      <li v-for="item in gossipContentList" class="card" v-show="item.info.host === host || !onlyHost">
         <div class="articleInfo">
           <div class="author">
             <img :src="gossipUserList[item.info.host].avatar" alt="假装有一张图片">
@@ -15,14 +14,26 @@
           <ContentView :contents="item.content"/>
         </div>
         <div class="content-bottom">
-          <icon icon="icon-sys-pinglun" width="25px" height="25px" class="icon"
-                @click="routerPush('gossipInfo',buildQuery(item.info.host, item.info.id))"/>
+          <icon
+              icon="icon-sys-pinbi"
+              width="25px" height="25px"
+              class="icon" title="不看该域主内容"
+              v-if="item.info.host !== host && shieldList[item.info.host]"
+              @click="shieldUser(item.info.host)"/>
+          <icon
+              icon="icon-sys-pinglun"
+              width="25px" height="25px"
+              class="icon" title="查看全部"
+              @click="routerPush('gossipInfo',buildQuery(item.info.host, item.info.id))"/>
         </div>
       </li>
     </ul>
     <div v-else class="cover">
       <div>暂时什么都还没有哦</div>
     </div>
+
+    <PastTop/>
+    <Settings @onlyHost="(data)=> onlyHost = data.value"/>
   </div>
 </template>
 
@@ -32,9 +43,10 @@ import ContentView from "@/components/contentView/ContentView.vue";
 import PastTop from "@/components/PastTop.vue";
 import Icon from "@/components/Icon.vue";
 import {useRouter} from "vue-router";
-import {onMounted, reactive} from "vue";
+import {onMounted, reactive, ref} from "vue";
 import localStorage from "@/composition/localStorage.js";
 import {getGossipCutByUrl} from "@/api/gossipAPI.js";
+import Settings from "@/views/gossip/Settings.vue";
 
 // 本地列表信息
 const gossipList = localStorage.getContent(localStorage.menu.GOSSIP_CONTENT_LIST);
@@ -48,11 +60,36 @@ const gossipContentList = reactive([]);
 // 路由
 const router = useRouter();
 
+// 域名
+const host = ref(location.host);
+
+// 只看域主
+const onlyHost = ref(false);
+
+// 屏蔽列表
+const shieldList = ref({});
+
 // 生命周期
 onMounted(() => {
   // 请求内容列表
   requestContentList()
 })
+
+// 屏蔽域主
+function shieldUser(host) {
+  // 获取屏蔽列表
+  const shield = localStorage.getContent(localStorage.menu.GOSSIP_SHIELD) || [];
+  if (shield.indexOf(host) === -1) {
+    // 如果不在屏蔽列表中则添加
+    shield.push(host);
+    localStorage.setContent(localStorage.menu.GOSSIP_SHIELD, shield);
+    shieldList.value[host] = false;
+  }
+
+  // 删除内容列表中所有有该域主的数据
+  const contentList = localStorage.getContent(localStorage.menu.GOSSIP_CONTENT_LIST)
+  localStorage.setContent(localStorage.menu.GOSSIP_CONTENT_LIST, contentList.filter(item => item.indexOf(host) === -1))
+}
 
 // 请求内容列表
 function requestContentList() {
@@ -73,8 +110,8 @@ function requestContentList() {
     getGossipCutByUrl(id, host()).then(resp => {
       if (typeof resp !== 'object') return
       resp.info.host = host();
+      shieldList.value[host()] = true;
       gossipContentList.push(resp)
-      console.log(gossipContentList)
     })
   })
 }

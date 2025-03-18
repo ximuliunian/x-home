@@ -1,7 +1,9 @@
 <template>
-  <svg :style="{width: width, height: height}" aria-hidden="true" class="icon">
-    <use :xlink:href='`#${icon}`'></use>
-  </svg>
+  <div style="display: inline-block">
+    <svg :style="{width: width, height: height}" aria-hidden="true" class="icon">
+      <use :xlink:href='`#${icon}`'></use>
+    </svg>
+  </div>
 </template>
 
 <script setup>

@@ -20,12 +20,15 @@ const initQueryData = async () => {
         handleGossipContentListData(rawData)
     })
 
+    // 获取屏蔽列表
+    const shield = localStorage.getContent(localStorage.menu.GOSSIP_SHIELD) || [];
+
     // 请求域主关联的人的主文件
     gossipConfig.links.forEach(link => getGossipMainByUrl(link).then(resp => {
         if (typeof resp !== 'object') return
         rawData[new URL(link).origin] = resp
         // 主文件没请求下来不需要处理数据
-        if (flag) handleGossipContentListData(rawData)
+        if (flag || !shield.includes(new URL(link).origin)) handleGossipContentListData(rawData)
     }))
 
 }
