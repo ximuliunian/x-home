@@ -92,6 +92,14 @@ function handleGossipContentListData(data) {
 const initUserInfoData = () => {
     let userInfo = localStorage.getContent(localStorage.menu.GOSSIP_USER_LIST) || {};
 
+    // 请求域主的主文件
+    getMainByUrl(location.origin).then(resp => {
+        if (typeof resp !== 'object') return
+        resp.avatar = location.origin + '/' + resp.avatar
+        userInfo[location.origin] = resp
+        localStorage.setContent(localStorage.menu.GOSSIP_USER_LIST, userInfo)
+    })
+
     // 请求域主关联的人的主文件
     gossipConfig.links.forEach(link => getMainByUrl(link).then(resp => {
         if (typeof resp !== 'object') return
