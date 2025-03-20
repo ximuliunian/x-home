@@ -2,7 +2,7 @@
   <div class="timeline">
     <Router/>
     <ul v-if="gossipContentList.length > 0" class="line">
-      <li v-for="item in gossipContentList" class="card" v-show="item.info.host === host || !onlyHost">
+      <li v-for="item in gossipContentList" class="card" v-show="item.info.host === locationHost || !onlyHost">
         <div class="articleInfo">
           <div class="author">
             <img :src="gossipUserList[item.info.host].avatar" alt="假装有一张图片">
@@ -18,7 +18,7 @@
               icon="icon-sys-pinbi"
               width="25px" height="25px"
               class="icon" title="不看该域主内容"
-              v-if="item.info.host !== host && shieldList[item.info.host]"
+              v-if="item.info.host !== locationHost && shieldList[item.info.host]"
               @click="shieldUser(item.info.host)"/>
           <icon
               icon="icon-sys-pinglun"
@@ -61,7 +61,7 @@ const gossipContentList = reactive([]);
 const router = useRouter();
 
 // 域名
-const host = ref(location.host);
+const locationHost = ref(location.origin);
 
 // 只看域主
 const onlyHost = ref(false);
@@ -94,7 +94,8 @@ function shieldUser(host) {
 // 请求内容列表
 function requestContentList() {
   if (!gossipList) return
-  gossipList.forEach(item => {
+  for (let i = 0; i < gossipList.length; i++) {
+    const item = gossipList[i];
     const itemT = item.split("-")
     // ID
     const id = `${itemT[0]}-${itemT[1]}`;
@@ -111,9 +112,9 @@ function requestContentList() {
       if (typeof resp !== 'object') return
       resp.info.host = host();
       shieldList.value[host()] = true;
-      gossipContentList.push(resp)
+      gossipContentList[i] = resp
     })
-  })
+  }
 }
 
 // 路由跳转
