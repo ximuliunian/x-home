@@ -18,7 +18,5 @@ export const gossipConfig = {
         internalDisplay: 0
     },
     // 关联链接（开头需带 https:// 结尾不带 /）
-    links: [
-        "https://091bdef4.xmln-home.pages.dev"
-    ]
+    links: []
 }

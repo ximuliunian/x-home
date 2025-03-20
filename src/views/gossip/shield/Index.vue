@@ -35,7 +35,7 @@ onMounted(() => {
 // 获取用户方法
 const getUsers = () => {
   const users = localStorage.getContent(localStorage.menu.GOSSIP_USER_LIST)
-  localStorage.getContent(localStorage.menu.GOSSIP_SHIELD).forEach(user => {
+  localStorage.getContent(localStorage.menu.GOSSIP_SHIELD)?.forEach(user => {
     userList.value.push({
       id: user,
       avatar: users[user].avatar,

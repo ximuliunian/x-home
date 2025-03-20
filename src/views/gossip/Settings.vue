@@ -21,6 +21,7 @@
         <li class="setting-item" @click="onlyHostFun">
           只看域主 <input type="checkbox" v-model="onlyHost" disabled>
         </li>
+        <li class="setting-item" @click="localStorageClear()">清除缓存</li>
       </ul>
     </transition>
   </div>
@@ -30,6 +31,7 @@
 import Icon from "@/components/Icon.vue";
 import {ref} from "vue";
 import {useRouter} from "vue-router";
+import localStorage from "@/composition/localStorage.js";
 
 // 路由
 const router = useRouter();
@@ -52,6 +54,11 @@ const emit = defineEmits(['onlyHost']);
 function onlyHostFun() {
   onlyHost.value = !onlyHost.value;
   emit('onlyHost', onlyHost);
+}
+
+// 清除缓存
+function localStorageClear() {
+  localStorage.clear()
 }
 </script>
 

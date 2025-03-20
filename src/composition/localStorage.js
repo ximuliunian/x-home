@@ -36,6 +36,13 @@ const setContent = (menu, content) => {
     localStorage.setItem(NAMESPACE, JSON.stringify(parse))
 }
 
+// 清除缓存
+const clear = () => {
+    for (let modelMenuKey in ModelMenu) {
+        setContent(ModelMenu[modelMenuKey], null);
+    }
+}
+
 // 初始化
 export const localStorageInit = () => {
     if (!localStorage.getItem(NAMESPACE)) {
@@ -61,5 +68,6 @@ export const localStorageInit = () => {
 export default {
     menu: ModelMenu,
     getContent,
-    setContent
+    setContent,
+    clear
 }

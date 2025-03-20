@@ -92,29 +92,30 @@ function shieldUser(host) {
 }
 
 // 请求内容列表
-function requestContentList() {
+async function requestContentList() {
   if (!gossipList) return
-  for (let i = 0; i < gossipList.length; i++) {
-    const item = gossipList[i];
+
+  // 使用Promise.all处理并发请求
+  const requests = gossipList.map(async (item) => {
     const itemT = item.split("-")
-    // ID
-    const id = `${itemT[0]}-${itemT[1]}`;
-    // 主机
-    const host = () => {
-      let T = itemT[2];
-      for (let i = 3; i < itemT.length; i++) {
-        T += `-${itemT[i]}`
-      }
-      return T
+    const id = `${itemT[0]}-${itemT[1]}`
+    const host = itemT.slice(2).join("-")
+
+    try {
+      const resp = await getGossipCutByUrl(id, host)
+      if (resp === 'error') return null // 标记错误响应
+
+      resp.info.host = host
+      shieldList.value[host] = true
+      return resp
+    } catch {
+      return null
     }
-    // 请求内容
-    getGossipCutByUrl(id, host()).then(resp => {
-      if (typeof resp !== 'object') return
-      resp.info.host = host();
-      shieldList.value[host()] = true;
-      gossipContentList[i] = resp
-    })
-  }
+  })
+
+  // 等待所有请求完成并过滤无效项
+  const results = await Promise.all(requests)
+  gossipContentList.push(...results.filter(Boolean))
 }
 
 // 路由跳转
