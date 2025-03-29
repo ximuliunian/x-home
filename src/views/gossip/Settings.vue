@@ -59,6 +59,8 @@ function onlyHostFun() {
 // 清除缓存
 function localStorageClear() {
   localStorage.clear()
+  // 刷新页面
+  location.reload()
 }
 </script>
 
