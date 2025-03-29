@@ -151,12 +151,13 @@ data-category-id = 分类ID
 这个脚本已经写好了（路径：`.github\workflows\main.yml`
 ），什么都不用动什么都不用改，上传到GitHub即可使用。它的执行流程就是每当当前仓库有提交的时候会执行一次，然后就是会在每周一早上八点执行一次。
 
-它执行完成后会提交一个svg文件（`github-contribution.svg`）到 `public/img/` 目录下
+它执行完成后会提交一个 svg 文件（`github-contribution.svg`）到 `public/img/` 目录下
 
 > 注意：
 >
-> 1. 贡献图只能在GitHub中使用生成
-> 2. 使用这个得修改一下Workflow权限，不然会执行失败
+> 1. 贡献图只能在 GitHub 中使用生成
+> 2. 使用这个得修改一下 Workflow 权限，不然会执行失败
+> 3. 以上以上内容最终会输出到 output 分支上
 >
 > 修改权限：依次点击仓库的 Settings -> Actions -> General 拉到最下面 找到 "Workflow permissions" 选择 Read and write
 > permissions 点击保存

@@ -2,7 +2,7 @@
   <Section icon="icon-sys-nav" title="站内导航">
     <div class="sites">
       <Container v-for="(item, key) in config.siteNavs" :key="key" class="site" close-title close-width
-                 @click="openLink(item.url, true)">
+                 @click="commonlyFunctions.openLink(item.url, true)">
         <div style="display: flex;align-items: center;">
           <Icon :icon="item.icon" height="30px" width="30px"/>
           <span style="margin-left: 10px">{{ item.name }}</span>
@@ -19,8 +19,7 @@ import {inject} from "vue";
 import Container from "@/components/Container.vue";
 import Icon from "@/components/Icon.vue";
 import commonlyFunctions from "@/composition/commonlyFunctions.js";
-// 通用函数
-const {openLink} = commonlyFunctions();
+
 // 全局配置
 const config = inject('config')
 

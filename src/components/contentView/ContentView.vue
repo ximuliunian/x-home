@@ -23,7 +23,7 @@ const props = defineProps({
 let contentList = ref([]);
 
 onMounted(() => {
-  for (let i = 0; i < props.contents.length; i++) {
+  for (let i = 0; i < props.contents?.length; i++) {
     let content = props.contents[i];
     // 渲染元素
     let el = {

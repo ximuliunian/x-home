@@ -1,5 +1,4 @@
 import {createRouter, createWebHistory} from 'vue-router'
-
 import {config} from '../../config/Configuration.js'
 
 const router = createRouter({
@@ -8,19 +7,25 @@ const router = createRouter({
         {
             path: '/',
             name: 'home',
-            component: () => import('../views/home/Index.vue'),
+            component: () => import('@/views/home/Index.vue'),
             meta: {title: '首页'}
-        }, {
+        },
+        {
             path: '/comments',
             name: 'comments',
-            component: () => import('../views/comment/Index.vue'),
+            component: () => import('@/views/comment/Index.vue'),
             meta: {title: '留言板'}
-        }, {
+        },
+        {
             path: '/gossip',
-            name: 'gossip',
-            component: () => import('@/views/gossip/Index.vue'),
-            meta: {title: '闲言碎语'}
-        }, {
+            meta: {title: '闲言碎语'},
+            children: [
+                {path: '', name: 'gossip', component: () => import('@/views/gossip/Index.vue')},
+                {path: 'info', name: 'gossipInfo', component: () => import('@/views/gossip/info/Index.vue')},
+                {path: 'shield', name: 'gossipShield', component: () => import('@/views/gossip/shield/Index.vue')}
+            ]
+        },
+        {
             path: '/friendLinks',
             name: 'friendLinks',
             component: () => import('@/views/friendLinks/Index.vue'),
@@ -38,6 +43,13 @@ router.beforeEach((to, from, next) => {
         document.title = import.meta.env.VITE_TITLE + ' - ' + to.meta.title
         next();
     } else {
+        const gossipNames = ['gossipInfo', 'gossipShield']
+        if (gossipNames.includes(to.name) && config.enable.router.gossip) {
+            next()
+            return
+        }
+
+        // 跳转到主页
         document.title = import.meta.env.VITE_TITLE + ' - ' + to.meta.title
         next({name: 'home'})
     }

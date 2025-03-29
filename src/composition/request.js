@@ -11,12 +11,8 @@ const service = axios.create({
 })
 
 // 请求拦截器
-service.interceptors.request.use(config => {
-    return config
-}, error => Promise.reject(error));
+service.interceptors.request.use(config => config, error => 'error');
 
 // 响应拦截器
-service.interceptors.response.use(resp => {
-    return resp.data
-}, error => Promise.reject(error));
+service.interceptors.response.use(resp => resp.data, error => 'error');
 export default service

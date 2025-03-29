@@ -1,35 +1,160 @@
 <template>
   <div class="timeline">
-    <PastTop/>
     <Router/>
-    <ul v-if="gossipContent.length > 0" class="line">
-      <li v-for="item in gossipContent" class="card">
+    <ul v-if="gossipContentList.length > 0" class="line">
+      <li v-for="item in gossipContentList" class="card" v-show="item.info.host === locationHost || !onlyHost">
         <div class="articleInfo">
           <div class="author">
-            <img src="https://www.ximuliunian.top/img/avatar.png">
-            <span>曦暮流年</span>
+            <img :src="gossipUserList[item.info.host].avatar" alt="假装有一张图片">
+            <span>{{ gossipUserList[item.info.host].name }}</span>
           </div>
           <div class="time">{{ item.date }}</div>
         </div>
         <div class="content">
           <ContentView :contents="item.content"/>
         </div>
+        <div class="content-bottom">
+          <icon
+              icon="icon-sys-pinbi"
+              width="25px" height="25px"
+              class="icon" title="不看该域主内容"
+              v-if="item.info.host !== locationHost && shieldList[item.info.host]"
+              @click="shieldUser(item.info.host)"/>
+          <icon
+              icon="icon-sys-pinglun"
+              width="25px" height="25px"
+              class="icon" title="查看全部"
+              @click="routerPush('gossipInfo',buildQuery(item.info.host, item.info.id))"/>
+        </div>
       </li>
     </ul>
     <div v-else class="cover">
       <div>暂时什么都还没有哦</div>
     </div>
+
+    <PastTop/>
+    <Settings @onlyHost="(data)=> onlyHost = data.value"/>
   </div>
 </template>
 
 <script setup>
 import Router from "@/components/Router.vue";
 import ContentView from "@/components/contentView/ContentView.vue";
-import gossipContent from "../../../config/GossipContent.js";
 import PastTop from "@/components/PastTop.vue";
+import Icon from "@/components/Icon.vue";
+import {useRouter} from "vue-router";
+import {onMounted, reactive, ref} from "vue";
+import localStorage from "@/composition/localStorage.js";
+import {getGossipCutByUrl} from "@/api/gossipAPI.js";
+import Settings from "@/views/gossip/Settings.vue";
+
+// 本地列表信息
+const gossipList = localStorage.getContent(localStorage.menu.GOSSIP_CONTENT_LIST);
+
+// 本地用户信息
+const gossipUserList = localStorage.getContent(localStorage.menu.GOSSIP_USER_LIST);
+
+// 列表内容
+const gossipContentList = reactive([]);
+
+// 路由
+const router = useRouter();
+
+// 域名
+const locationHost = ref(location.origin);
+
+// 只看域主
+const onlyHost = ref(false);
+
+// 屏蔽列表
+const shieldList = ref({});
+
+// 生命周期
+onMounted(() => {
+  // 请求内容列表
+  requestContentList()
+})
+
+// 屏蔽域主
+function shieldUser(host) {
+  // 获取屏蔽列表
+  const shield = localStorage.getContent(localStorage.menu.GOSSIP_SHIELD) || [];
+  if (shield.indexOf(host) === -1) {
+    // 如果不在屏蔽列表中则添加
+    shield.push(host);
+    localStorage.setContent(localStorage.menu.GOSSIP_SHIELD, shield);
+    shieldList.value[host] = false;
+  }
+
+  // 删除内容列表中所有有该域主的数据
+  const contentList = localStorage.getContent(localStorage.menu.GOSSIP_CONTENT_LIST)
+  localStorage.setContent(localStorage.menu.GOSSIP_CONTENT_LIST, contentList.filter(item => item.indexOf(host) === -1))
+}
+
+// 请求内容列表
+async function requestContentList() {
+  if (!gossipList) return
+
+  // 使用Promise.all处理并发请求
+  const requests = gossipList.map(async (item) => {
+    const itemT = item.split("-")
+    const id = `${itemT[0]}-${itemT[1]}`
+    const host = itemT.slice(2).join("-")
+
+    try {
+      const resp = await getGossipCutByUrl(id, host)
+      if (resp === 'error') return null // 标记错误响应
+
+      resp.info.host = host
+      shieldList.value[host] = true
+      return resp
+    } catch {
+      return null
+    }
+  })
+
+  // 等待所有请求完成并过滤无效项
+  const results = await Promise.all(requests)
+  gossipContentList.push(...results.filter(Boolean))
+}
+
+// 路由跳转
+function routerPush(name, query) {
+  router.push({name: name, query: {...query}});
+}
+
+// 构建传递数据
+const buildQuery = (host, id) => {
+  const user = gossipUserList[host];
+  return {
+    id: id,
+    url: host,
+    name: user.name,
+    avatar: user.avatar,
+    description: user.description,
+    giscus_repo: user.giscus.repo,
+    giscus_repoId: user.giscus.repoId,
+    giscus_category: user.giscus.category,
+    giscus_categoryId: user.giscus.categoryId
+  }
+}
 </script>
 
 <style scoped>
+/* 内容底部 */
+.content-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-radius: 0 0 10px 10px;
+  background-color: rgba(110, 110, 110, 0.5);
+
+  .icon {
+    cursor: pointer;
+    margin: 5px;
+  }
+}
+
 /* 覆盖 */
 .cover {
   display: flex;
@@ -53,7 +178,7 @@ import PastTop from "@/components/PastTop.vue";
   width: 100%;
   background-color: rgb(22 22 22 / 30%);;
   padding: 5px;
-  border-radius: 0 10px 10px 10px;
+  border-radius: 0 10px 0 0;
   color: #fff;
 
   img {

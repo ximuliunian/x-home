@@ -6,9 +6,7 @@
   <div class="container">
     <router-view v-slot="{ Component }">
       <transition name="fade">
-        <keep-alive>
-          <component :is="Component"/>
-        </keep-alive>
+        <component :is="Component"/>
       </transition>
     </router-view>
   </div>
@@ -20,7 +18,9 @@
 <script setup>
 import useLCG from "@/composition/useLCG.js";
 import Loading from "@/components/loading.vue";
-import {computed, inject, ref} from "vue";
+import {computed, inject, onMounted, ref} from "vue";
+import {localStorageInit} from "@/composition/localStorage.js";
+import gossip from "@/composition/gossip.js";
 
 // 全局配置
 const config = inject('config')
@@ -30,6 +30,17 @@ const year = new Date().getFullYear();
 const {randomInt} = useLCG();
 // 加载动画开关
 let loadingFlag = ref(false);
+
+onMounted(() => {
+  // 本地存储初始化
+  localStorageInit()
+
+  // 初始化用户信息列表
+  gossip.initUserInfoData()
+
+  // 初始化访问数据
+  gossip.initQueryData()
+})
 
 // ICP备案号
 const icp = computed(() => {
@@ -57,17 +68,17 @@ imageLoad.onload = () => {
 </script>
 
 <style scoped>
-.fade-enter-from{
+.fade-enter-from {
   opacity: 0;
   transform: translateX(-50%);
 }
 
-.fade-enter-to{
+.fade-enter-to {
   transform: translateX(0%);
   opacity: 1;
 }
 
-.fade-leave-active,.fade-enter-active {
+.fade-leave-active, .fade-enter-active {
   transition: all 0.5s ease-out;
 }
 
@@ -76,7 +87,7 @@ imageLoad.onload = () => {
   opacity: 1;
 }
 
-.fade-leave-to{
+.fade-leave-to {
   transform: translateX(50%);
   opacity: 0;
 }
