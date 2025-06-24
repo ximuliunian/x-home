@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path';
-import {config} from '../config/Configuration';
-import {friendLinks} from '../config/FriendLinks';
-import {gossipConfig} from "../config/GossipConfiguration.js";
+import { config } from '../config/Configuration';
+import { friendLinks } from '../config/FriendLinks';
+import { gossipConfig } from "../config/GossipConfiguration.js";
 
 // API 生成目录
 const apiDir = {
@@ -85,7 +85,7 @@ function buildGossipConfig() {
 
     sort(main)
 
-    writeFile(apiDir.root, 'gossip.json', {...gossipConfig, list: main})
+    writeFile(apiDir.root, 'gossip.json', { ...gossipConfig, list: main })
 }
 
 // 友链配置
@@ -205,7 +205,7 @@ function existsDir() {
         const outputDir = apiDir[key];
         // 判断是否存在目录，不存在则创建
         if (!fs.existsSync(outputDir)) {
-            fs.mkdirSync(outputDir, {recursive: true});
+            fs.mkdirSync(outputDir, { recursive: true });
         }
     }
 }

@@ -105,12 +105,16 @@ export const config = {
             icon: 'icon-nav'
         }, {
             name: '下载加速',
-            url: 'https://xzjs.ximuliunian.top/',
+            url: 'https://xzjs.ximuliunian.top',
             icon: 'icon-xiazaijiasu'
         }, {
             name: 'GPT',
-            url: 'https://gpt.ximuliunian.top/',
+            url: 'https://gpt.ximuliunian.top',
             icon: 'icon-gpt'
+        }, {
+            name: '云盘资源',
+            url: 'https://cloud-folder.ximuliunian.top/',
+            icon: 'icon-yunpan'
         }
     ],
 
@@ -121,6 +125,11 @@ export const config = {
             icon: 'icon-jiangbing',
             url: 'https://github.com/ximuliunian/xmln-home',
             description: '本站同款个人主页'
+        }, {
+            name: 'CloudExplorer',
+            icon: 'icon-zhuangshi',
+            url: 'https://github.com/ximuliunian/CloudExplorer',
+            description: '本站同款云盘资源页面'
         },
     ],
 
