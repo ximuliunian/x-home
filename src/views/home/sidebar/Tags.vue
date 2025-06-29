@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import {inject, onMounted, ref} from 'vue';
+import { inject, onMounted, ref } from 'vue';
 import useLCG from "@/composition/useLCG.js";
 import Container from "@/components/Container.vue";
 
@@ -91,8 +91,9 @@ onMounted(() => {
 <style scoped>
 .tags-content {
   display: inline-block;
-  padding: 3px 5px;
-  background-color: rgba(255, 255, 255, 0.5);
+  padding: 6px 12px;
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  color: white;
   border-radius: 50px;
   position: absolute;
   top: 50%;
@@ -100,6 +101,17 @@ onMounted(() => {
   white-space: nowrap;
   animation: moveLeft 10s linear;
   animation-fill-mode: forwards;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  z-index: 5;
+}
+
+.tags-content:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 @keyframes moveLeft {

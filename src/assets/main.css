@@ -1,5 +1,11 @@
 :root {
-    --milky-white: rgba(255, 255, 240);
+    --milky-white: rgba(255, 255, 240, 0.8);
+    --primary-color: #6e8efb;
+    --secondary-color: #a777e3;
+    --accent-color: #5dc1e6;
+    --text-color: #2d3748;
+    --text-secondary: #4a5568;
+    --bg-blur: blur(10px);
 }
 
 * {
@@ -7,6 +13,13 @@
     padding: 0;
     box-sizing: border-box;
     user-select: none;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-color);
+    scroll-behavior: smooth;
 }
 
 html {
@@ -17,8 +30,48 @@ img {
     -webkit-user-drag: none; /* 禁止拖动 */
 }
 
-/* 隐藏滚动条样式 */
+/* 隐藏水平滚动条 */
 ::-webkit-scrollbar {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    height: 0 !important;
+}
+
+/* 保留垂直滚动条样式 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(110, 142, 251, 0.5);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    cursor: pointer;
+    outline: none;
+    border: none;
+}
+
+/* 添加全局过渡效果 */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }

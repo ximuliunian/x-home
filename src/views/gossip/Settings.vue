@@ -9,8 +9,7 @@
       <icon
           icon="icon-sys-setting"
           class="settings-icon"
-          width="30px"
-          height="30px"
+          width="30px" height="30px"
       />
     </div>
 
@@ -29,8 +28,8 @@
 
 <script setup>
 import Icon from "@/components/Icon.vue";
-import {ref} from "vue";
-import {useRouter} from "vue-router";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 import localStorage from "@/composition/localStorage.js";
 
 // 路由
@@ -67,25 +66,27 @@ function localStorageClear() {
 <style scoped>
 .settings-container {
   position: fixed;
-  top: 20px;
-  right: 10px;
+  top: 30px;
+  right: 20px;
   z-index: 1000;
 }
 
 .icon-wrapper {
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.8);
   border-radius: 50%;
-  padding: 5px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   transition: transform 0.3s;
   display: flex;
   justify-content: center;
   align-items: center;
+  backdrop-filter: blur(10px);
 }
 
 .icon-wrapper:hover {
   transform: rotate(120deg);
+  background: rgba(255, 255, 255, 1);
 }
 
 .settings-list {
@@ -93,24 +94,27 @@ function localStorageClear() {
   top: calc(100% + 15px);
   right: 0;
   min-width: 160px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
   padding: 8px 0;
   margin: 0;
   list-style: none;
+  backdrop-filter: blur(10px);
 }
 
 .setting-item {
   padding: 12px 20px;
-  color: #606266;
+  color: #4a5568;
   transition: all 0.3s;
   cursor: pointer;
+  font-weight: 500;
 }
 
 .setting-item:hover {
-  background: #f5f7fa;
+  background: rgba(110, 142, 251, 0.1);
   padding-left: 25px;
+  color: #6e8efb;
 }
 
 /* 过渡动画 */

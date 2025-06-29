@@ -22,7 +22,7 @@
 
 <script setup>
 import Icon from "@/components/Icon.vue";
-import {inject} from "vue";
+import { inject } from "vue";
 
 const config = inject("config");
 
@@ -54,27 +54,34 @@ let icon = {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  gap: 15px;
+  margin: 20px 0;
 }
 
 /* 路由 */
 .routing {
-  width: 30%;
-  display: inline-block;
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
-  padding: 5px;
-  margin: 10px 0;
-  color: #fff;
-  font-weight: bold;
-  font-size: 20px;
-  background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+  padding: 15px 20px;
+  color: white;
+  font-weight: 600;
+  font-size: 18px;
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
   background-size: 200%;
   background-position: 100%;
-  border-radius: 10px;
-  transition: width 0.3s;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* 鼠标悬浮时 */
 .routing:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
   animation: textFlashes 2s ease-in-out infinite;
 }
 
@@ -87,14 +94,19 @@ let icon = {
 @media only screen and (max-width: 800px) {
   /* 路由 */
   .routing {
-    width: 49%;
-    transition: width 0.3s;
+    min-width: 45%;
+    transition: all 0.3s;
   }
 
   /* 占位符 */
   .placeholder {
-    width: 49%;
-    display: block;
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .routing {
+    min-width: 100%;
   }
 }
 

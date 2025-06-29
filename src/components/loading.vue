@@ -7,13 +7,11 @@
         <span class="tip">加载中......</span>
       </div>
     </div>
-    <div class="loader-section section-left"></div>
-    <div class="loader-section section-right"></div>
   </div>
 </template>
 
 <script setup>
-import {inject} from "vue";
+import { inject } from "vue";
 // 全局配置
 const config = inject('config')
 
@@ -29,6 +27,7 @@ defineProps(['flag']);
   height: 100%;
   z-index: 999;
   overflow: hidden;
+  background: rgba(0, 0, 0, 0.7); /* 添加背景色保证半透明效果 */
 
   .loader {
     width: 100%;
@@ -46,7 +45,7 @@ defineProps(['flag']);
       height: 150px;
       border-radius: 50%;
       border: 3px solid transparent;
-      border-top-color: #fff;
+      border-top-color: #6e8efb;
       animation: spin 1.8s linear infinite;
       z-index: 2;
 
@@ -59,7 +58,7 @@ defineProps(['flag']);
         bottom: 5px;
         border-radius: 50%;
         border: 3px solid transparent;
-        border-top-color: #a4a4a4;
+        border-top-color: #a777e3;
         animation: spin-reverse 0.6s linear infinite;
       }
 
@@ -72,7 +71,7 @@ defineProps(['flag']);
         bottom: 15px;
         border-radius: 50%;
         border: 3px solid transparent;
-        border-top-color: #d3d3d3;
+        border-top-color: #5dc1e6;
         animation: spin 1s linear infinite;
       }
     }
@@ -85,55 +84,33 @@ defineProps(['flag']);
       z-index: 2;
       margin-top: 40px;
       font-size: 24px;
+      text-align: center;
 
+      .name {
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: #6e8efb;
+      }
+      
       .tip {
         margin-top: 6px;
         font-size: 18px;
-        opacity: 0.6;
+        opacity: 0.8;
+        color: #a777e3;
       }
     }
   }
 
-  .loader-section {
-    position: fixed;
-    top: 0;
-    width: 51%;
-    height: 100%;
-    background: #333;
-    z-index: 1;
-
-    &.section-left {
-      left: 0;
-    }
-
-    &.section-right {
-      right: 0;
-    }
-  }
-
+  /* 简化加载完成后的动画效果 */
   &.loaded {
+    opacity: 0;
     visibility: hidden;
-    transform: translateY(-100%);
-    transition: transform 0.3s 1s ease-out, visibility 0.3s 1s ease-out;
-
-    .loader {
-      .loader-circle,
-      .loader-text {
-        opacity: 0;
-        transition: opacity 0.3s ease-out;
-      }
-    }
-
-    .loader-section {
-      &.section-left {
-        transform: translateX(-100%);
-        transition: transform 0.5s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-      }
-
-      &.section-right {
-        transform: translateX(100%);
-        transition: transform 0.5s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-      }
+    transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+    
+    .loader-circle,
+    .loader-text {
+      opacity: 0;
+      transition: opacity 0.3s ease-out;
     }
   }
 }

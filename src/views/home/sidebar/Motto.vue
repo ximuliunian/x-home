@@ -9,7 +9,7 @@
 
 <script setup>
 import Container from "@/components/Container.vue";
-import {inject} from "vue";
+import { inject } from "vue";
 // 全局配置
 const config = inject("config");
 </script>
@@ -17,19 +17,33 @@ const config = inject("config");
 <style scoped>
 /* 座右铭 */
 .motto-content {
-  padding: 10px 5px;
+  padding: 15px;
   font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 /* 上文 */
 .motto-content-top {
-  float: left;
-  margin-bottom: 10px;
+  font-style: italic;
+  font-weight: 500;
+  color: #4a5568;
+  text-align: center;
+  transition: all 0.3s ease;
 }
 
 /* 下文 */
 .motto-content-bottom {
-  float: right;
-  margin-bottom: 10px;
+  font-weight: 700;
+  color: #2d3748;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+/* 悬停效果 */
+.container:hover .motto-content-top,
+.container:hover .motto-content-bottom {
+  transform: translateY(-3px);
 }
 </style>

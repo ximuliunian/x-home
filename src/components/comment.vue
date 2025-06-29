@@ -20,7 +20,7 @@
 
 <script setup>
 import Giscus from "@giscus/vue";
-import {inject} from "vue";
+import { inject } from "vue";
 // 全局配置
 const config = inject('config')
 
@@ -38,5 +38,15 @@ const props = defineProps({
 </script>
 
 <style scoped>
+#comments {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
 
+#comments:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
 </style>

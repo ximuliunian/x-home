@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import {onBeforeUnmount, onMounted, ref} from "vue";
+import { onBeforeUnmount, onMounted, ref } from "vue";
 import Container from "@/components/Container.vue";
 
 // 时钟
@@ -59,17 +59,29 @@ onBeforeUnmount(() => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  transition: all 0.3s ease;
 }
 
 .date {
-  font-size: 13px;
+  font-size: 16px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  margin-bottom: 10px;
+  color: #4a5568;
 }
 
 .text {
   font-size: 2.5rem;
-  font-weight: bold;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #2d3748;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.container:hover .text {
+  transform: scale(1.05);
+  color: #1a202c;
 }
 </style>

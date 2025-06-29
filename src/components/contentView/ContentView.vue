@@ -6,7 +6,7 @@
 
 <script setup>
 import Image from "@/components/contentView/Image.vue";
-import {onMounted, ref} from "vue";
+import { onMounted, ref } from "vue";
 import LiView from "@/components/contentView/LiView.vue";
 
 const props = defineProps({
@@ -97,7 +97,7 @@ function getAttributes(content) {
     case Image:
       return {
         src: getContent(content),
-        alt: '假装这里有一张图片',
+        alt: '图片',
         width: props.imgWidth,
         height: props.imgHeight,
         InlineBlock: props.imgInlineBlock
@@ -128,32 +128,110 @@ function splitContent(content) {
 <style scoped>
 * {
   text-align: left;
-  margin: 10px 0;
+  margin: 15px 0;
   padding: 0;
   box-sizing: border-box;
-  height: 30px;
-  line-height: 30px;
+  line-height: 1.6;
+  transition: all 0.3s ease;
 }
 
 h1 {
   text-align: center;
-  font-size: 25px;
-  height: 35px;
-  line-height: normal;
+  font-size: 28px;
+  margin: 20px 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e2e8f0;
+  color: #2d3748;
 }
 
 h2 {
-  font-size: 20px;
-  border-bottom: 2px solid #ccc;
+  font-size: 24px;
+  margin: 18px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #e2e8f0;
+  color: #2d3748;
 }
 
 h3 {
-  padding-left: 10px;
-  border-left: 5px solid #ccc;
+  font-size: 20px;
+  margin: 16px 0;
+  padding-left: 15px;
+  border-left: 5px solid #6e8efb;
+  color: #2d3748;
 }
 
 p {
   height: auto;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
+  color: #4a5568;
+  margin: 15px 0;
+}
+
+ul, ol {
+  padding-left: 25px;
+  margin: 15px 0;
+}
+
+li {
+  margin: 8px 0;
+  color: #4a5568;
+}
+
+img {
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  max-width: 100%;
+}
+
+img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+blockquote {
+  border-left: 4px solid #6e8efb;
+  padding-left: 20px;
+  margin: 20px 0;
+  color: #4a5568;
+  font-style: italic;
+  background: rgba(110, 142, 251, 0.05);
+  border-radius: 0 8px 8px 0;
+  padding: 15px;
+}
+
+code {
+  background: rgba(110, 142, 251, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+  color: #2d3748;
+}
+
+pre {
+  background: rgba(30, 30, 30, 0.9);
+  color: #f8f8f2;
+  padding: 15px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 20px 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+a {
+  color: #6e8efb;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  color: #a777e3;
+  text-decoration: underline;
 }
 </style>

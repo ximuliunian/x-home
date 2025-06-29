@@ -1,11 +1,16 @@
 <template>
-  <div class="button-group">
-    <button class="button" @click="goBack" title="返回上一级">←</button>
-    <button class="button" @click="scrollToTop" title="回到顶部">↑</button>
+  <div class="floating-buttons">
+    <button class="float-btn back" @click="goBack" title="返回上一级">
+      <Icon icon="icon-sys-fanhui" width="20px" height="20px"/>
+    </button>
+    <button class="float-btn top" @click="scrollToTop" title="回到顶部">
+      <Icon icon="icon-sys-dingbu" width="20px" height="20px"/>
+    </button>
   </div>
 </template>
 
 <script setup>
+import Icon from "@/components/Icon.vue";
 
 // 回到上一页
 const goBack = () => {
@@ -31,68 +36,47 @@ const scrollToTop = () => {
 </script>
 
 <style scoped>
-/* 按钮容器 */
-.button-group {
+.floating-buttons {
   position: fixed;
-  bottom: 30px;
-  right: 10px;
+  bottom: 50px;
+  right: 30px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  z-index: 100;
+  gap: 15px;
+  z-index: 1000;
 }
 
-/* 基础按钮样式 */
-.button {
-  --size: 30px;
-  --bg-color: white;
-  --text-color: black;
-
-  width: var(--size);
-  height: var(--size);
+.float-btn {
+  width: 50px;
+  height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 18px;
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #6e8efb;
+  border-radius: 50%;
   border: none;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   cursor: pointer;
-  transition: background-color 0.3s ease,
-  color 0.3s ease,
-  transform 0.2s ease;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
 }
 
-/* 悬停效果 */
-.button:hover {
-  --bg-color: #333;
-  --text-color: white;
-  transform: translateY(-2px);
+.float-btn:hover {
+  color: white;
+  transform: translateY(-5px) scale(1.1);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
 }
 
-/* 不同功能按钮的扩展样式（示例） */
-.button.back {
-  font-size: 20px;
-}
-
-.button.top {
-  font-size: 22px;
-}
-
-/* 响应式设计 */
 @media (max-width: 768px) {
-  .button-group {
-    bottom: 30px;
-    right: 8px;
+  .floating-buttons {
+    bottom: 20px;
+    right: 20px;
   }
-
-  .button {
-    --size: 28px;
-    font-size: 16px;
+  
+  .float-btn {
+    width: 45px;
+    height: 45px;
   }
 }
 </style>

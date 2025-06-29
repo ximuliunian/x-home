@@ -18,8 +18,8 @@
 <script setup>
 import useLCG from "@/composition/useLCG.js";
 import Loading from "@/components/loading.vue";
-import {computed, inject, onMounted, ref} from "vue";
-import {localStorageInit} from "@/composition/localStorage.js";
+import { computed, inject, onMounted, ref } from "vue";
+import { localStorageInit } from "@/composition/localStorage.js";
 import gossip from "@/composition/gossip.js";
 
 // 全局配置
@@ -97,24 +97,35 @@ imageLoad.onload = () => {
 .container {
   padding-top: 2vw;
   padding-bottom: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 /* 页脚 */
 .siteInfo {
   width: 100%;
-  height: 30px;
-  line-height: 30px;
+  height: 40px;
+  line-height: 40px;
   text-align: center;
   position: fixed;
   bottom: 0;
   backdrop-filter: blur(30px);
   color: white;
   -webkit-user-select: none;
+  background: rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  z-index: 100;
+}
 
-  a {
-    color: white;
-    text-decoration: none;
-  }
+.siteInfo a {
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.siteInfo a:hover {
+  color: #a777e3;
+  text-decoration: underline;
 }
 
 /* 背景图片 */
@@ -127,6 +138,7 @@ imageLoad.onload = () => {
   background-position: center;
   background-size: cover;
   user-select: none;
+  transition: all 0.5s ease;
 }
 
 /* 遮罩层 */
@@ -134,6 +146,6 @@ imageLoad.onload = () => {
   width: 100%;
   height: 100%;
   position: fixed;
-  backdrop-filter: blur(30px);
+  background: rgba(124, 124, 124, 0.5);
 }
 </style>

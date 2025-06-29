@@ -21,7 +21,7 @@
               v-if="item.info.host !== locationHost && shieldList[item.info.host]"
               @click="shieldUser(item.info.host)"/>
           <icon
-              icon="icon-sys-pinglun"
+              icon="icon-sys-gossip-info"
               width="25px" height="25px"
               class="icon" title="查看全部"
               @click="routerPush('gossipInfo',buildQuery(item.info.host, item.info.id))"/>
@@ -42,10 +42,10 @@ import Router from "@/components/Router.vue";
 import ContentView from "@/components/contentView/ContentView.vue";
 import PastTop from "@/components/PastTop.vue";
 import Icon from "@/components/Icon.vue";
-import {useRouter} from "vue-router";
-import {onMounted, reactive, ref} from "vue";
+import { useRouter } from "vue-router";
+import { onMounted, reactive, ref } from "vue";
 import localStorage from "@/composition/localStorage.js";
-import {getGossipCutByUrl} from "@/api/gossipAPI.js";
+import { getGossipCutByUrl } from "@/api/gossipAPI.js";
 import Settings from "@/views/gossip/Settings.vue";
 
 // 本地列表信息
@@ -146,12 +146,20 @@ const buildQuery = (host, id) => {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  border-radius: 0 0 10px 10px;
-  background-color: rgba(110, 110, 110, 0.5);
+  border-radius: 0 0 12px 12px;
+  background-color: rgba(110, 110, 110, 0.3);
+  padding: 8px 15px;
 
   .icon {
     cursor: pointer;
-    margin: 5px;
+    margin: 0 5px;
+    transition: all 0.3s ease;
+    color: white;
+  }
+  
+  .icon:hover {
+    transform: scale(1.2);
+    color: #a777e3;
   }
 }
 
@@ -160,29 +168,38 @@ const buildQuery = (host, id) => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80vh;
+  height: 70vh;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  margin-top: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 
   div {
     font-size: 30px;
     font-weight: bolder;
-    color: #fff;
-    text-shadow: 1px 1px 1px #000;
-    background-color: rgba(110, 110, 110, 0.3);
-    padding: 10px;
-    border-radius: 10px;
+    color: #2d3748;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 20px 40px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   }
 }
 
 /* 内容 */
 .content {
   width: 100%;
-  background-color: rgb(22 22 22 / 30%);;
-  padding: 5px;
-  border-radius: 0 10px 0 0;
+  background-color: rgba(22, 22, 22, 0.2);
+  padding: 15px;
+  border-radius: 0 12px 0 0;
   color: #fff;
-
+  min-height: 100px;
+  
   img {
-    width: 80%;
+    max-width: 80%;
+    border-radius: 8px;
+    margin: 10px 0;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
   }
 }
 
@@ -190,9 +207,12 @@ const buildQuery = (host, id) => {
 .time {
   display: flex;
   align-items: center;
-  padding: 5px;
-  border-radius: 0 10px 0 0;
-  background-color: rgba(255, 255, 255, 0.36);
+  padding: 8px 15px;
+  border-radius: 0 12px 0 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  color: #2d3748;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 /* 作者 */
@@ -200,52 +220,60 @@ const buildQuery = (host, id) => {
   display: flex;
   align-items: center;
   max-width: 50%;
-  padding: 5px;
-  border-radius: 10px 0 0 0;
-  border-right: 2px dashed rgba(0, 0, 0, 0.31);
-  background-color: rgba(255, 255, 255, 0.36);
+  padding: 8px 15px;
+  border-radius: 12px 0 0 0;
+  border-right: 2px dashed rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.5);
+  color: #2d3748;
 
   img {
-    width: 25px;
-    height: 25px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   }
 
   span {
-    margin-left: 5px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-weight: 600;
   }
 }
 
 /* 文章信息 */
 .articleInfo {
   display: flex;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px 12px 0 0;
+  overflow: hidden;
 }
 
 /* 时间线 */
 .line {
-  border-left: 5px solid rgba(0, 0, 0, 0.31);
+  border-left: 5px solid rgba(255, 255, 255, 0.8);
+  padding-left: 20px;
+  margin-left: 10px;
 }
 
 /* 卡片 */
 .card {
-  margin: 10px;
+  margin: 20px 0;
   list-style: none;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
 }
 
-/* 卡片左侧小圆点 */
-.card::before {
-  content: '';
-  display: block;
-  width: 13px;
-  height: 13px;
-  border-radius: 50%;
-  background-color: white;
-  position: relative;
-  left: -19px;
-  top: 35px;
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
 /* 时间轴 */
@@ -253,6 +281,26 @@ const buildQuery = (host, id) => {
   margin: 0 auto;
   width: 80%;
   min-width: 300px;
-  padding: 5px;
+  padding: 20px 5px;
+}
+
+@media (max-width: 768px) {
+  .timeline {
+    width: 95%;
+  }
+  
+  .articleInfo {
+    flex-direction: column;
+  }
+  
+  .author {
+    max-width: 100%;
+    border-right: none;
+    border-bottom: 2px dashed rgba(0, 0, 0, 0.2);
+  }
+  
+  .time {
+    border-radius: 0;
+  }
 }
 </style>

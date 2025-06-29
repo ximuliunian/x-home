@@ -1,43 +1,55 @@
 <template>
-  <div class="section">
-    <Icon :icon="icon" height="40px" width="40px"/>
-    <span style="margin-left: 10px">{{ title }}</span>
-  </div>
-  <div class="content">
-    <slot/>
-  </div>
+    <div class="section-container">
+        <div class="section">
+            <Icon :icon="icon" height="40px" width="40px" />
+            <span style="margin-left: 10px">{{ title }}</span>
+        </div>
+        <div class="content">
+            <slot />
+        </div>
+    </div>
 </template>
 
 <script setup>
 import Icon from "@/components/Icon.vue";
 
 defineProps({
-  icon: {
-    type: String,
-    required: true
-  },
-  title: {
-    type: String,
-    required: true
-  }
+    icon: {
+        type: String,
+        required: true
+    },
+    title: {
+        type: String,
+        required: true
+    }
 })
 </script>
 
 <style scoped>
+.section-container {
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.5);
+    overflow: hidden;
+    padding: 10px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+}
+
 /* 标题 */
 .section {
-  margin: 10px 0;
-  padding: 5px 0;
-  display: flex;
-  align-items: center;
-  border-bottom: 3px dashed #fff;
-  font-weight: bold;
-  font-size: 20px;
-  color: #ffffff;
+    padding: 5px 0;
+    display: flex;
+    align-items: center;
+    border-bottom: 3px dashed #6e8efb;
+    font-weight: 700;
+    font-size: 24px;
+    color: #2d3748;
+    transition: all 0.3s ease;
 }
 
 /* 内容 */
 .content {
-  position: relative;
+    margin-top: 25px;
+    position: relative;
 }
 </style>

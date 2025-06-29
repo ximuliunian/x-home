@@ -10,7 +10,7 @@
 
 <script setup>
 import Container from "@/components/Container.vue";
-import {onMounted, ref} from "vue";
+import { onMounted, ref } from "vue";
 import localStorage from "@/composition/localStorage.js";
 
 // 内容
@@ -74,13 +74,29 @@ function typewriter(str) {
 /* 内容 */
 .content {
   padding-top: 10px;
-  font-size: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #4a5568;
+  min-height: 80px;
+  transition: all 0.3s ease;
 }
 
 /* 出处 */
 .from {
-  font-size: 15px;
+  font-size: 14px;
   text-align: right;
+  color: #718096;
+  font-style: italic;
+  transition: all 0.3s ease;
+}
+
+/* 容器悬停效果 */
+.container:hover .content {
+  color: #2d3748;
+}
+
+.container:hover .from {
+  color: #4a5568;
 }
 
 /* 光标动画 */

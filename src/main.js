@@ -1,8 +1,9 @@
 import './assets/main.css'
-import {config} from '../config/Configuration.js'
+import './assets/iconfont.js'
+import { config } from '../config/Configuration.js'
 
-import {createApp} from 'vue'
-import {createPinia} from 'pinia'
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'

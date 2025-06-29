@@ -29,7 +29,7 @@
 
     <div class="description">
       <h1 style="border-bottom: 3px dashed #ccc; padding-bottom: 10px">
-        <Icon icon="icon-sys-geshi" height="38px" width="38px"/>
+        <Icon icon="icon-sys-info" height="38px" width="38px"/>
         信息
       </h1>
       <div class="description-content">
@@ -87,14 +87,14 @@
 import Router from "@/components/Router.vue";
 import Icon from "@/components/Icon.vue";
 import ContentView from "@/components/contentView/ContentView.vue";
-import {friendLinks} from "../../../config/FriendLinks.js";
-import {inject, onMounted, reactive, ref} from "vue";
+import { friendLinks } from "../../../config/FriendLinks.js";
+import { inject, onMounted, reactive, ref } from "vue";
 import Section from "@/components/Section.vue";
 import PastTop from "@/components/PastTop.vue";
 import commonlyFunctions from "@/composition/commonlyFunctions.js";
-import {getSorted} from "@/api/friendLinkAPI.js";
+import { getSorted } from "@/api/friendLinkAPI.js";
 import Comment from "@/components/comment.vue";
-import {getFriendLink} from "@/api/rootAPI.js";
+import { getFriendLink } from "@/api/rootAPI.js";
 
 // 全局配置
 const config = inject("config");
@@ -140,12 +140,28 @@ function addList(sort, array, isCreate) {
 <style scoped>
 /* 信息 */
 .info {
-  margin-left: 10px;
+  margin-left: 15px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
 
   span:first-child {
     font-weight: bold;
+    font-size: 18px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  span:last-child {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #4a5568;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 }
 
@@ -156,28 +172,32 @@ function addList(sort, array, isCreate) {
 
 /* 链接 */
 .links {
-  width: 33%;
+  width: 32%;
   display: flex;
   align-items: center;
   margin: 10px 0;
-  padding: 10px;
-  border: 1px solid #8d8d8d;
-  border-radius: 5px;
+  padding: 15px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
-  color: #595959;
-  background-color: var(--milky-white);
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
 
-  &:hover {
-    background-color: #8d8d8d !important;
-    color: #fff;
-  }
+.links:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
 
-  img {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-  }
+.links img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* 链接容器 */
@@ -185,11 +205,14 @@ function addList(sort, array, isCreate) {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  gap: 10px;
 }
 
 /* 表格容器 */
 .table-container {
   overflow-x: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 .table-container::-webkit-scrollbar {
@@ -204,6 +227,7 @@ function addList(sort, array, isCreate) {
 .table-container::-webkit-scrollbar-track {
   background: #f1f1f1;
   /* 滚动条轨道背景色 */
+  border-radius: 4px;
 }
 
 .table-container::-webkit-scrollbar-thumb {
@@ -220,33 +244,58 @@ function addList(sort, array, isCreate) {
 
 /* 表格 */
 table {
-  width: auto;
+  width: 100%;
   border-collapse: collapse;
   margin-bottom: 10px;
   min-width: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 th,
 td {
-  padding: 8px 15px;
+  padding: 12px 15px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #e2e8f0;
   white-space: nowrap;
   user-select: text;
 }
 
+th {
+  background-color: rgba(110, 142, 251, 0.2);
+  font-weight: 600;
+}
+
+tr:nth-child(even) {
+  background-color: rgba(247, 250, 252, 0.5);
+}
+
+tr:hover {
+  background-color: rgba(226, 232, 240, 0.3);
+}
+
 /* 描述内容 */
 .description-content {
-  margin-top: 10px;
-  font-size: 18px;
+  margin-top: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #4a5568;
 }
 
 /* 描述 */
 .description {
-  background-color: var(--milky-white);
-  border-radius: 10px;
-  padding: 15px;
-  margin: 20px 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 25px 0;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.description:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
 /* 友链 */
@@ -258,11 +307,15 @@ td {
 /* 当屏幕宽度小于 800 时 */
 @media only screen and (max-width: 800px) {
   .links {
-    width: 49%;
+    width: 48%;
   }
 
   .placeholder {
-    width: 49%;
+    width: 48%;
+  }
+  
+  .friendLinks {
+    width: 95%;
   }
 }
 

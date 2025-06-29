@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import {inject} from "vue";
+import { inject } from "vue";
 import Container from "@/components/Container.vue";
 
 const config = inject('config')
@@ -54,6 +54,7 @@ const config = inject('config')
 
 .avatar-status:hover {
   width: 120px;
+  z-index: 999;
 }
 
 #icon {

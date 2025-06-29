@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import {defineProps} from "vue";
+import { defineProps } from "vue";
 
 // 定义props
 const props = defineProps({
@@ -25,33 +25,35 @@ const props = defineProps({
 /* 通用列表样式 */
 .list {
   height: auto;
-  margin: 0;
-  padding-left: 1.5em; /* 根据需要调整缩进 */
+  margin: 15px 0;
+  padding-left: 1.5em;
   font-family: 'Helvetica Neue', Arial, sans-serif;
-  line-height: 1.6; /* 行高 */
-  color: #333; /* 深灰色文字 */
+  line-height: 1.6;
+  color: #4a5568;
+  transition: all 0.3s ease;
 }
 
 /* 无序列表样式 */
 .list--unordered {
-  list-style-type: none; /* 移除默认项目符号 */
+  list-style-type: none;
   padding-left: 0;
 }
 
 .list--unordered li {
   position: relative;
-  padding-left: 2em; /* 为自定义标记留出空间 */
-  margin-bottom: 0.5em; /* 列表项之间的间距 */
+  padding-left: 2em;
+  margin-bottom: 0.8em;
+  transition: all 0.3s ease;
 }
 
 .list--unordered li::before {
   content: '';
   position: absolute;
   left: 0;
-  top: 0.2em;
+  top: 0.5em;
   width: 0.6em;
   height: 0.6em;
-  background-color: #007bff; /* 蓝色背景 */
+  background-color: #6e8efb;
   border-radius: 50%;
   box-shadow: 0 0 0 0.2em white inset;
   transition: transform 0.3s ease, background-color 0.3s ease;
@@ -59,34 +61,45 @@ const props = defineProps({
 
 /* 有序列表样式 */
 .list--ordered {
-  list-style-type: none; /* 移除默认编号 */
+  list-style-type: none;
   padding-left: 0;
-  counter-reset: item; /* 创建计数器 */
+  counter-reset: item;
 }
 
 .list--ordered li {
   position: relative;
-  padding-left: 2em; /* 为自定义编号留出更多空间 */
-  margin-bottom: 0.5em; /* 列表项之间的间距 */
+  padding-left: 2.5em;
+  margin-bottom: 0.8em;
+  transition: all 0.3s ease;
 }
 
 .list--ordered li::before {
   counter-increment: item;
-  content: counter(item) '. ';
+  content: counter(item) '.';
   position: absolute;
   left: 0;
   font-weight: bold;
-  color: #dc3545; /* 红色编号 */
+  color: #a777e3;
   transition: color 0.3s ease;
+  width: 1.5em;
+  text-align: right;
 }
 
 /* 鼠标悬停效果 */
+.list--unordered li:hover {
+  transform: translateX(5px);
+}
+
 .list--unordered li:hover::before {
-  transform: scale(1.2); /* 放大 */
-  background-color: #28a745; /* 悬停时变为绿色 */
+  transform: scale(1.2);
+  background-color: #a777e3;
+}
+
+.list--ordered li:hover {
+  transform: translateX(5px);
 }
 
 .list--ordered li:hover::before {
-  color: #007bff; /* 悬停时变为蓝色 */
+  color: #6e8efb;
 }
 </style>

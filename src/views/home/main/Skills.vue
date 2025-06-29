@@ -1,12 +1,12 @@
 <template>
   <Section icon="icon-sys-skills" title="技术栈">
-    <img :src="srcLike" alt="技术栈" style="max-width: 100%;"/>
+    <img :src="srcLike" alt="技术栈" style="max-width: 100%; border-radius: 12px;"/>
   </Section>
 </template>
 
 <script setup>
 import Section from "@/components/Section.vue";
-import {computed, inject, onMounted, ref} from "vue";
+import { computed, inject, onMounted, ref } from "vue";
 // 全部配置
 const config = inject('config')
 // URL
@@ -41,4 +41,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
+img {
+  border-radius: 12px;
+}
 </style>

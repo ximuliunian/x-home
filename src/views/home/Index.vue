@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-import {inject} from "vue";
+import { inject } from "vue";
 import Motto from "@/views/home/sidebar/Motto.vue";
 import Tags from "@/views/home/sidebar/Tags.vue";
 import Avatar from "@/views/home/sidebar/Avatar.vue";
@@ -39,6 +39,7 @@ const config = inject("config");
 .main {
   width: 100%;
   padding: 0 15px;
+  transition: all 0.3s ease;
 }
 
 /* 侧边栏 */
@@ -49,6 +50,8 @@ const config = inject("config");
   flex-direction: column;
   align-items: center;
   padding: 15px;
+  gap: 20px;
+  transition: all 0.3s ease;
 }
 
 /* 应用 */
@@ -56,6 +59,7 @@ const config = inject("config");
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
+  gap: 20px;
 }
 
 /* 当屏幕宽度小于 870 时 */
@@ -63,5 +67,25 @@ const config = inject("config");
   .aside {
     display: none;
   }
+  
+  .home {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .main {
+    padding: 0 10px;
+  }
+}
+
+/* 添加卡片悬停效果 */
+.container {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 </style>
