@@ -35,7 +35,6 @@ const config = inject("config");
     flex-wrap: wrap;
     justify-content: space-between;
     margin-top: 30px;
-    gap: 15px;
 
     /* 占位符 */
     .placeholder {
@@ -45,7 +44,6 @@ const config = inject("config");
 
     .social-link {
         width: 23%;
-        min-width: 150px;
         transition: all 0.3s ease;
         cursor: pointer;
         border-radius: 12px;
@@ -120,6 +118,21 @@ const config = inject("config");
     /* 欢迎文本 */
     .welcome {
         font-size: 9vw;
+        margin: 2vw 0;
+    }
+}
+
+/* 当屏幕宽度小于 800 时 */
+@media only screen and (max-width: 300px) {
+
+    /* 社交链接 */
+    .social-link {
+        width: 100% !important;
+    }
+
+    /* 欢迎文本 */
+    .welcome {
+        font-size: 15vw;
         margin: 2vw 0;
     }
 }
