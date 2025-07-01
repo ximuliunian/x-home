@@ -67,4 +67,13 @@ const config = inject('config')
         width: 49%;
     }
 }
+
+/* 当屏幕宽度小于 800 时 */
+@media only screen and (max-width: 300px) {
+    /* 站点 */
+    .site {
+        width: 100%;
+        transition: width 0.3s;
+    }
+}
 </style>
