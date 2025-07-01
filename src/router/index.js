@@ -1,5 +1,5 @@
-import {createRouter, createWebHistory} from 'vue-router'
-import {config} from '../../config/Configuration.js'
+import { createRouter, createWebHistory } from 'vue-router'
+import { config } from '../../../source/Configuration.js'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),

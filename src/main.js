@@ -1,6 +1,6 @@
 import './assets/main.css'
 import './assets/iconfont.js'
-import { config } from '../config/Configuration.js'
+import { config } from '../../source/Configuration.js'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'

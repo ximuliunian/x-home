@@ -1,6 +1,6 @@
-import {gossipConfig} from "../../config/GossipConfiguration.js";
-import {getGossipMain, getGossipMainByUrl, getMainByUrl} from "@/api/rootAPI.js";
-import {reactive} from "vue";
+import { gossipConfig } from "../../../source/GossipConfiguration.js";
+import { getGossipMain, getGossipMainByUrl, getMainByUrl } from "@/api/rootAPI.js";
+import { reactive } from "vue";
 import commonlyFunctions from "@/composition/commonlyFunctions.js";
 import localStorage from "@/composition/localStorage.js";
 // 初始化访问数据
