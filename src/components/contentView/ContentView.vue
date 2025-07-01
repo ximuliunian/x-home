@@ -1,12 +1,19 @@
 <template>
-  <component v-for="content in contentList" :is="getElementType(content.tag)" v-bind="content.attributes">
-    {{ content.text }}
-  </component>
+  <div class="content-view">
+    <component 
+      v-for="(content, index) in contentList" 
+      :key="index" 
+      :is="getElementType(content.tag)" 
+      v-bind="content.attributes"
+    >
+      {{ content.text }}
+    </component>
+  </div>
 </template>
 
 <script setup>
 import Image from "@/components/contentView/Image.vue";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import LiView from "@/components/contentView/LiView.vue";
 
 const props = defineProps({
@@ -22,7 +29,9 @@ const props = defineProps({
 // 展示内容列表
 let contentList = ref([]);
 
-onMounted(() => {
+function parseContents() {
+  const newContentList = [];
+  
   for (let i = 0; i < props.contents?.length; i++) {
     let content = props.contents[i];
     // 渲染元素
@@ -44,15 +53,25 @@ onMounted(() => {
       }
       // 提交
       i--;
-      addContent(el)
-      continue
+      newContentList.push(el);
+      continue;
     }
 
-    el.attributes = getAttributes(content)
-    addContent(el);
+    el.attributes = getAttributes(content);
+    newContentList.push(el);
   }
-})
+  
+  return newContentList;
+}
 
+// 添加响应式更新
+watch(() => props.contents, (newContents) => {
+  contentList.value = parseContents();
+}, { deep: true });
+
+onMounted(() => {
+  contentList.value = parseContents();
+});
 
 // 添加对象到列表
 function addContent(content) {
@@ -126,6 +145,11 @@ function splitContent(content) {
 </script>
 
 <style scoped>
+.content-view {
+  display: block;
+  width: 100%;
+}
+
 * {
   text-align: left;
   margin: 15px 0;
