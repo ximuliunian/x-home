@@ -16,6 +16,8 @@ o((>ω< ))o
 ## 如何使用
 
 > 前置条件：需要安装 Git 环境
+>
+> 具体可以参考：[ximuliunian/xmln-x-home](https://github.com/ximuliunian/xmln-x-home)
 
 首先在本地创建一个目录（这里暂且叫它 root），然后在目录下执行以下命令
 
@@ -49,6 +51,7 @@ git submodule update --init --recursive
 ```txt
 root:
 │  .env # 站点配置
+│  .gitignore # Git禁止上传
 │
 ├─.github
 │  └─workflows
@@ -104,6 +107,16 @@ VITE_KEYWORDS =
 ---
 
 > 以下所有的配置文件或者会用到的文件都可以在 `x-home(子目录) > template` 文件夹中找到
+
+## 配置文件（.gitignore）
+
+这个文件就是用来让 Git 判断不需要为哪个文件做版本控制。打开文件，并添加如下内容
+
+```git
+/public/api
+```
+
+通过 `pnpm run dev` 命令启动项目后会在 public 目录下生成一个 api 目录，这个目录是用于存放请求 API 数据的，这个目录中的数据如果存在则会在打包时出现文件重复的问题，所以需要将这个目录添加到 Git 忽略文件中
 
 ## 配置文件（Configuration.js）
 
