@@ -36,12 +36,12 @@ git submodule update --init --recursive
 >
 > ```bash
 > # 更新子模块（尝试合并）
-> git submodule update --remote --merge CloudExplorer
+> git submodule update --remote --merge x-home
 > 
 > # 如果你在子模块中有本地修改或提交，使用以上命令不会被丢弃，而是尝试自动合并
 > # 如果合并失败，你可能需要手动解决冲突，如果不想或者不会解决冲突，你可以使用以下命令
 > # 强制更新子模块（丢弃本地修改和提交）
-> git submodule update --remote CloudExplorer
+> git submodule update --remote x-home
 > ```
 >
 > 每次更新子模块之前需要先来本仓库中查看一下是否对配置做了更新，该怎么配置这些更新的内容。做好准备后再更新子模块
