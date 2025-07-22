@@ -22,9 +22,7 @@
 
 <script setup>
 import Icon from "@/components/Icon.vue";
-import { inject } from "vue";
-
-const config = inject("config");
+import config from 'virtual:yaml-config';
 
 // 判断是否显示
 function isShow(condition) {

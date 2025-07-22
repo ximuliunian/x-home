@@ -16,13 +16,10 @@
 
 <script setup>
 import Section from "@/components/Section.vue";
-import { inject } from "vue";
 import Container from "@/components/Container.vue";
 import Icon from "@/components/Icon.vue";
 import commonlyFunctions from "@/composition/commonlyFunctions.js";
-
-// 全局配置
-const config = inject('config')
+import config from 'virtual:yaml-config';
 </script>
 
 <style scoped>

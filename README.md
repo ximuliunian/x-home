@@ -74,9 +74,7 @@ root:
 │          icon.js	# 展示图标
 │
 └─source
-    │  Configuration.js	# 主配置文件
-    │  FriendLinks.js	# 友链配置
-    │  GossipConfiguration.js	# 闲言碎语配置
+    │  config.yml	# 配置文件
     │
     ├─friendLink # 友链
     │	...
@@ -118,7 +116,7 @@ VITE_KEYWORDS =
 
 通过 `pnpm run dev` 命令启动项目后会在 public 目录下生成一个 api 目录，这个目录是用于存放请求 API 数据的，这个目录中的数据如果存在则会在打包时出现文件重复的问题，所以需要将这个目录添加到 Git 忽略文件中
 
-## 配置文件（Configuration.js）
+## 配置文件（config.yml）
 
 这里面存放就是展示的信息了 (￣y▽,￣)╭ ，文件里面基本都有注释，看着改就行了，下面挑一些需要说的
 
@@ -137,12 +135,11 @@ VITE_KEYWORDS =
 
 这个就谈谈 `info` 中的配置：
 
-```javascript
-{
-    name: 'GitHub',
-    icon: 'icon-GitHub',
-    url: 'https://github.com/ximuliunian'
-}
+```yaml
+social:
+  - name: "平台名称" # 如：GitHub
+    icon: "图标代码" # 如：icon-GitHub（需使用内置图标库名称）
+    url: "链接地址" # 如：https://github.com/yourname
 ```
 
 name：展示的名字
@@ -151,7 +148,7 @@ icon：iconfont图标库软件，[#具体点我](#图标选择)
 
 url：这是点击按钮需要跳转的链接
 
-### 站点内部
+### 站内导航
 
 参考社交链接……
 
@@ -163,13 +160,11 @@ url：这是点击按钮需要跳转的链接
 
 GitHub：https://github.com/tandpfun/skill-icons
 
-GitCode：https://gitcode.com/gh_mirrors/sk/skill-icons
-
-这个项目收录了很多常用的技术栈图标，具体有什么图标可以通过上面的链接查看一番（建议使用GitCode国内快）。具体详情什么的这里不做赘述。使用的时候进入项目找到图标对应的关键字，如下图：
+这个项目收录了很多常用的技术栈图标，具体有什么图标可以通过上面的链接查看一番。具体详情什么的这里不做赘述。使用的时候进入项目找到图标对应的关键字，如下图：
 
 ![image-20241207234847615](md.image/README/image-20241207234847615.png)
 
-然后把关键字加入 list 配置中即可
+然后把关键字加入 `skills > list` 配置中即可
 
 ### 图标选择
 
@@ -189,19 +184,17 @@ GitCode：https://gitcode.com/gh_mirrors/sk/skill-icons
    
 4. 最后在需要使用图标的地方的 icon 选项内使用自己的即可
 
-``` javascript
-{
-    name: 'bilibili',
-    url: 'https://space.bilibili.com/1304924540',
-    icon: 'icon-bilibili'
-}
+``` yaml
+- name: "bilibili"
+  icon: "icon-bilibili" # 推荐使用内置图标
+  url: "https://space.bilibili.com/1304924540"
 ```
 
 ### ICP 备案
 
 这个因为我有这个需求，在对应的站点展示或者不展示对应的ICP号。`domain` 里面填写顶级域（如：`xxx.com`），后面的 `info` 填写对应的备案号
 
-## 评论配置
+### 评论配置
 
 这个项目的评论系统我是集成的 Giscus 这个项目，它的原理就是利用 GitHub
 的 [Discussions](https://docs.github.com/cn/discussions) 功能，这里不做过多的赘述，可以自行查找资料。使用的时候跟着他的官网内的教程就可以了。
@@ -230,6 +223,126 @@ data-repo = 仓库
 data-repo-id = 仓库ID
 data-category = 分类
 data-category-id = 分类ID
+
+### 闲言碎语
+
+这个配置的是闲言碎语页面中的内容，其中有两个主要的配置
+
+第一个是设置，它是用来管理你自己书写的内容的展示和拉取权限的
+
+第二个是关联链接，如果有别人也使用了该项目，并且他也书写了闲言碎语的内容，那么你只需要把他的网站域名添加到该配置中即可拉取他的闲言碎语内容
+
+#### 闲言碎语书写
+
+在根目录中的 `config` 的文件夹中有 `gossip` 文件夹，请在那里面创建一个 `json` 文件即可，文件名称自定义，但在文件中按照下方模板填写内容
+
+```json
+{
+  "info": {
+    "id": "（yyyy/MM/dd）-（今天的第几条内容）：2024.12.19-0"
+  },
+  "date": "（yyyy/MM/dd）：2000/01/01",
+  "content": [
+    "p:今天是个好天气，但是不是一个好日子……"
+  ]
+}
+```
+
+
+
+对于 `content` 中书写内容的前缀在以下表格中，对于展示内容需要使用一些简单的语法格式，项目会自动编译成 HTML 代码，目前所支持的格式有
+
+| 格式      | 标签                                         |
+| --------- | -------------------------------------------- |
+| "h1:xxx"  | 一级标题                                     |
+| "h2:xxx"  | 二级标题                                     |
+| "h3:xxx"  | 三级标题                                     |
+| "p:xxx"   | 正常文本                                     |
+| "img:xxx" | 图片内容，xxx 为图片链接（也可以是相对路径） |
+| "ol:xxx"  | 有序列表                                     |
+| "ul:xxx"  | 无序列表                                     |
+
+例子：
+
+```js
+{
+    ...
+    content: [
+    	"p:今天是个好日子",
+     	"p:希望明天不要是一个坏天气",
+       	"img:xxxxxxx"
+    ]
+    ...
+}
+```
+
+### 友链
+
+这个配置中有两个模块分别控制着友链界面的介绍内容和分类
+
+```yaml
+# ================ 友链高级配置 ================
+_friendLinks:
+  description:
+    - "p:段落文本" # 支持HTML段落
+    - "img:/img/图片路径" # 插入图片
+    # 示例：
+    # - "p:欢迎交换友情链接！"
+    # - "img:/img/friendlinks-banner.png"
+
+  scheme: # 本站信息（供他人申请友链时参考）
+    name: "站点名称" # 如：曦暮流年
+    url: "https://yoursite.com"
+    avatar: "头像URL"
+    desc: "站点简介"
+    bgColor: "#颜色代码" # 如：#8bfdd4
+
+  require: # 友链申请要求
+    - "ol:要求描述" # 有序列表项
+    # 示例：
+    # - "ol:站点需稳定运行超过3个月"
+    # - "p:其他说明文字"
+
+  links: # 友链分类（按需添加）
+    # 示例：
+    # - sort: "技术博客"
+    #   icon: "icon-zhineng"
+    # - sort: "创意设计"
+    #   icon: "icon-zhineng"
+```
+
+这里面最需要说的就是 `scheme` 内容。它是用来帮助交换友链的，这里面填写本站信息，然后别人就可以根据这些信息填写友链
+
+然后就是 `links` 这个里面放着的是友链的分类，这个没什么说的需要多少分类添加多少即可
+
+#### 添加友链
+
+在配置文件夹（config）下有一个 `friendLink` 的文件夹，在这个文件夹中创建 JSON 文件按照以下格式，那么在构建项目的时候会自己生成对应的信息。格式如下：
+
+```json
+{
+  "sorts": "测试",
+  "name": "曦暮流年",
+  "url": "https://www.ximuliunian.top",
+  "avatar": "https://www.ximuliunian.top/img/avatar.png",
+  "desc": "懒惰往往是创新的催化剂",
+  "bgColor": "#8bfdd4"
+}
+```
+
+| 字段    | 是否必填 | 介绍                                                         |
+| ------- | -------- | ------------------------------------------------------------ |
+| sorts   | 否       | 当前友链的分类，填写分类名即可（就是在配置文件中写的分类名）。<br />如果不写或者写的分类配置文件中没有那么都会归类到 “小伙伴们” 一栏 |
+| name    | 是       | 昵称                                                         |
+| url     | 是       | 网站链接                                                     |
+| avatar  | 是       | 头像链接                                                     |
+| desc    | 是       | 介绍或者座右铭                                               |
+| bgColor | 否       | 友链卡片背景颜色                                             |
+
+按照以上信息在目录中创建对应json文件即可
+
+- json文件随便命名没有要求
+- 可以创建多个文件夹，如：`friendLink > dir1`、`friendLink > dir2` 目录的深度不会影响友链的展示
 
 ## GitHub贪吃蛇贡献图
 
@@ -287,124 +400,6 @@ jobs:
 >
 > 修改权限：依次点击仓库的 Settings -> Actions -> General 拉到最下面 找到 "Workflow permissions" 选择 Read and write
 > permissions 点击保存
-
-## 配置文件（ GossipConfiguration.js ）
-
-这个配置文件中存放的是闲言碎语中的配置内容，其中有两个主要的配置
-
-第一个是设置，它是用来管理你自己书写的内容的展示和拉取权限的
-
-第二个是关联链接，如果有别人也使用了该项目，并且他也书写了闲言碎语的内容，那么你只需要把他的网站域名添加到该配置中即可拉取他的闲言碎语内容
-
-### 闲言碎语书写
-
-在根目录中的 `config` 的文件夹中有 `gossip` 文件夹，请在那里面创建一个 `json` 文件即可，文件名称自定义，但在文件中按照下方模板填写内容
-
-```json
-{
-  "info": {
-    "id": "（yyyy/MM/dd）-（今天的第几条内容）：2024.12.19-0"
-  },
-  "date": "（yyyy/MM/dd）：2000/01/01",
-  "content": [
-    "p:今天是个好天气，但是不是一个好日子……"
-  ]
-}
-```
-
-
-
-对于 `content` 中书写内容的前缀在以下表格中，对于展示内容需要使用一些简单的语法格式，项目会自动编译成 HTML 代码，目前所支持的格式有
-
-| 格式      | 标签                                         |
-| --------- | -------------------------------------------- |
-| "h1:xxx"  | 一级标题                                     |
-| "h2:xxx"  | 二级标题                                     |
-| "h3:xxx"  | 三级标题                                     |
-| "p:xxx"   | 正常文本                                     |
-| "img:xxx" | 图片内容，xxx 为图片链接（也可以是相对路径） |
-| "ol:xxx"  | 有序列表                                     |
-| "ul:xxx"  | 无序列表                                     |
-
-例子：
-
-```js
-{
-    ...
-    content: [
-    	"p:今天是个好日子",
-     	"p:希望明天不要是一个坏天气",
-       	"img:xxxxxxx"
-    ]
-    ...
-}
-```
-
-## 配置文件（ FriendLinks.js）
-
-这个是友人帐（友链）的配置文件。这个配置中有两个模块分别控制着友链界面的介绍内容和分类
-
-```js
-export const friendLinks = {
-    apply: {
-        description: [
-            "p:使用本站特定语法书写介绍内容"
-        ],
-        scheme: {
-            name: "昵称",
-            url: "本站链接",
-            avatar: "头像",
-            desc: "个人介绍或者座右铭",
-            bgColor: "背景颜色"
-        },
-        require: [
-            "p:使用本站特定语法书写要求内容"
-        ],
-    },
-    links: [
-        {
-            sort: "分类名-1",
-            icon: "icon-xxx"
-        }, {
-            sort: "分类名-2",
-            icon: "icon-xxx"
-        }
-    ]
-}
-```
-
-`apply` 主要控制着展示的内容在这里面最需要说的就是 `scheme` 内容。它是用来帮助交换友链的，这里面填写本站信息，然后别人就可以根据这些信息填写友链
-
-然后就是 `links` 这个里面放着的是友链的分类这个没什么说的要多少分类添加多少即可
-
-### 添加友链
-
-在配置文件夹（config）下有一个 `friendLink` 的文件夹，在这个文件夹中创建 JSON 文件按照以下格式，那么在构建项目的时候会自己生成对应的信息。格式如下：
-
-```json
-{
-  "sorts": "测试",
-  "name": "曦暮流年",
-  "url": "https://www.ximuliunian.top",
-  "avatar": "https://www.ximuliunian.top/img/avatar.png",
-  "desc": "懒惰往往是创新的催化剂",
-  "bgColor": "#8bfdd4"
-}
-```
-
-| 字段    | 是否必填 | 介绍                                                         |
-| ------- | -------- | ------------------------------------------------------------ |
-| sorts   | 否       | 当前友链的分类，填写分类名即可（就是在配置文件中写的分类名）。<br />如果不写或者写的分类配置文件中没有那么都会归类到 “小伙伴们” 一栏 |
-| name    | 是       | 昵称                                                         |
-| url     | 是       | 网站链接                                                     |
-| avatar  | 是       | 头像链接                                                     |
-| desc    | 是       | 介绍或者座右铭                                               |
-| bgColor | 否       | 友链卡片背景颜色                                             |
-
-按照以上信息在目录中创建对应json文件即可
-
-- json文件随便命名没有要求
-- 可以创建多个文件夹，如：`friendLink > dir1`、`friendLink > dir2` 目录的深度不会影响友链的展示
 
 ## Vercel 部署
 

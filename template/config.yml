@@ -1,0 +1,168 @@
+# ================ 开关控制模块 ================
+enable:
+  # 路由板块开关
+  router:
+    comments: true # 是否启用留言板路由
+    gossip: true # 是否启用闲言碎语路由
+    friendLinks: true # 是否启用友链路由
+
+  # 主页模块开关
+  home:
+    avatar: true # 是否显示头像
+    motto: true # 是否显示座右铭
+    hitokoto: true # 是否显示一言
+    tags: true # 是否显示标签云
+    dateTime: true # 是否显示时钟
+    welcome: true # 是否显示欢迎语
+    social: true # 是否显示社交链接
+    githubContribution: true # 是否显示GitHub贡献图
+    siteNavs: true # 是否显示网站导航
+    projects: true # 是否显示项目展示
+    skills: true # 是否显示技术栈
+
+  # 留言板模块开关
+  comments:
+    banner: true # 是否显示横幅
+    bannerText: true # 是否显示横幅文本
+
+  # 友链模块开关
+  friendLinks:
+    description: true # 是否显示友链简介
+
+# ================ 个人信息配置 ================
+name: "您的昵称" # 显示在页面的昵称（必填）
+
+avatar: "img/avatar.png" # 头像路径（存放在/public/img/目录下）
+description: "您的个人简介" # 简短的个人介绍（建议20字内）
+
+# 头像状态标签
+avatar_status:
+  icon: "✨" # 状态图标（使用Windows徽标键+>打开emoji选择器）
+  text: "状态标签" # 状态文字（建议3-4个汉字）
+
+# ================ 座右铭配置 ================
+motto:
+  top: "上句内容," # 座右铭上半句
+  bottom: "下句内容." # 座右铭下半句
+
+# ================ 个人标签 ================
+tags:
+  - "标签1" # 个人标签（按需添加多个）
+  - "标签2"
+  - "标签3"
+  # 示例标签（可删除）：
+  # - "前端开发"
+  # - "游戏爱好者"
+  # - "音乐迷"
+
+# ================ 背景图片 ================
+background_image:
+  - "/img/background/1.png" # 背景图路径（至少需要一张）
+  - "/img/background/2.png" # 支持添加多张随机切换
+  # 注意：图片需先放入 /public/img/background/ 目录
+
+# ================ 社交链接 ================
+social:
+  - name: "平台名称" # 如：GitHub
+    icon: "图标代码" # 如：icon-GitHub（需使用内置图标库名称）
+    url: "链接地址" # 如：https://github.com/yourname
+
+  # 示例配置（可复制修改）：
+  # - name: "邮箱"
+  #   icon: "icon-youxiang"
+  #   url: "mailto:your@email.com"
+
+# ================ 站内导航 ================
+siteNavs:
+  - name: "导航名称" # 如：博客
+    icon: "图标代码" # 如：icon-blog
+    url: "链接地址" # 如：https://blog.yoursite.com
+
+  # 示例配置：
+  # - name: "云盘"
+  #   icon: "icon-yunpan"
+  #   url: "https://cloud.yoursite.com"
+
+# ================ 项目展示 ================
+projects:
+  - name: "项目名称"
+    icon: "图标代码" # 推荐使用内置图标
+    url: "项目链接"
+    description: "项目描述" # 简短描述（20字内）
+
+  # 示例：
+  # - name: "智能家居系统"
+  #   icon: "icon-zhineng"
+  #   url: "https://github.com/yourname/smart-home"
+  #   description: "基于物联网的智能控制方案"
+
+# ================ 技术栈图标 ================
+skills:
+  theme: "light" # 主题风格：light（亮色）/dark（暗色）
+  list:
+    - "技术名称" # 从 skillicons.dev 选择有效名称
+    # 支持的技术列表参考：
+    # - "java"
+    # - "python"
+    # - "docker"
+    # - "vue"
+    # 完整列表：https://github.com/tandpfun/skill-icons
+
+# ================ ICP备案 ================
+icp:
+  - domain: "您的域名" # 如：yoursite.com
+    info: "备案号" # 如：京ICP备12345678号
+
+# ================ 评论系统 ================
+giscus:
+  repo: "username/repo" # GitHub仓库（格式：owner/repo）
+  repoId: "R_xxxxxxxxxx" # 仓库ID（在Giscus设置获取）
+  category: "分类名称" # 如：Comments
+  categoryId: "DIC_xxxxxx" # 分类ID
+  theme: "light" # 主题风格
+
+# ================ 留言板配置 ================
+_comment:
+  cover: "/img/reviewCover.png" # 封面图路径
+  title: "留言板标题" # 如：访客留言
+  description: "留言板描述" # 显示在顶部的描述文字
+
+# ================ 友链高级配置 ================
+_friendLinks:
+  description:
+    - "p:段落文本" # 支持HTML段落
+    - "img:/img/图片路径" # 插入图片
+    # 示例：
+    # - "p:欢迎交换友情链接！"
+    # - "img:/img/friendlinks-banner.png"
+
+  scheme: # 本站信息（供他人申请友链时参考）
+    name: "站点名称" # 如：曦暮流年
+    url: "https://yoursite.com"
+    avatar: "头像URL"
+    desc: "站点简介"
+    bgColor: "#颜色代码" # 如：#8bfdd4
+
+  require: # 友链申请要求
+    - "ol:要求描述" # 有序列表项
+    # 示例：
+    # - "ol:站点需稳定运行超过3个月"
+    # - "p:其他说明文字"
+
+  links: # 友链分类（按需添加）
+    # 示例：
+    # - sort: "技术博客"
+    #   icon: "icon-zhineng"
+    # - sort: "创意设计"
+    #   icon: "icon-zhineng"
+
+# ================ 闲言碎语配置 ================
+_gossip:
+  settings:
+    public: 0 # 0=任何人都可以拉取我的内容/1=只有我关联的人可以拉取我的内容
+    internalDisplay: 0 # 0=可以展示所有人的内容/1=只能展示关联我的人的内容
+
+  links: # 关联站点（需完整URL）
+    # 示例：
+    # - "https://friend-site.com"
+    # - "https://another-site.net"

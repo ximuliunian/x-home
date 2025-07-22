@@ -1,10 +1,10 @@
 <template>
   <div class="comment">
     <PastTop/>
-    <div :style="{backgroundImage: 'url(' + config.comment.cover + ')'}" class="header">
-      <div>
-        <h1>{{ config.comment.title }}</h1>
-        <p>{{ config.comment.description }}</p>
+    <div :style="{backgroundImage: 'url(' + config._comment.cover + ')'}" v-if="config.enable.comments.banner" class="header">
+      <div v-if="config.enable.comments.bannerText">
+        <h1>{{ config._comment.title }}</h1>
+        <p>{{ config._comment.description }}</p>
       </div>
     </div>
     <Router/>
@@ -16,11 +16,9 @@
 
 <script setup>
 import Router from "@/components/Router.vue";
-import { inject } from "vue";
 import PastTop from "@/components/PastTop.vue";
 import Comment from "@/components/comment.vue";
-// 全局配置
-const config = inject('config')
+import config from 'virtual:yaml-config';
 </script>
 
 <style scoped>

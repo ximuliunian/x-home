@@ -6,9 +6,8 @@
 
 <script setup>
 import Section from "@/components/Section.vue";
-import { computed, inject, onMounted, ref } from "vue";
-// 全部配置
-const config = inject('config')
+import { computed, onMounted, ref } from "vue";
+import config from 'virtual:yaml-config';
 // URL
 const url = 'https://skillicons.dev/icons';
 // 展示个数

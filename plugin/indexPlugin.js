@@ -1,11 +1,9 @@
-import { config } from '../../source/Configuration';
-import { friendLinks } from '../../source/FriendLinks';
-import { gossipConfig } from "../../source/GossipConfiguration";
 import fs from 'fs';
 import path from 'path';
 import generateMainConfig from './generateMainConfig';
 import generateGossipConfig from './generateGossipConfig';
 import generateFriendLinksConfig from './generateFriendLinksConfig';
+import { loadYamlConfig } from './yamlConfigPlugin';
 
 // 源文件路径
 export const sourcePath = {
@@ -44,14 +42,17 @@ function generateStaticFiles() {
     // 确保输出目录存在
     existsDir();
 
+    // 加载 YAML 配置
+    const config = loadYamlConfig();
+
     // 构建主配置
     generateMainConfig(config);
 
     // 构建友链配置
-    generateFriendLinksConfig(friendLinks);
+    generateFriendLinksConfig(config._friendLinks);
 
     // 构建闲言碎语配置
-    generateGossipConfig(gossipConfig);
+    generateGossipConfig(config._gossip);
 }
 
 // 更新 ApiDir 状态

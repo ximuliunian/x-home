@@ -11,9 +11,7 @@
 </template>
 
 <script setup>
-import { inject } from "vue";
-// 全局配置
-const config = inject('config')
+import config from 'virtual:yaml-config';
 
 defineProps(['flag']);
 </script>
@@ -27,7 +25,7 @@ defineProps(['flag']);
   height: 100%;
   z-index: 999;
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.7); /* 添加背景色保证半透明效果 */
+  background: rgb(80, 80, 80);
 
   .loader {
     width: 100%;

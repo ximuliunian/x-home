@@ -2,7 +2,7 @@ import { apiDir, findAndReadJsonFiles, findAndReadJsonFilesType, sourcePath, spl
 
 export default (friendLinks) => {
     // 获取友链配置所有分类
-    const sorts = new Set(friendLinks.links.map(link => link.sort));
+    const sorts = new Set(friendLinks.links?.map(link => link.sort));
 
     // 查找并读取所有JSON文件
     const jsonFilesWithContent = [];

@@ -1,5 +1,5 @@
 {
-  "sorts": "测试",  // 分类 - 可选
+  "sorts": "测试",  // 分类（在配置文件中写的分类名） - 可选
   "name": "曦暮流年",   // 名称
   "url": "https://www.ximuliunian.top",   // 网址
   "avatar": "https://www.ximuliunian.top/img/avatar.png",   // 头像

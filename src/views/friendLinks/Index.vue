@@ -1,13 +1,13 @@
 <template>
-    <PastTop />
     <div class="friendLinks">
-        <div class="description">
+        <PastTop />
+        <div class="description" v-if="config.enable.friendLinks.description">
             <h1 style="border-bottom: 3px dashed #ccc; padding-bottom: 10px">
                 <Icon icon="icon-sys-ya" height="38px" width="38px" />
                 友人帐
             </h1>
             <div class="description-content">
-                <ContentView :contents="friendLinks.apply.description" img-height="200px" img-inline-block />
+                <ContentView :contents="friendLinks.description" img-height="200px" img-inline-block />
             </div>
         </div>
 
@@ -43,27 +43,27 @@
                         <tr>
                             <td>名称</td>
                             <td>是</td>
-                            <td>{{ friendLinks.apply.scheme.name }}</td>
+                            <td>{{ friendLinks.scheme.name }}</td>
                         </tr>
                         <tr>
                             <td>简介</td>
                             <td>是</td>
-                            <td>{{ friendLinks.apply.scheme.desc }}</td>
+                            <td>{{ friendLinks.scheme.desc }}</td>
                         </tr>
                         <tr>
                             <td>链接</td>
                             <td>是</td>
-                            <td>{{ friendLinks.apply.scheme.url }}</td>
+                            <td>{{ friendLinks.scheme.url }}</td>
                         </tr>
                         <tr>
                             <td>头像</td>
                             <td>是</td>
-                            <td>{{ friendLinks.apply.scheme.avatar }}</td>
+                            <td>{{ friendLinks.scheme.avatar }}</td>
                         </tr>
                         <tr>
                             <td>背景颜色</td>
                             <td>否</td>
-                            <td>{{ friendLinks.apply.scheme.bgColor }}</td>
+                            <td>{{ friendLinks.scheme.bgColor }}</td>
                         </tr>
                     </table>
                 </div>
@@ -73,7 +73,7 @@
                 申请要求
             </h1>
             <div class="description-content">
-                <ContentView :contents="friendLinks.apply.require" img-height="200px" img-inline-block />
+                <ContentView :contents="friendLinks.require" img-height="200px" img-inline-block />
             </div>
         </div>
 
@@ -87,17 +87,18 @@
 import Router from "@/components/Router.vue";
 import Icon from "@/components/Icon.vue";
 import ContentView from "@/components/contentView/ContentView.vue";
-import { friendLinks } from "../../../../source/FriendLinks.js";
-import { inject, onMounted, reactive, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import Section from "@/components/Section.vue";
 import PastTop from "@/components/PastTop.vue";
 import commonlyFunctions from "@/composition/commonlyFunctions.js";
 import { getSorted } from "@/api/friendLinkAPI.js";
 import Comment from "@/components/comment.vue";
 import { getFriendLink } from "@/api/rootAPI.js";
+import config from 'virtual:yaml-config';
 
 // 全局配置
-const config = inject("config");
+const friendLinks = config._friendLinks;
+
 // 友链列表
 const list = reactive([]);
 // 分组
@@ -106,7 +107,7 @@ const links = ref({});
 onMounted(() => {
     // 遍历所有分类
     links.notSorted = { sort: '小伙伴们', icon: 'icon-sys-ya', list: [] }
-    friendLinks.links.forEach(link => links[link.sort] = { ...link, list: [] })
+    friendLinks.links?.forEach(link => links[link.sort] = { ...link, list: [] })
 
     getFriendLink().then(respFriendLink => {
         for (const e of respFriendLink) {

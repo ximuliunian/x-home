@@ -1,8 +1,10 @@
-import { gossipConfig } from "../../../source/GossipConfiguration.js";
+// import { gossipConfig } from "../../../source/GossipConfiguration.js";
 import { getGossipMain, getGossipMainByUrl, getMainByUrl } from "@/api/rootAPI.js";
 import { reactive } from "vue";
 import commonlyFunctions from "@/composition/commonlyFunctions.js";
 import localStorage from "@/composition/localStorage.js";
+import config from 'virtual:yaml-config';
+
 // 初始化访问数据
 const initQueryData = async () => {
     // 清空外传缓存
@@ -24,7 +26,7 @@ const initQueryData = async () => {
     const shield = localStorage.getContent(localStorage.menu.GOSSIP_SHIELD) || [];
 
     // 请求域主关联的人的主文件
-    gossipConfig.links.forEach(link => getGossipMainByUrl(link).then(resp => {
+    config._gossip.links?.forEach(link => getGossipMainByUrl(link).then(resp => {
         if (resp == 'error') return
         rawData[new URL(link).origin] = resp
         // 主文件没请求下来不需要处理数据
@@ -44,7 +46,7 @@ function handleGossipContentListData(data) {
         const d = data[key];
 
         // 如果条件成立，则需要去人家的关联人列表中看看自己是否存在
-        if (d.settings.public == 1 || gossipConfig.settings.internalDisplay == 1) {
+        if (d.settings.public == 1 || config._gossip.settings.internalDisplay == 1) {
 
             // 看看有没有缓存
             if (gossipPublic && gossipPublic[key]) {
@@ -62,13 +64,13 @@ function handleGossipContentListData(data) {
 
                 // 如果循环下来开关还是 true 则代表 “我” 不在请求人的关联人列表中
                 if (flag) {
-                    gossipPublic[key] = {flag: false}
+                    gossipPublic[key] = { flag: false }
                     continue
-                } else gossipPublic[key] = {flag: true}
+                } else gossipPublic[key] = { flag: true }
             }
         } else {
             // 不是 1 的话那么就是 0,表示所有人都可以拉取
-            gossipPublic[key] = {flag: true}
+            gossipPublic[key] = { flag: true }
         }
 
         // 保存缓存
@@ -101,7 +103,7 @@ const initUserInfoData = () => {
     })
 
     // 请求域主关联的人的主文件
-    gossipConfig.links.forEach(link => getMainByUrl(link).then(resp => {
+    config._gossip.links?.forEach(link => getMainByUrl(link).then(resp => {
         if (resp == 'error') return
         resp.avatar = `${link}/${resp.avatar}`
         userInfo[new URL(link).origin] = resp
