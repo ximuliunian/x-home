@@ -1,28 +1,44 @@
 <template>
     <container :height="height" :title="title" :width="width">
-        <span v-for="(item, index) in barrageList" :key="index" :data-id="item.text + item.top"
-            :style="{ top: item.top + 'px' }" class="tags-content"
+        <span
+            v-for="(item, index) in barrageList"
+            :key="index"
+            :data-id="item.text + item.top"
+            :style="{ top: item.top + 'px', background: item.gradient }"
+            class="tags-content"
             @animationend="removeBarrage($event, item.text + item.top)"
-            @blur="removeBarrage($event, item.text + item.top)">
+            @blur="removeBarrage($event, item.text + item.top)"
+        >
             {{ item.text }}
         </span>
     </container>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
-import useLCG from "@/composition/useLCG.js";
+import { onMounted, ref } from "vue";
+import useLCG from "@/composition/useLCG";
 import Container from "@/components/Container.vue";
-import config from 'virtual:yaml-config';
+import config from "virtual:yaml-config";
 
 // 标题
-const title = '标签';
+const title = "标签";
 // 宽度
-const width = '100%';
+const width = "100%";
 // 高度
-const height = '160px';
+const height = "160px";
 // 弹幕生成时间
 const barrageTime = 1500;
+
+// 渐变色列表
+const gradients = [
+    "linear-gradient(135deg, #6e8efb, #a777e3)",
+    "linear-gradient(135deg, #f093fb, #f5576c)",
+    "linear-gradient(135deg, #4facfe, #00f2fe)",
+    "linear-gradient(135deg, #43e97b, #38f9d7)",
+    "linear-gradient(135deg, #fa709a, #fee140)",
+    "linear-gradient(135deg, #a18cd1, #fbc2eb)",
+    "linear-gradient(135deg, #ff9a9e, #fecfef)",
+];
 
 // 弹幕列表
 const barrageList = ref([]);
@@ -47,14 +63,22 @@ function createBarrage() {
     const text = config.tags[index];
 
     // 获取展示位置
-    let position = randomInt(0, (containerHeight - 30));
+    let position = randomInt(0, containerHeight - 30);
     // 弹幕高度大概在30左右，如果这次生成的位置和上一次的位置差不多，就重新生成
     while (Math.abs(position - lastPosition) < 30) {
-        position = randomInt(0, (containerHeight - 30));
+        position = randomInt(0, containerHeight - 30);
     }
     lastPosition = position;
 
-    barrageList.value.push({ id: text + position, text, top: position });
+    // 随机选择一个渐变色
+    const gradient = gradients[randomInt(0, gradients.length - 1)];
+
+    barrageList.value.push({
+        id: text + position,
+        text,
+        top: position,
+        gradient,
+    });
 }
 
 // 移除弹幕元素
@@ -75,11 +99,11 @@ onMounted(() => {
     // 切换窗口时清空弹幕
     window.onblur = (e) => {
         barrageList.value = [];
-    }
+    };
     // 切换窗口时清空弹幕
     window.onfocus = (e) => {
         barrageList.value = [];
-    }
+    };
 });
 </script>
 
@@ -87,7 +111,6 @@ onMounted(() => {
 .tags-content {
     display: inline-block;
     padding: 6px 12px;
-    background: linear-gradient(135deg, #6e8efb, #a777e3);
     color: white;
     border-radius: 50px;
     position: absolute;
@@ -101,12 +124,6 @@ onMounted(() => {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
     z-index: 5;
-}
-
-.tags-content:hover {
-    transform: scale(1.1);
-    z-index: 10;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 @keyframes moveLeft {

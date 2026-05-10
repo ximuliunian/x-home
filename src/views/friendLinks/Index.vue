@@ -1,26 +1,39 @@
 <template>
     <div class="friendLinks">
-        <PastTop />
         <div class="description" v-if="config.enable.friendLinks.description">
             <h1 style="border-bottom: 3px dashed #ccc; padding-bottom: 10px">
                 <Icon icon="icon-sys-ya" height="38px" width="38px" />
                 友人帐
             </h1>
             <div class="description-content">
-                <ContentView :contents="friendLinks.description" img-height="200px" img-inline-block />
+                <ContentView
+                    :contents="friendLinks.description"
+                    img-height="200px"
+                    img-inline-block
+                />
             </div>
         </div>
 
         <Router />
 
-        <Section :title="item.sort" :icon="item.icon" v-for="(item, key) in list" :key="key">
+        <Section
+            :title="item.sort"
+            :icon="item.icon"
+            v-for="(item, key) in list"
+            :key="key"
+        >
             <div class="links-container">
-                <div class="links" :style="{ backgroundColor: list.bgColor }" v-for="(list, index) in item.list"
-                    :key="index" @click="commonlyFunctions.openLink(list.url, true)">
-                    <img :src="list.avatar" alt="假装有一张图片">
+                <div
+                    class="links"
+                    :style="{ backgroundColor: item.bgColor }"
+                    v-for="(link, index) in item.list"
+                    :key="index"
+                    @click="commonlyFunctions.openLink(link.url, true)"
+                >
+                    <img :src="link.avatar" alt="假装有一张图片" />
                     <div class="info">
-                        <span>{{ list.name }}</span>
-                        <span>{{ list.desc }}</span>
+                        <span>{{ link.name }}</span>
+                        <span>{{ link.desc }}</span>
                     </div>
                 </div>
                 <i v-for="i in 2" class="placeholder"></i>
@@ -73,7 +86,11 @@
                 申请要求
             </h1>
             <div class="description-content">
-                <ContentView :contents="friendLinks.require" img-height="200px" img-inline-block />
+                <ContentView
+                    :contents="friendLinks.require"
+                    img-height="200px"
+                    img-inline-block
+                />
             </div>
         </div>
 
@@ -81,57 +98,65 @@
             <Comment />
         </div>
     </div>
+
+    <Teleport to="body">
+        <PastTop />
+    </Teleport>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Router from "@/components/Router.vue";
 import Icon from "@/components/Icon.vue";
 import ContentView from "@/components/contentView/ContentView.vue";
 import { onMounted, reactive, ref } from "vue";
 import Section from "@/components/Section.vue";
 import PastTop from "@/components/PastTop.vue";
-import commonlyFunctions from "@/composition/commonlyFunctions.js";
-import { getSorted } from "@/api/friendLinkAPI.js";
+import commonlyFunctions from "@/composition/commonlyFunctions";
+import { getSorted, type LinkItem } from "@/api/friendLinkAPI";
 import Comment from "@/components/comment.vue";
-import { getFriendLink } from "@/api/rootAPI.js";
-import config from 'virtual:yaml-config';
+import { getFriendLink } from "@/api/rootAPI";
+import config from "virtual:yaml-config";
 
-// 全局配置
+interface LinkGroup {
+    sort: string;
+    icon: string;
+    list: LinkItem[];
+    bgColor?: string;
+}
+
 const friendLinks = config._friendLinks;
-
-// 友链列表
-const list = reactive([]);
-// 分组
-const links = ref({});
+const list = reactive<LinkGroup[]>([]);
+const links = ref<Record<string, LinkGroup>>({});
 
 onMounted(() => {
-    // 遍历所有分类
-    links.notSorted = { sort: '小伙伴们', icon: 'icon-sys-ya', list: [] }
-    friendLinks.links?.forEach(link => links[link.sort] = { ...link, list: [] })
+    links.value.notSorted = { sort: "小伙伴们", icon: "icon-sys-ya", list: [] };
+    friendLinks.links?.forEach((link: { sort: string; icon: string }) => {
+        links.value[link.sort] = { ...link, list: [] };
+    });
 
-    getFriendLink().then(respFriendLink => {
+    getFriendLink().then((respFriendLink: string[]) => {
         for (const e of respFriendLink) {
-            getSorted(e).then(resp => {
-                let sort = e.split('.')[0].split('-')[0];
-                addList(sort, resp, list.some(fl => fl.sort == sort))
-            })
+            getSorted(e).then((resp: LinkItem[]) => {
+                const sort = e.split(".")[0].split("-")[0];
+                addList(
+                    sort,
+                    resp,
+                    list.some((fl) => fl.sort == sort),
+                );
+            });
         }
-    })
+    });
 });
 
-// 添加元素到list
-function addList(sort, array, isCreate) {
-    // 判断这个分类是否已经存在
+function addList(sort: string, array: LinkItem[], isCreate: boolean): void {
     if (isCreate) {
-        // 存在则加入
-        for (let listKey in list) {
+        for (const listKey in list) {
             if (list[listKey].sort == sort) {
                 list[listKey].list.push(...array);
             }
         }
     } else {
-        // 不存在则创建
-        let e = links[sort];
+        const e = links.value[sort];
         e.list.push(...array);
         list.push(e);
     }
@@ -139,7 +164,6 @@ function addList(sort, array, isCreate) {
 </script>
 
 <style scoped>
-/* 信息 */
 .info {
     margin-left: 15px;
     display: flex;
@@ -166,12 +190,10 @@ function addList(sort, array, isCreate) {
     }
 }
 
-/* 占位符 */
 .placeholder {
     width: 33%;
 }
 
-/* 链接 */
 .links {
     width: 32%;
     display: flex;
@@ -201,7 +223,6 @@ function addList(sort, array, isCreate) {
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* 链接容器 */
 .links-container {
     display: flex;
     flex-wrap: wrap;
@@ -209,7 +230,6 @@ function addList(sort, array, isCreate) {
     gap: 10px;
 }
 
-/* 表格容器 */
 .table-container {
     overflow-x: auto;
     border-radius: 10px;
@@ -218,32 +238,24 @@ function addList(sort, array, isCreate) {
 
 .table-container::-webkit-scrollbar {
     -ms-overflow-style: auto;
-    /* IE and Edge */
     scrollbar-width: auto;
-    /* Firefox */
     height: 8px;
-    /* 滚动条高度 */
 }
 
 .table-container::-webkit-scrollbar-track {
     background: #f1f1f1;
-    /* 滚动条轨道背景色 */
     border-radius: 4px;
 }
 
 .table-container::-webkit-scrollbar-thumb {
     background: #888;
-    /* 滚动条滑块背景色 */
     border-radius: 4px;
-    /* 滑块圆角 */
 }
 
 .table-container::-webkit-scrollbar-thumb:hover {
     background: #555;
-    /* 滑块悬停时的背景色 */
 }
 
-/* 表格 */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -277,7 +289,6 @@ tr:hover {
     background-color: rgba(226, 232, 240, 0.3);
 }
 
-/* 描述内容 */
 .description-content {
     margin-top: 15px;
     font-size: 16px;
@@ -285,7 +296,6 @@ tr:hover {
     color: #4a5568;
 }
 
-/* 描述 */
 .description {
     background-color: rgba(255, 255, 255, 0.7);
     border-radius: 12px;
@@ -299,13 +309,11 @@ tr:hover {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
-/* 友链 */
 .friendLinks {
     width: 80%;
     margin: 0 auto;
 }
 
-/* 当屏幕宽度小于 800 时 */
 @media only screen and (max-width: 800px) {
     .links {
         width: 48%;
@@ -320,7 +328,6 @@ tr:hover {
     }
 }
 
-/* 当屏幕宽度小于 500 时 */
 @media only screen and (max-width: 500px) {
     .links {
         width: 100%;

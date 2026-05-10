@@ -1,28 +1,38 @@
 <template>
     <Loading :flag="loadingFlag" />
-    <div id="background-image" :style="{ backgroundImage: 'url(' + backgroundImage + ')' }">
+    <div
+        id="background-image"
+        :style="{ backgroundImage: 'url(' + backgroundImage + ')' }"
+    >
         <div class="mask-layer"></div>
     </div>
     <div class="container">
-        <router-view v-slot="{ Component }">
-            <transition name="fade">
-                <component :is="Component" />
+        <router-view v-slot="{ Component, route }">
+            <transition name="page" mode="out-in">
+                <div :key="route.path" class="page-transition-wrapper">
+                    <component :is="Component" />
+                </div>
             </transition>
         </router-view>
     </div>
     <footer class="siteInfo">
-        <span> <a href="https://github.com/ximuliunian/xmln-home">曦暮流年 © {{ year }}</a> </span>
-        <span v-if="icp"> | <a href="https://beian.miit.gov.cn">{{ icp }}</a> </span>
+        <span>
+            <a href="https://github.com/ximuliunian/xmln-home"
+                >曦暮流年 © {{ year }}</a
+            >
+        </span>
+        <span v-if="icp">
+            | <a href="https://beian.miit.gov.cn">{{ icp }}</a>
+        </span>
     </footer>
 </template>
 <script setup>
-import useLCG from "@/composition/useLCG.js";
+import useLCG from "@/composition/useLCG";
 import Loading from "@/components/loading.vue";
 import { computed, onMounted, ref } from "vue";
-import { localStorageInit } from "@/composition/localStorage.js";
-import gossip from "@/composition/gossip.js";
-import config from 'virtual:yaml-config';
-
+import { localStorageInit } from "@/composition/localStorage";
+import gossip from "@/composition/gossip";
+import config from "virtual:yaml-config";
 
 // 年份
 const year = new Date().getFullYear();
@@ -33,14 +43,14 @@ let loadingFlag = ref(false);
 
 onMounted(() => {
     // 本地存储初始化
-    localStorageInit()
+    localStorageInit();
 
     // 初始化用户信息列表
-    gossip.initUserInfoData(config._gossip)
+    gossip.initUserInfoData(config._gossip);
 
     // 初始化访问数据
-    gossip.initQueryData(config._gossip)
-})
+    gossip.initQueryData(config._gossip);
+});
 
 // ICP备案号
 const icp = computed(() => {
@@ -51,47 +61,48 @@ const icp = computed(() => {
             return item.info;
         }
     }
-})
+});
 
 // 随机选取背景图片
 let backgroundImage = computed(() => {
     const size = randomInt(0, config.background_image.length - 1);
-    return config.background_image[size]
+    return config.background_image[size];
 });
 
 // 背景图片加载判断
 const imageLoad = new Image();
 imageLoad.src = backgroundImage.value;
-imageLoad.onload = () => loadingFlag.value = true
-
+imageLoad.onload = () => (loadingFlag.value = true);
 </script>
 
 <style scoped>
-.fade-enter-from {
+.page-enter-active {
+    transition: all 0.4s ease-out;
+}
+
+.page-leave-active {
+    transition: all 0.3s ease-in;
+}
+
+.page-enter-from {
     opacity: 0;
-    transform: translateX(-50%);
+    transform: translateY(15px);
 }
 
-.fade-enter-to {
-    transform: translateX(0%);
+.page-enter-to {
     opacity: 1;
+    transform: translateY(0);
 }
 
-.fade-leave-active,
-.fade-enter-active {
-    transition: all 0.5s ease-out;
-}
-
-.fade-leave-from {
-    transform: translateX(0%);
+.page-leave-from {
     opacity: 1;
+    transform: translateY(0);
 }
 
-.fade-leave-to {
-    transform: translateX(50%);
+.page-leave-to {
     opacity: 0;
+    transform: translateY(-10px);
 }
-
 
 /* 容器 */
 .container {
@@ -99,6 +110,12 @@ imageLoad.onload = () => loadingFlag.value = true
     padding-bottom: 40px;
     max-width: 1200px;
     margin: 0 auto;
+}
+
+/* 页面过渡包装器 */
+.page-transition-wrapper {
+    width: 100%;
+    display: block;
 }
 
 /* 页脚 */

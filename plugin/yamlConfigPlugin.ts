@@ -2,8 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
 
-// 抽取的YAML加载方法 (可被其他插件调用)
-export function loadYamlConfig(configPath= '../source/config.yml', baseDir = process.cwd()) {
+export function loadYamlConfig(configPath = '../source/config.yml', baseDir = process.cwd()) {
     const fullPath = path.resolve(baseDir, configPath);
     if (!fs.existsSync(fullPath)) {
         throw new Error(`YAML配置文件不存在: ${fullPath}`);
@@ -19,8 +18,7 @@ export default (configPath = '../source/config.yml') => {
     return {
         name: 'yaml-config-loader',
 
-        // 配置热更新
-        configureServer(server) {
+        configureServer(server: { watcher: { add: (arg0: string) => void; on: (arg0: string, arg1: (changedPath: string) => void) => void; }; ws: { send: (arg0: { type: string; path: string; }) => void; }; }) {
             const fullPath = path.resolve(process.cwd(), configPath);
 
             server.watcher.add(fullPath);
@@ -34,15 +32,14 @@ export default (configPath = '../source/config.yml') => {
             });
         },
 
-        resolveId(id) {
+        resolveId(id: string) {
             if (id === virtualModuleId) {
                 return resolvedVirtualModuleId;
             }
         },
 
-        load(id) {
+        load(id: string) {
             if (id === resolvedVirtualModuleId) {
-                // 使用抽取的方法加载配置
                 const config = loadYamlConfig(configPath);
                 return `export default ${JSON.stringify(config)}`;
             }

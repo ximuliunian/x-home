@@ -18,7 +18,7 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Motto from "@/views/home/sidebar/Motto.vue";
 import Tags from "@/views/home/sidebar/Tags.vue";
 import Avatar from "@/views/home/sidebar/Avatar.vue";
@@ -29,18 +29,16 @@ import Skills from "@/views/home/main/Skills.vue";
 import Hitokoto from "@/views/home/sidebar/Hitokoto.vue";
 import Projects from "@/views/home/main/Projects.vue";
 import DateTime from "@/views/home/sidebar/DateTime.vue";
-import config from 'virtual:yaml-config';
+import config from "virtual:yaml-config";
 </script>
 
 <style scoped>
-/* 主体 */
 .main {
     width: 100%;
     padding: 0 15px;
     transition: all 0.3s ease;
 }
 
-/* 侧边栏 */
 .aside {
     width: 230px;
     height: 100%;
@@ -52,7 +50,6 @@ import config from 'virtual:yaml-config';
     transition: all 0.3s ease;
 }
 
-/* 应用 */
 .home {
     max-width: 1200px;
     margin: 0 auto;
@@ -60,7 +57,6 @@ import config from 'virtual:yaml-config';
     gap: 20px;
 }
 
-/* 当屏幕宽度小于 870 时 */
 @media only screen and (max-width: 800px) {
     .aside {
         display: none;
@@ -76,9 +72,10 @@ import config from 'virtual:yaml-config';
     }
 }
 
-/* 添加卡片悬停效果 */
 .container {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 

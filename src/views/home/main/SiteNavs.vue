@@ -1,9 +1,15 @@
 <template>
     <Section icon="icon-sys-nav" title="站内导航">
         <div class="sites">
-            <Container v-for="(item, key) in config.siteNavs" :key="key" class="site" close-title close-width
-                @click="commonlyFunctions.openLink(item.url, true)">
-                <div style="display: flex;align-items: center;">
+            <Container
+                v-for="(item, key) in config.siteNavs"
+                :key="key"
+                class="site"
+                close-title
+                close-width
+                @click="commonlyFunctions.openLink(item.url, true)"
+            >
+                <div style="display: flex; align-items: center">
                     <Icon :icon="item.icon" height="30px" width="30px" />
                     <span style="margin-left: 10px">{{ item.name }}</span>
                 </div>
@@ -13,24 +19,21 @@
     </Section>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Section from "@/components/Section.vue";
 import Container from "@/components/Container.vue";
 import Icon from "@/components/Icon.vue";
-import commonlyFunctions from "@/composition/commonlyFunctions.js";
-import config from 'virtual:yaml-config';
-
+import commonlyFunctions from "@/composition/commonlyFunctions";
+import config from "virtual:yaml-config";
 </script>
 
 <style scoped>
-/* 站内导航 */
 .sites {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 }
 
-/* 站点 */
 .site {
     width: 24%;
     transition: width 0.3s;
@@ -45,29 +48,22 @@ import config from 'virtual:yaml-config';
     transform: translateY(-5px);
 }
 
-/* 占位符 */
 .placeholder {
     width: 24%;
 }
 
-/* 当屏幕宽度小于 800 时 */
 @media only screen and (max-width: 800px) {
-
-    /* 站点 */
     .site {
         width: 49%;
         transition: width 0.3s;
     }
 
-    /* 占位符 */
     .placeholder {
         width: 49%;
     }
 }
 
-/* 当屏幕宽度小于 800 时 */
 @media only screen and (max-width: 300px) {
-    /* 站点 */
     .site {
         width: 100%;
         transition: width 0.3s;

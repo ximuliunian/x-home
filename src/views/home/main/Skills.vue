@@ -1,46 +1,47 @@
 <template>
-  <Section icon="icon-sys-skills" title="技术栈">
-    <img :src="srcLike" alt="技术栈" style="max-width: 100%; border-radius: 12px;"/>
-  </Section>
+    <Section icon="icon-sys-skills" title="技术栈">
+        <img
+            :src="srcLike"
+            alt="技术栈"
+            style="max-width: 100%; border-radius: 12px"
+        />
+    </Section>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Section from "@/components/Section.vue";
 import { computed, onMounted, ref } from "vue";
-import config from 'virtual:yaml-config';
-// URL
-const url = 'https://skillicons.dev/icons';
-// 展示个数
-const perline = ref(17);
-// 拼接参数
-let srcLike = computed(() => {
-  return `${url}?i=${config.skills.list.join(',')}&theme=${config.skills.theme}&perline=${perline.value}`
+import config from "virtual:yaml-config";
+
+const url = "https://skillicons.dev/icons";
+const perline = ref<number>(17);
+
+const srcLike = computed(() => {
+    return `${url}?i=${config.skills.list.join(",")}&theme=${config.skills.theme}&perline=${perline.value}`;
 });
 
 onMounted(() => {
-  window.addEventListener('resize', () => {
-    let width = window.innerWidth;
-    let oldData;
+    window.addEventListener("resize", () => {
+        const width = window.innerWidth;
+        let newPerline: number;
 
-    // 判断屏幕
-    if (width < 500) {
-      oldData = 10
-    } else if (width < 800) {
-      oldData = 14
-    } else {
-      oldData = 17
-    }
+        if (width < 500) {
+            newPerline = 10;
+        } else if (width < 800) {
+            newPerline = 14;
+        } else {
+            newPerline = 17;
+        }
 
-    // 防止无限切换
-    if (oldData !== perline.value) {
-      perline.value = oldData;
-    }
-  });
-})
+        if (newPerline !== perline.value) {
+            perline.value = newPerline;
+        }
+    });
+});
 </script>
 
 <style scoped>
 img {
-  border-radius: 12px;
+    border-radius: 12px;
 }
 </style>

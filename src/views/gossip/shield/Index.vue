@@ -5,9 +5,14 @@
             <p>您可以在此管理已屏蔽的用户</p>
         </div>
 
-        <div v-for="(user, index) in userList" :key="index" class="user-item" v-if="userList.length > 0">
+        <div
+            v-for="(user, index) in userList"
+            :key="index"
+            class="user-item"
+            v-if="userList.length > 0"
+        >
             <div class="avatar-container">
-                <img :src="user.avatar" alt="用户头像" class="avatar">
+                <img :src="user.avatar" alt="用户头像" class="avatar" />
             </div>
 
             <div class="user-info">
@@ -24,40 +29,66 @@
             <div>您的屏蔽列表为空</div>
         </div>
     </div>
-    <PastTop />
+
+    <Teleport to="body">
+        <PastTop />
+    </Teleport>
 </template>
 
-<script setup>
-import { onMounted, ref } from 'vue';
-import localStorage from "@/composition/localStorage.js";
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
+import localStorage from "@/composition/localStorage";
 import PastTop from "@/components/PastTop.vue";
 import Icon from "@/components/Icon.vue";
 
-// 模拟用户数据
-const userList = ref([])
+interface UserItem {
+    id: string;
+    avatar: string;
+    nickname: string;
+    bio: string;
+}
+
+interface UserList {
+    [key: string]: {
+        avatar: string;
+        name: string;
+        description: string;
+    };
+}
+
+const userList = ref<UserItem[]>([]);
 
 onMounted(() => {
-    getUsers()
-})
+    getUsers();
+});
 
-// 获取用户方法
-const getUsers = () => {
-    const users = localStorage.getContent(localStorage.menu.GOSSIP_USER_LIST)
-    localStorage.getContent(localStorage.menu.GOSSIP_SHIELD)?.forEach(user => {
-        userList.value.push({
-            id: user,
-            avatar: users[user].avatar,
-            nickname: users[user].name,
-            bio: users[user].description
-        })
-    })
-}
+const getUsers = (): void => {
+    const users =
+        localStorage.getContent<UserList>(localStorage.menu.GOSSIP_USER_LIST) ||
+        {};
+    const shieldList =
+        localStorage.getContent<string[]>(localStorage.menu.GOSSIP_SHIELD) ||
+        [];
 
-// 移除用户方法
-const handleRemove = (userId) => {
-    userList.value = userList.value.filter(user => user.id !== userId)
-    localStorage.setContent(localStorage.menu.GOSSIP_SHIELD, userList.value.map(user => user.id))
-}
+    shieldList.forEach((user) => {
+        if (users[user]) {
+            userList.value.push({
+                id: user,
+                avatar: users[user].avatar,
+                nickname: users[user].name,
+                bio: users[user].description,
+            });
+        }
+    });
+};
+
+const handleRemove = (userId: string): void => {
+    userList.value = userList.value.filter((user) => user.id !== userId);
+    localStorage.setContent(
+        localStorage.menu.GOSSIP_SHIELD,
+        userList.value.map((user) => user.id),
+    );
+};
 </script>
 
 <style scoped>

@@ -7,13 +7,12 @@
     </container>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Container from "@/components/Container.vue";
-import config from 'virtual:yaml-config';
+import config from "virtual:yaml-config";
 </script>
 
 <style scoped>
-/* 座右铭 */
 .motto-content {
     padding: 15px;
     font-size: 18px;
@@ -22,7 +21,6 @@ import config from 'virtual:yaml-config';
     gap: 15px;
 }
 
-/* 上文 */
 .motto-content-top {
     font-style: italic;
     font-weight: 500;
@@ -31,7 +29,6 @@ import config from 'virtual:yaml-config';
     transition: all 0.3s ease;
 }
 
-/* 下文 */
 .motto-content-bottom {
     font-weight: 700;
     color: #2d3748;
@@ -39,7 +36,6 @@ import config from 'virtual:yaml-config';
     transition: all 0.3s ease;
 }
 
-/* 悬停效果 */
 .container:hover .motto-content-top,
 .container:hover .motto-content-bottom {
     transform: translateY(-3px);

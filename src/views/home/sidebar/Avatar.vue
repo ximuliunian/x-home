@@ -11,9 +11,9 @@
     </container>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Container from "@/components/Container.vue";
-import config from 'virtual:yaml-config';
+import config from "virtual:yaml-config";
 </script>
 
 <style scoped>
@@ -34,20 +34,18 @@ import config from 'virtual:yaml-config';
 .avatar-status {
     width: 30px;
     height: 30px;
-
     position: absolute;
     bottom: 10%;
     left: 80%;
-
     font-size: 20px;
     background-color: white;
-
     border-radius: 50px;
     border: 1px solid rgba(0, 0, 0, 0.5);
     padding-left: 1px;
-
     overflow: hidden;
-    transition: width 0.3s ease, transform 0.3s ease;
+    transition:
+        width 0.3s ease,
+        transform 0.3s ease;
 }
 
 .avatar-status:hover {
