@@ -59,7 +59,7 @@ function generateStaticFiles() {
     const config = loadYamlConfig(yamlConfigPath);
     generateMainConfig(config);
     generateFriendLinksConfig(config._friendLinks);
-    generateGossipConfig(config._gossip);
+    generateGossipConfig();
 }
 
 export default (paths: RootPaths) => {

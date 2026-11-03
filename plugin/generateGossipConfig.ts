@@ -5,12 +5,7 @@ interface GossipObject {
     content: string[];
 }
 
-interface GossipConfig {
-    links?: string[];
-    settings?: { public?: number; internalDisplay?: number; };
-}
-
-export default (gossipConfig: GossipConfig) => {
+export default () => {
     const main: string[] = [];
 
     findAndReadJsonFiles(sourcePath.gossip, (object, type) => {
@@ -44,5 +39,5 @@ export default (gossipConfig: GossipConfig) => {
     }
 
     sort(main);
-    writeFile(apiDir.root, 'gossip.json', { ...gossipConfig, list: main });
+    writeFile(apiDir.root, 'gossip.json', { list: main });
 }

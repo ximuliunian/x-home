@@ -4,16 +4,13 @@
         <ul v-if="gossipContentList.length > 0" class="line">
             <li
                 v-for="item in gossipContentList"
+                :key="item.info.id"
                 class="card"
-                v-show="item.info.host === locationHost || !onlyHost"
             >
                 <div class="articleInfo">
                     <div class="author">
-                        <img
-                            :src="getUserAvatar(item.info.host)"
-                            alt="avatar"
-                        />
-                        <span>{{ getUserName(item.info.host) }}</span>
+                        <img :src="config.avatar" alt="avatar" />
+                        <span>{{ config.name }}</span>
                     </div>
                     <div class="time">{{ item.date }}</div>
                 </div>
@@ -22,29 +19,12 @@
                 </div>
                 <div class="content-bottom">
                     <icon
-                        icon="icon-sys-pinbi"
-                        width="25px"
-                        height="25px"
-                        class="icon"
-                        title="不看该域主内容"
-                        v-if="
-                            item.info.host !== locationHost &&
-                            isHostVisible(item.info.host)
-                        "
-                        @click="shieldUser(item.info.host)"
-                    />
-                    <icon
                         icon="icon-sys-gossip-info"
                         width="25px"
                         height="25px"
                         class="icon"
                         title="查看全部"
-                        @click="
-                            routerPush(
-                                'gossipInfo',
-                                buildQuery(item.info.host, item.info.id),
-                            )
-                        "
+                        @click="routerPush('gossipInfo', item.info.id)"
                     />
                 </div>
             </li>
@@ -57,9 +37,6 @@
     <Teleport to="body">
         <PastTop />
     </Teleport>
-    <Teleport to="body">
-        <Settings @onlyHost="(data) => (onlyHost = data.value)" />
-    </Teleport>
 </template>
 
 <script setup lang="ts">
@@ -68,138 +45,41 @@ import ContentView from "@/components/contentView/ContentView.vue";
 import PastTop from "@/components/PastTop.vue";
 import Icon from "@/components/Icon.vue";
 import { useRouter } from "vue-router";
-import { onMounted, reactive, ref } from "vue";
-import localStorage from "@/composition/localStorage";
-import { getGossipCutByUrl } from "@/api/gossipAPI";
-import Settings from "@/views/gossip/Settings.vue";
+import { onMounted, reactive } from "vue";
+import { getGossipCut } from "@/api/gossipAPI";
+import { getGossipMain } from "@/api/rootAPI";
 import type { GossipContent } from "@/api/gossipAPI";
-
-interface GiscusConfig {
-    repo: string;
-    repoId: string;
-    category: string;
-    categoryId: string;
-}
-
-interface GossipUser {
-    name: string;
-    avatar: string;
-    description: string;
-    giscus?: GiscusConfig;
-}
-
-const gossipList = localStorage.getContent<string[]>(
-    localStorage.menu.GOSSIP_CONTENT_LIST,
-);
-
-const gossipUserList =
-    localStorage.getContent<Record<string, GossipUser>>(
-        localStorage.menu.GOSSIP_USER_LIST,
-    ) || {};
+import config from "virtual:yaml-config";
 
 const gossipContentList = reactive<GossipContent[]>([]);
 const router = useRouter();
-const locationHost = ref<string>(
-    typeof window !== "undefined" ? window.location.origin : "",
-);
-const onlyHost = ref<boolean>(false);
-const shieldList = ref<Record<string, boolean>>({});
 
-onMounted(() => {
-    requestContentList();
+onMounted(async () => {
+    try {
+        const main = (await getGossipMain()) as { list?: string[] };
+        const results = await Promise.all(
+            (main?.list ?? []).map(async (id: string) => {
+                try {
+                    return await getGossipCut(id);
+                } catch {
+                    return null;
+                }
+            }),
+        );
+        gossipContentList.push(
+            ...results.filter(
+                (item: GossipContent | null): item is GossipContent =>
+                    item !== null,
+            ),
+        );
+    } catch {
+        // 主文件请求失败时保持空列表
+    }
 });
 
-function getUserAvatar(host: string): string {
-    return gossipUserList[host]?.avatar || "/img/default-avatar.png";
+function routerPush(name: string, id: string): void {
+    router.push({ name, query: { id } });
 }
-
-function getUserName(host: string): string {
-    return gossipUserList[host]?.name || host;
-}
-
-function isHostVisible(host: string): boolean {
-    return shieldList.value[host] !== false;
-}
-
-function shieldUser(host: string): void {
-    const shield =
-        localStorage.getContent<string[]>(localStorage.menu.GOSSIP_SHIELD) ||
-        [];
-    if (shield.indexOf(host) === -1) {
-        shield.push(host);
-        localStorage.setContent(localStorage.menu.GOSSIP_SHIELD, shield);
-    }
-    shieldList.value[host] = false;
-
-    const contentList =
-        localStorage.getContent<string[]>(
-            localStorage.menu.GOSSIP_CONTENT_LIST,
-        ) || [];
-    localStorage.setContent(
-        localStorage.menu.GOSSIP_CONTENT_LIST,
-        contentList.filter((item: string) => item.indexOf(host) === -1),
-    );
-}
-
-async function requestContentList(): Promise<void> {
-    if (!gossipList || gossipList.length === 0) return;
-
-    const requests = gossipList.map(async (item: string) => {
-        const itemT = item.split("-");
-        const id = `${itemT[0]}-${itemT[1]}`;
-        const host = itemT.slice(2).join("-");
-
-        try {
-            const resp = await getGossipCutByUrl(id, host);
-
-            resp.info.host = host;
-            shieldList.value[host] = true;
-            return resp as GossipContent;
-        } catch {
-            return null;
-        }
-    });
-
-    const results = await Promise.all(requests);
-    gossipContentList.push(
-        ...results.filter(
-            (item: GossipContent | null): item is GossipContent =>
-                item !== null,
-        ),
-    );
-}
-
-function routerPush(name: string, query: Record<string, string>): void {
-    router.push({ name, query });
-}
-
-const buildQuery = (host: string, id: string): Record<string, string> => {
-    const user = gossipUserList[host];
-    if (!user) {
-        return {
-            id,
-            url: host,
-            name: host,
-            avatar: "/img/default-avatar.png",
-            description: "",
-            giscus_repo: "",
-            giscus_repoId: "",
-            giscus_category: "",
-            giscus_categoryId: "",
-        };
-    }
-    return {
-        id,
-        url: host,
-        name: user.name,
-        avatar: user.avatar,
-        description: user.description || "",
-        giscus_repo: user.giscus?.repo || "",
-        giscus_repoId: user.giscus?.repoId || "",
-        giscus_category: user.giscus?.category || "",
-        giscus_categoryId: user.giscus?.categoryId || "",
-    };
-};
 </script>
 
 <style scoped>
@@ -234,16 +114,16 @@ const buildQuery = (host: string, id: string): Record<string, string> => {
     margin-top: 20px;
     backdrop-filter: blur(10px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
 
-    div {
-        font-size: 30px;
-        font-weight: bolder;
-        color: #2d3748;
-        background-color: rgba(255, 255, 255, 0.7);
-        padding: 20px 40px;
-        border-radius: 12px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
+.cover div {
+    font-size: 30px;
+    font-weight: bolder;
+    color: #2d3748;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 20px 40px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .content {
@@ -253,13 +133,13 @@ const buildQuery = (host: string, id: string): Record<string, string> => {
     border-radius: 0 12px 0 0;
     color: #fff;
     min-height: 100px;
+}
 
-    img {
-        max-width: 80%;
-        border-radius: 8px;
-        margin: 10px 0;
-        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
-    }
+.content img {
+    max-width: 80%;
+    border-radius: 8px;
+    margin: 10px 0;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }
 
 .time {
@@ -282,23 +162,23 @@ const buildQuery = (host: string, id: string): Record<string, string> => {
     border-right: 2px dashed rgba(0, 0, 0, 0.2);
     background-color: rgba(255, 255, 255, 0.5);
     color: #2d3748;
+}
 
-    img {
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-        object-fit: cover;
-        margin-right: 10px;
-        border: 2px solid rgba(255, 255, 255, 0.8);
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    }
+.author img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
 
-    span {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-weight: 600;
-    }
+.author span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 600;
 }
 
 .articleInfo {

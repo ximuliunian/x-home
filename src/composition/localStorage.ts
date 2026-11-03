@@ -15,21 +15,9 @@ const NAMESPACE = 'xmln_home'
  */
 const ModelMenu = {
     HITOKOTO: 'HITOKOTO',                           // 一言数据
-    GOSSIP_CONTENT_LIST: 'GOSSIP_CONTENT_LIST',     // 闲言碎语内容列表
-    GOSSIP_USER_LIST: 'GOSSIP_USER_LIST',           // 闲言碎语用户列表
-    GOSSIP_PUBLIC_BOOL: 'GOSSIP_PUBLIC_BOOL',       // 对方是否关联了我
-    GOSSIP_SHIELD: 'GOSSIP_SHIELD',                 // 屏蔽列表
 } as const
 
 type ModelMenuValue = typeof ModelMenu[keyof typeof ModelMenu]
-
-/**
- * 初始化默认内容
- * 为某些存储键设置初始值
- */
-const initContent: Record<string, unknown> = {
-    [ModelMenu.GOSSIP_SHIELD]: [],
-}
 
 /**
  * 获取指定键的内容
@@ -76,7 +64,7 @@ export const localStorageInit = (): void => {
     const keys = Object.keys(ModelMenu) as (keyof typeof ModelMenu)[];
     for (const key of keys) {
         if (!getContent(ModelMenu[key])) {
-            setContent(ModelMenu[key], initContent[ModelMenu[key]] || null);
+            setContent(ModelMenu[key], null);
         }
     }
 

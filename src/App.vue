@@ -31,7 +31,6 @@ import useLCG from "@/composition/useLCG";
 import Loading from "@/components/loading.vue";
 import { computed, onMounted, ref } from "vue";
 import { localStorageInit } from "@/composition/localStorage";
-import gossip from "@/composition/gossip";
 import config from "virtual:yaml-config";
 
 // 年份
@@ -44,12 +43,6 @@ let loadingFlag = ref(false);
 onMounted(() => {
     // 本地存储初始化
     localStorageInit();
-
-    // 初始化用户信息列表
-    gossip.initUserInfoData(config._gossip);
-
-    // 初始化访问数据
-    gossip.initQueryData(config._gossip);
 });
 
 // ICP备案号

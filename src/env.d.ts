@@ -94,15 +94,6 @@ declare module 'virtual:yaml-config' {
             }>;
         };
 
-        /** 闲言碎语配置 */
-        _gossip: {
-            settings: {
-                public: 0 | 1;
-                internalDisplay: 0 | 1;
-            };
-            links: string[];
-        };
-
         /** 开关控制模块 */
         enable: {
             router: {

@@ -27,8 +27,7 @@ const routes: RouteRecordRaw[] = [
         meta: { title: '闲言碎语' },
         children: [
             { path: '', name: 'gossip', component: () => import('@/views/gossip/Index.vue') },
-            { path: 'info', name: 'gossipInfo', component: () => import('@/views/gossip/info/Index.vue') },
-            { path: 'shield', name: 'gossipShield', component: () => import('@/views/gossip/shield/Index.vue') }
+            { path: 'info', name: 'gossipInfo', component: () => import('@/views/gossip/info/Index.vue') }
         ]
     },
     {
@@ -64,7 +63,7 @@ router.beforeEach((to, from, next) => {
         next();
     } else {
         // 检查闲言碎语相关子路由
-        const gossipNames = ['gossipInfo', 'gossipShield']
+        const gossipNames = ['gossipInfo']
         if (gossipNames.includes(routeName) && config.enable.router.gossip) {
             next()
             return

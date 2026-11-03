@@ -2,31 +2,13 @@
     <div class="gossipInfo">
         <div class="header">
             <div class="header-left">
-                <img
-                    :src="queryData.user.avatar"
-                    alt="用户头像"
-                    width="50px"
-                    height="50px"
-                />
+                <img :src="config.avatar" alt="用户头像" width="50px" height="50px" />
                 <span
-                    >{{ queryData.user.name }}&emsp;&bullet;&emsp;{{
-                        queryData.user.description
+                    >{{ config.name }}&emsp;&bullet;&emsp;{{
+                        config.description
                     }}</span
                 >
             </div>
-
-            <button
-                class="header-right"
-                @click="commonlyFunctions.openLink(queryData.url, true)"
-            >
-                前往主页
-                <Icon
-                    icon="icon-sys-qianwang"
-                    width="25px"
-                    height="25px"
-                    style="margin-left: 5px"
-                />
-            </button>
         </div>
 
         <div class="content" v-if="gossipContentFlag">
@@ -39,11 +21,11 @@
 
         <div class="comment">
             <Comment
-                :term="queryData.id"
-                :repo="queryData.giscus.repo as `${string}/${string}` | undefined" 
-                :repoId="queryData.giscus.repoId"
-                :category="queryData.giscus.category"
-                :categoryId="queryData.giscus.categoryId"
+                :term="gossipId"
+                :repo="config.giscus.repo"
+                :repoId="config.giscus.repoId"
+                :category="config.giscus.category"
+                :categoryId="config.giscus.categoryId"
                 :mapping="CommentEnum.MappingEnum.SPECIFIC"
             />
         </div>
@@ -55,31 +37,14 @@
 </template>
 
 <script setup lang="ts">
-import Icon from "@/components/Icon.vue";
 import ContentView from "@/components/contentView/ContentView.vue";
 import Comment from "@/components/comment.vue";
 import CommentEnum from "@/enums/commentEnum";
 import PastTop from "@/components/PastTop.vue";
 import { onMounted, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
-import commonlyFunctions from "@/composition/commonlyFunctions";
-import { getGossip, getGossipByUrl } from "@/api/gossipAPI";
-
-interface QueryData {
-    id: string | undefined;
-    url: string | undefined;
-    user: {
-        name: string | undefined;
-        avatar: string | undefined;
-        description: string | undefined;
-    };
-    giscus: {
-        repo: string | undefined;
-        repoId: string | undefined;
-        category: string | undefined;
-        categoryId: string | undefined;
-    };
-}
+import { getGossip } from "@/api/gossipAPI";
+import config from "virtual:yaml-config";
 
 interface GossipContent {
     date: string;
@@ -89,67 +54,28 @@ interface GossipContent {
     };
 }
 
-const queryData = reactive<QueryData>({
-    id: undefined,
-    url: undefined,
-    user: {
-        name: undefined,
-        avatar: undefined,
-        description: undefined,
-    },
-    giscus: {
-        repo: undefined,
-        repoId: undefined,
-        category: undefined,
-        categoryId: undefined,
-    },
-});
-
 const gossipContent = reactive<Partial<GossipContent>>({});
 const gossipContentFlag = ref<boolean>(true);
+const gossipId = ref<string>("");
 const router = useRouter();
 
-onMounted(() => {
-    initQueryData();
-    getGossipContent();
-});
-
-const getGossipContent = async (): Promise<void> => {
-    const id = queryData.id;
-    const url = queryData.url;
-    if (!id || !url) return;
-
-    const host = new URL(url).host;
-
-    if (location.host === host) {
-        const resp = await getGossip(id);
-        gossipContent.content = resp.content;
-        gossipContent.date = resp.date;
-        if (resp.info.id) {
-            gossipContentFlag.value = false;
-        }
-    } else {
-        const resp = await getGossipByUrl(id, url);
-        gossipContent.content = resp.content;
-        gossipContent.date = resp.date;
-        if (resp.info.id) {
-            gossipContentFlag.value = false;
-        }
+onMounted(async () => {
+    gossipId.value = (router.currentRoute.value.query.id as string) || "";
+    if (!gossipId.value) {
+        gossipContentFlag.value = false;
+        return;
     }
-};
 
-const initQueryData = (): void => {
-    const query = router.currentRoute.value.query;
-    queryData.id = query.id as string;
-    queryData.url = query.url as string;
-    queryData.user.name = query.name as string;
-    queryData.user.avatar = query.avatar as string;
-    queryData.user.description = query.description as string;
-    queryData.giscus.repo = query.giscus_repo as string;
-    queryData.giscus.repoId = query.giscus_repoId as string;
-    queryData.giscus.category = query.giscus_category as string;
-    queryData.giscus.categoryId = query.giscus_categoryId as string;
-};
+    try {
+        const resp = await getGossip(gossipId.value);
+        gossipContent.content = resp.content;
+        gossipContent.date = resp.date;
+    } catch {
+        // 内容请求失败时展示占位内容
+    } finally {
+        gossipContentFlag.value = false;
+    }
+});
 </script>
 
 <style scoped>
@@ -208,26 +134,6 @@ const initQueryData = (): void => {
         span {
             font-weight: 500;
             color: #4a5568;
-        }
-    }
-
-    .header-right {
-        display: flex;
-        align-items: center;
-        padding: 8px 20px;
-        border-radius: 25px;
-        background: linear-gradient(135deg, #6e8efb, #a777e3);
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-weight: 600;
-        color: white;
-        border: none;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
-        &:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-            background: linear-gradient(135deg, #5d7dfa, #9a6ad9);
         }
     }
 }

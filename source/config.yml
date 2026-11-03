@@ -121,12 +121,3 @@ _friendLinks:
     # - sort: "技术博客"
     #   icon: "icon-zhineng"
 
-# ================ 闲言碎语配置 ================
-_gossip:
-  settings:
-    public: 0 # 0=任何人都可以拉取我的内容/1=只有我关联的人可以拉取我的内容
-    internalDisplay: 0 # 0=可以展示所有人的内容/1=只能展示关联我的人的内容
-
-  links: # 关联站点（需完整URL）
-    # 示例：
-    # - "https://friend-site.com"
