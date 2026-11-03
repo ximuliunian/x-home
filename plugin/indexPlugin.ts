@@ -5,52 +5,73 @@ import generateGossipConfig from './generateGossipConfig';
 import generateFriendLinksConfig from './generateFriendLinksConfig';
 import { loadYamlConfig } from './yamlConfigPlugin';
 
+/**
+ * 站点根目录相关路径
+ * rootDir: 站点根目录（可能是上级目录，也可能是项目自身目录）
+ * distDir: 构建输出目录
+ * configPath: YAML 配置文件路径
+ */
+export interface RootPaths {
+    rootDir: string;
+    distDir: string;
+    configPath: string;
+}
+
+// 数据源目录（由 initPaths 初始化）
 export const sourcePath = {
-    source: '../../source',
-    gossip: '../../source/gossip',
-    friendLinks: '../../source/friendLink',
+    source: '',
+    gossip: '',
+    friendLinks: '',
 }
 
-export const apiDirPath = {
-    root: '../dist/api',
-    rootDev: '../../public/api',
-
-    friendLinks: '../dist/api/friendLinks',
-    friendLinksDev: '../../public/api/friendLinks',
-
-    gossip: '../dist/api/gossip',
-    gossipDev: '../../public/api/gossip',
-}
-
+// API 输出目录（由 initPaths 初始化）
 export const apiDir: { root: string; friendLinks: string; gossip: string; } = {
-    root: path.resolve(__dirname, apiDirPath.root),
-    friendLinks: path.resolve(__dirname, apiDirPath.friendLinks),
-    gossip: path.resolve(__dirname, apiDirPath.gossip),
+    root: '',
+    friendLinks: '',
+    gossip: '',
 }
 
 export const splitNum = 40;
 
+let yamlConfigPath = '';
+
+/**
+ * 根据根目录与构建模式初始化各类路径
+ * @param paths - 站点根目录相关路径
+ * @param mode - Vite 构建模式
+ */
+function initPaths(paths: RootPaths, mode: string) {
+    const apiRoot = mode === 'development'
+        ? path.join(paths.rootDir, 'public', 'api')
+        : path.join(paths.distDir, 'api');
+
+    sourcePath.source = path.join(paths.rootDir, 'source');
+    sourcePath.gossip = path.join(sourcePath.source, 'gossip');
+    sourcePath.friendLinks = path.join(sourcePath.source, 'friendLink');
+
+    apiDir.root = apiRoot;
+    apiDir.friendLinks = path.join(apiRoot, 'friendLinks');
+    apiDir.gossip = path.join(apiRoot, 'gossip');
+}
+
 function generateStaticFiles() {
     existsDir();
-    const config = loadYamlConfig();
+    const config = loadYamlConfig(yamlConfigPath);
     generateMainConfig(config);
     generateFriendLinksConfig(config._friendLinks);
     generateGossipConfig(config._gossip);
 }
 
-function updateApiDir(mode: string) {
-    apiDir.root = path.resolve(__dirname, mode === 'development' ? apiDirPath.rootDev : apiDirPath.root);
-    apiDir.friendLinks = path.resolve(__dirname, mode === 'development' ? apiDirPath.friendLinksDev : apiDirPath.friendLinks);
-    apiDir.gossip = path.resolve(__dirname, mode === 'development' ? apiDirPath.gossipDev : apiDirPath.gossip);
-}
+export default (paths: RootPaths) => {
+    yamlConfigPath = paths.configPath;
 
-export default () => {
     return {
         name: 'vite-plugin-generate-json',
 
         config(config: unknown, env: { mode: string; }) {
-            updateApiDir(env.mode);
-            const apiPath = path.resolve(__dirname, apiDirPath.rootDev);
+            initPaths(paths, env.mode);
+            // public 目录下的 api 数据在打包时会被重复生成，先清理掉
+            const apiPath = path.join(paths.rootDir, 'public', 'api');
 
             if (env.mode === 'development' && !process.env.__VITE_INITIALIZED__) {
                 if (fs.existsSync(apiPath)) {
@@ -67,8 +88,8 @@ export default () => {
             }
         },
 
-        configureServer(server: { watcher: { on: (arg0: string, arg1: (event: string, filePath: string) => void) => void; }; }) {
-            const sourceDir = path.resolve(__dirname, sourcePath.source);
+        configureServer(server: { watcher: { on: (arg0: string, event: string, filePath: string) => void; }; }) {
+            const sourceDir = path.join(paths.rootDir, 'source');
             server.watcher.on('all', (event, filePath) => {
                 if (filePath.startsWith(sourceDir) && filePath.endsWith('.json')) {
                     generateStaticFiles();
@@ -91,7 +112,8 @@ export const findAndReadJsonFilesType = {
 }
 
 export function findAndReadJsonFiles(dir: string, fun: (data: unknown, type: string, name: string) => void = () => { }) {
-    dir = path.resolve(__dirname, dir);
+    if (!fs.existsSync(dir)) return;
+
     const files = fs.readdirSync(dir);
     files.forEach(file => {
         const name = path.join(dir, file);

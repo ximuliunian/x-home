@@ -1,0 +1,148 @@
+# ================ 开关控制模块 ================
+enable:
+  # 路由板块开关
+  router:
+    comments: true # 是否启用留言板路由
+    gossip: true # 是否启用闲言碎语路由
+    friendLinks: true # 是否启用友链路由
+
+  # 主页模块开关
+  home:
+    avatar: true # 是否显示头像
+    motto: true # 是否显示座右铭
+    hitokoto: true # 是否显示一言
+    tags: true # 是否显示标签云
+    dateTime: true # 是否显示时钟
+    welcome: true # 是否显示欢迎语
+    social: true # 是否显示社交链接
+    githubContribution: true # 是否显示GitHub贡献图
+    siteNavs: true # 是否显示网站导航
+    projects: true # 是否显示项目展示
+    skills: true # 是否显示技术栈
+
+  # 留言板模块开关
+  comments:
+    banner: true # 是否显示横幅
+    bannerText: true # 是否显示横幅文本
+
+  # 友链模块开关
+  friendLinks:
+    description: true # 是否显示友链简介
+
+# ================ 个人信息配置 ================
+name: "曦暮流年" # 显示在页面的昵称（必填）
+
+avatar: "img/avatar.png" # 头像路径（存放在根目录/public/img/目录下）
+description: "懒惰往往是创新的催化剂" # 简短的个人介绍（建议20字内）
+
+# 头像状态标签
+avatar_status:
+  icon: "✨" # 状态图标（使用Windows徽标键+>打开emoji选择器）
+  text: "学习中~" # 状态文字（建议3-4个汉字）
+
+# ================ 座右铭配置 ================
+motto:
+  top: "能躺着绝不坐着," # 座右铭上半句
+  bottom: "能坐着绝不站着." # 座右铭下半句
+
+# ================ 个人标签 ================
+tags:
+  - "前端"
+  - "后端"
+  - "随遇而安"
+  - "IT"
+  - "懒癌患者"
+
+# ================ 背景图片 ================
+background_image:
+  - "/img/background/1.png" # 背景图路径（至少需要一张）
+  - "/img/background/2.png"
+
+# ================ 社交链接 ================
+social:
+  - name: "GitHub"
+    icon: "icon-GitHub"
+    url: "https://github.com/ximuliunian"
+
+  - name: "邮箱"
+    icon: "icon-youxiang"
+    url: "mailto:xmln@ximuliunian.top"
+
+# ================ 站内导航 ================
+siteNavs:
+  - name: "博客"
+    url: "https://blog.ximuliunian.top"
+    icon: "icon-blog"
+
+  - name: "笔记"
+    url: "https://notes.ximuliunian.top"
+    icon: "icon-notes"
+
+# ================ 项目展示 ================
+projects:
+  - name: "X-Home"
+    icon: "icon-jiangbing"
+    url: "https://github.com/ximuliunian/x-home"
+    description: "本站同款个人主页"
+
+# ================ 技术栈图标 ================
+skills:
+  theme: "light" # 主题风格：light（亮色）/dark（暗色）
+  list:
+    - "java"
+    - "python"
+    - "vue"
+    - "vite"
+    - "ts"
+    - "mysql"
+    - "redis"
+    - "docker"
+    - "linux"
+
+# ================ ICP备案 ================
+icp: []
+
+# ================ 评论系统 ================
+giscus:
+  repo: "username/repo" # GitHub仓库（格式：owner/repo）
+  repoId: "R_xxxxxxxxxx" # 仓库ID（在Giscus设置获取）
+  category: "Comments" # 分类名称
+  categoryId: "DIC_xxxxxx" # 分类ID
+  theme: "light" # 主题风格
+
+# ================ 留言板配置 ================
+_comment:
+  cover: "/img/reviewCover.png" # 封面图路径
+  title: "留言板"
+  description: "少年，江湖之路漫长且未知，今朝有幸相逢，便是缘定一线。"
+
+# ================ 友链高级配置 ================
+_friendLinks:
+  description:
+    - "p:欢迎交换友情链接！"
+
+  scheme: # 本站信息（供他人申请友链时参考）
+    name: "曦暮流年"
+    url: "https://www.ximuliunian.top"
+    avatar: "https://www.ximuliunian.top/img/avatar.png"
+    desc: "懒惰往往是创新的催化剂"
+    bgColor: "#8bfdd4"
+
+  require: # 友链申请要求
+    - "ol:贵站已经添加的本站的链接"
+    - "ol:贵站符合中国大陆法律"
+
+  links: # 友链分类（按需添加）
+    # 示例：
+    # - sort: "技术博客"
+    #   icon: "icon-zhineng"
+
+# ================ 闲言碎语配置 ================
+_gossip:
+  settings:
+    public: 0 # 0=任何人都可以拉取我的内容/1=只有我关联的人可以拉取我的内容
+    internalDisplay: 0 # 0=可以展示所有人的内容/1=只能展示关联我的人的内容
+
+  links: # 关联站点（需完整URL）
+    # 示例：
+    # - "https://friend-site.com"

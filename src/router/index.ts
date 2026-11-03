@@ -3,7 +3,7 @@
  * 定义应用的路由规则和导航守卫
  */
 
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import config from 'virtual:yaml-config'
 
 /**
@@ -43,7 +43,7 @@ const routes: RouteRecordRaw[] = [
  * 创建路由实例
  */
 const router = createRouter({
-    history: createWebHistory(import.meta.env.BASE_URL),
+    history: createWebHashHistory(),
     routes
 })
 
