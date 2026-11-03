@@ -12,13 +12,11 @@ enable:
     motto: true # 是否显示座右铭
     hitokoto: true # 是否显示一言
     tags: true # 是否显示标签云
-    dateTime: true # 是否显示时钟
     welcome: true # 是否显示欢迎语
     social: true # 是否显示社交链接
     githubContribution: true # 是否显示GitHub贡献图
     siteNavs: true # 是否显示网站导航
     projects: true # 是否显示项目展示
-    skills: true # 是否显示技术栈
 
   # 留言板模块开关
   comments:
@@ -84,20 +82,6 @@ projects:
     icon: "icon-jiangbing"
     url: "https://github.com/ximuliunian/x-home"
     description: "本站同款个人主页"
-
-# ================ 技术栈图标 ================
-skills:
-  theme: "light" # 主题风格：light（亮色）/dark（暗色）
-  list:
-    - "java"
-    - "python"
-    - "vue"
-    - "vite"
-    - "ts"
-    - "mysql"
-    - "redis"
-    - "docker"
-    - "linux"
 
 # ================ ICP备案 ================
 icp: []

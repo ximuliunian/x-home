@@ -12,13 +12,11 @@ enable:
     motto: true # 是否显示座右铭
     hitokoto: true # 是否显示一言
     tags: true # 是否显示标签云
-    dateTime: true # 是否显示时钟
     welcome: true # 是否显示欢迎语
     social: true # 是否显示社交链接
     githubContribution: true # 是否显示GitHub贡献图
     siteNavs: true # 是否显示网站导航
     projects: true # 是否显示项目展示
-    skills: true # 是否显示技术栈
 
   # 留言板模块开关
   comments:
@@ -95,18 +93,6 @@ projects:
   #   icon: "icon-zhineng"
   #   url: "https://github.com/yourname/smart-home"
   #   description: "基于物联网的智能控制方案"
-
-# ================ 技术栈图标 ================
-skills:
-  theme: "light" # 主题风格：light（亮色）/dark（暗色）
-  list:
-    - "技术名称" # 从 skillicons.dev 选择有效名称
-    # 支持的技术列表参考：
-    # - "java"
-    # - "python"
-    # - "docker"
-    # - "vue"
-    # 完整列表：https://github.com/tandpfun/skill-icons
 
 # ================ ICP备案 ================
 icp:

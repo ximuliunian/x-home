@@ -5,7 +5,6 @@
             <motto v-if="config.enable.home.motto" />
             <Hitokoto v-if="config.enable.home.hitokoto" />
             <Tags v-if="config.enable.home.tags" />
-            <DateTime v-if="config.enable.home.dateTime" />
         </div>
 
         <div class="main">
@@ -13,7 +12,6 @@
             <Router />
             <SiteNavs v-if="config.enable.home.siteNavs" />
             <Projects v-if="config.enable.home.projects" />
-            <Skills v-if="config.enable.home.skills" />
         </div>
     </div>
 </template>
@@ -25,10 +23,8 @@ import Avatar from "@/views/home/sidebar/Avatar.vue";
 import Welcome from "@/views/home/main/Top.vue";
 import Router from "@/components/Router.vue";
 import SiteNavs from "@/views/home/main/SiteNavs.vue";
-import Skills from "@/views/home/main/Skills.vue";
 import Hitokoto from "@/views/home/sidebar/Hitokoto.vue";
 import Projects from "@/views/home/main/Projects.vue";
-import DateTime from "@/views/home/sidebar/DateTime.vue";
 import config from "virtual:yaml-config";
 </script>
 

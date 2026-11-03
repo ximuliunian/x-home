@@ -152,20 +152,6 @@ url：这是点击按钮需要跳转的链接
 
 参考社交链接……
 
-### 技术栈
-
-这个是用的 skillicons 这个项目
-
-官网：https://skillicons.dev
-
-GitHub：https://github.com/tandpfun/skill-icons
-
-这个项目收录了很多常用的技术栈图标，具体有什么图标可以通过上面的链接查看一番。具体详情什么的这里不做赘述。使用的时候进入项目找到图标对应的关键字，如下图：
-
-![image-20241207234847615](md.image/README/image-20241207234847615.png)
-
-然后把关键字加入 `skills > list` 配置中即可
-
 ### 图标选择
 
 在配置社交链接或者其他地方会看到 `icon`的配置（avatar_status里面的不算），图标可以去 [iconfont](https://www.iconfont.cn)

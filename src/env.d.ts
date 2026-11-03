@@ -55,12 +55,6 @@ declare module 'virtual:yaml-config' {
             description: string;
         }>;
 
-        /** 技术栈 */
-        skills: {
-            theme: 'light' | 'dark';
-            list: string[];
-        };
-
         /** ICP备案 */
         icp: Array<{
             domain: string;
@@ -121,13 +115,11 @@ declare module 'virtual:yaml-config' {
                 motto: boolean;
                 hitokoto: boolean;
                 tags: boolean;
-                dateTime: boolean;
                 welcome: boolean;
                 social: boolean;
                 githubContribution: boolean;
                 siteNavs: boolean;
                 projects: boolean;
-                skills: boolean;
             };
             comments: {
                 banner: boolean;
