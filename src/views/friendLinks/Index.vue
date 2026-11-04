@@ -25,7 +25,7 @@
             <div class="links-container">
                 <div
                     class="links"
-                    :style="{ backgroundColor: item.bgColor }"
+                    :style="{ backgroundColor: link.bgColor }"
                     v-for="(link, index) in item.list"
                     :key="index"
                     @click="commonlyFunctions.openLink(link.url, true)"
