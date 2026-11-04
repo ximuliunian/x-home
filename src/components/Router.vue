@@ -45,7 +45,7 @@
 </template>
 
 <script setup lang="ts">
-import { RouterLink } from "vue-router";
+import { RouterLink, useRoute } from "vue-router";
 import Icon from "@/components/Icon.vue";
 import config from "virtual:yaml-config";
 
@@ -67,13 +67,10 @@ const icon: IconConfig = {
     height: "25px",
 };
 
+const route = useRoute();
+
 function isShow(condition: string[]): boolean {
-    for (const e of condition) {
-        if (window.location.pathname === e) {
-            return false;
-        }
-    }
-    return true;
+    return !condition.includes(route.path);
 }
 </script>
 

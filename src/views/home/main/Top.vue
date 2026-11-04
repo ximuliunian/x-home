@@ -14,11 +14,10 @@
                 @click="commonlyFunctions.openLink(item.url, true)"
             >
                 <div class="link-card">
-                    <icon :icon="item.icon" height="30px" width="30px" />
-                    <span style="margin-left: 5px">{{ item.name }}</span>
+                    <icon :icon="item.icon" height="26px" width="26px" />
+                    <span>{{ item.name }}</span>
                 </div>
             </container>
-            <i v-for="i in 4" class="placeholder"></i>
         </div>
 
         <div
@@ -43,26 +42,23 @@ import config from "virtual:yaml-config";
 
 <style scoped>
 .social-links {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-top: 30px;
-
-    .placeholder {
-        width: 23%;
-        min-width: 150px;
-    }
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin-top: 28px;
 
     .social-link {
-        width: 23%;
         cursor: pointer;
         border-radius: var(--radius-md);
         overflow: hidden;
+        margin-bottom: 0;
 
         .link-card {
             display: flex;
             align-items: center;
-            padding: 14px 16px;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 20px;
             background: var(--card-bg);
             transition:
                 background 0.3s ease,
@@ -124,10 +120,6 @@ import config from "virtual:yaml-config";
 }
 
 @media only screen and (max-width: 800px) {
-    .social-link {
-        width: 48% !important;
-    }
-
     .welcome {
         font-size: 9vw;
         margin: 2vw 0;
@@ -135,10 +127,6 @@ import config from "virtual:yaml-config";
 }
 
 @media only screen and (max-width: 300px) {
-    .social-link {
-        width: 100% !important;
-    }
-
     .welcome {
         font-size: 15vw;
         margin: 2vw 0;
