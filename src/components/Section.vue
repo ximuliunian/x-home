@@ -75,8 +75,8 @@ const props = withDefaults(defineProps<Props>(), {
     titleWeight: "700",
     dividerColor: "#6e8efb",
     hoverable: true,
-    bgColor: "rgba(255, 255, 255, 0.5)",
-    borderRadius: "12px",
+    bgColor: "rgba(255, 255, 255, 0.58)",
+    borderRadius: "16px",
     padding: "10px",
     marginBottom: "20px",
 });
@@ -115,9 +115,13 @@ const contentStyle = computed(() => ({
     overflow: hidden;
     padding: 10px;
     margin-bottom: v-bind("marginBottom");
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    border: var(--border-soft);
+    backdrop-filter: blur(12px);
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        background-color 0.3s ease;
+    box-shadow: var(--shadow-soft);
 }
 
 /**
@@ -125,8 +129,8 @@ const contentStyle = computed(() => ({
  */
 .section-hover:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    background-color: rgba(255, 255, 255, 0.7);
+    box-shadow: var(--shadow-lift);
+    background-color: var(--card-bg-strong);
 }
 
 /**
@@ -161,6 +165,7 @@ const contentStyle = computed(() => ({
     z-index: 1;
     background: inherit;
     padding-right: 15px;
+    letter-spacing: 0.5px;
 }
 
 /**
@@ -168,10 +173,17 @@ const contentStyle = computed(() => ({
  */
 .section-divider {
     flex: 1;
-    height: 3px;
+    height: 2px;
     border-radius: 2px;
     margin-left: 10px;
-    transition: width 0.5s ease;
+    opacity: 0.75;
+    background-image: linear-gradient(
+        90deg,
+        var(--primary-color),
+        var(--secondary-color) 45%,
+        rgba(167, 119, 227, 0)
+    );
+    transition: all 0.5s ease;
 }
 
 .section-hover:hover .section-divider {

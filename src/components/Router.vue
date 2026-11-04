@@ -82,8 +82,8 @@ function isShow(condition: string[]): boolean {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 15px;
-    margin: 20px 0;
+    gap: 14px;
+    margin: 20px 0 24px;
 }
 
 .routing {
@@ -92,23 +92,25 @@ function isShow(condition: string[]): boolean {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 6px;
     text-decoration: none;
     padding: 15px 20px;
     color: white;
     font-weight: 600;
-    font-size: 18px;
+    font-size: 17px;
+    letter-spacing: 0.5px;
     background: linear-gradient(135deg, #6e8efb, #a777e3);
-    background-size: 200%;
+    background-size: 160%;
     background-position: 100%;
-    border-radius: 12px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius-md);
+    transition: all 0.35s ease;
+    box-shadow: 0 6px 16px rgba(110, 142, 251, 0.25);
 }
 
 .routing:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-    animation: textFlashes 2s ease-in-out infinite;
+    transform: translateY(-3px);
+    background-position: 0;
+    box-shadow: 0 10px 24px rgba(110, 142, 251, 0.35);
 }
 
 .placeholder {
@@ -129,24 +131,6 @@ function isShow(condition: string[]): boolean {
 @media only screen and (max-width: 500px) {
     .routing {
         min-width: 100%;
-    }
-}
-
-@keyframes textFlashes {
-    0% {
-        background-position: 100%;
-    }
-    25% {
-        background-position: 50%;
-    }
-    50% {
-        background-position: 0;
-    }
-    75% {
-        background-position: 50%;
-    }
-    100% {
-        background-position: 100%;
     }
 }
 </style>

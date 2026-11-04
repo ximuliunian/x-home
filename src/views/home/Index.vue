@@ -31,7 +31,7 @@ import config from "virtual:yaml-config";
 <style scoped>
 .main {
     width: 100%;
-    padding: 0 15px;
+    padding: 0;
     transition: all 0.3s ease;
 }
 
@@ -41,8 +41,8 @@ import config from "virtual:yaml-config";
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 15px;
-    gap: 20px;
+    padding: 0 10px;
+    gap: 16px;
     transition: all 0.3s ease;
 }
 
@@ -50,7 +50,7 @@ import config from "virtual:yaml-config";
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
-    gap: 20px;
+    gap: 24px;
 }
 
 @media only screen and (max-width: 800px) {

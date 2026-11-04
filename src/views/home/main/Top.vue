@@ -56,14 +56,14 @@ import config from "virtual:yaml-config";
     .social-link {
         width: 23%;
         cursor: pointer;
-        border-radius: 12px;
+        border-radius: var(--radius-md);
         overflow: hidden;
 
         .link-card {
             display: flex;
             align-items: center;
-            padding: 12px 15px;
-            background: rgba(255, 255, 255, 0.5);
+            padding: 14px 16px;
+            background: var(--card-bg);
             transition:
                 background 0.3s ease,
                 box-shadow 0.3s ease;
@@ -71,16 +71,20 @@ import config from "virtual:yaml-config";
     }
 
     .social-link:hover .link-card {
-        background: rgba(255, 255, 255, 0.9);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        background: var(--card-bg-strong);
     }
 }
 
 .welcome {
     font-weight: 800;
     font-size: 55px;
-    margin: 20px 0 30px;
+    letter-spacing: -0.5px;
+    margin: 12px 0 28px;
     line-height: 1.2;
+    color: #fff;
+    text-shadow:
+        0 2px 12px rgba(15, 23, 42, 0.5),
+        0 1px 3px rgba(15, 23, 42, 0.35);
 
     span {
         -webkit-background-clip: text;
@@ -90,10 +94,11 @@ import config from "virtual:yaml-config";
         animation: backgroundSizeAnimation 10s ease-in-out infinite;
         background-image: linear-gradient(
             120deg,
-            #6e8efb,
-            #a777e3 30%,
-            #5dc1e6 60%
+            #9db8ff,
+            #c9a6ff 30%,
+            #8fe6fb 60%
         );
+        filter: drop-shadow(0 2px 10px rgba(124, 156, 255, 0.4));
     }
 }
 
@@ -104,18 +109,18 @@ import config from "virtual:yaml-config";
 }
 
 .github-contribution {
-    margin-top: 30px;
-    border-radius: 12px;
+    margin-top: 28px;
+    border-radius: var(--radius-lg);
     overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-soft);
     transition: all 0.3s ease;
-    border: 1px dashed var(--milky-white);
-    background-color: rgba(219, 219, 219, 0.3);
+    border: var(--border-soft);
+    background-color: rgba(255, 255, 255, 0.35);
 }
 
 .github-contribution:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lift);
 }
 
 @media only screen and (max-width: 800px) {

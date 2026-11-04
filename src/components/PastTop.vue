@@ -44,25 +44,30 @@ const scrollToTop = (): void => {
 }
 
 .float-btn {
-    width: 50px;
-    height: 50px;
+    width: 48px;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.9);
-    color: #6e8efb;
+    background: rgba(255, 255, 255, 0.85);
+    color: var(--primary-color);
     border-radius: 50%;
-    border: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border: var(--border-soft);
+    box-shadow: var(--shadow-soft);
     cursor: pointer;
     transition: all 0.3s ease;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(10px);
 }
 
 .float-btn:hover {
     color: white;
-    transform: translateY(-5px) scale(1.1);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+    background: linear-gradient(
+        135deg,
+        var(--primary-color),
+        var(--secondary-color)
+    );
+    box-shadow: var(--shadow-lift);
 }
 
 @media (max-width: 768px) {

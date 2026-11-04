@@ -29,6 +29,16 @@ import config from "virtual:yaml-config";
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
+    border: 4px solid rgba(255, 255, 255, 0.55);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.18);
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.avatar:hover img {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 36px rgba(15, 23, 42, 0.22);
 }
 
 .avatar-status {
@@ -37,12 +47,17 @@ import config from "virtual:yaml-config";
     position: absolute;
     bottom: 10%;
     left: 80%;
-    font-size: 20px;
-    background-color: white;
-    border-radius: 50px;
-    border: 1px solid rgba(0, 0, 0, 0.5);
-    padding-left: 1px;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    line-height: 1;
     overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 50px;
+    padding-left: 4px;
+    box-shadow: var(--shadow-soft);
+    backdrop-filter: blur(8px);
     transition:
         width 0.3s ease,
         transform 0.3s ease;

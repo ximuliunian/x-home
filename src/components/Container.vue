@@ -28,31 +28,53 @@ withDefaults(defineProps<Props>(), {
 
 <style scoped>
 .container {
-    border-radius: 12px;
-    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: var(--radius-md);
+    background-color: var(--card-bg);
     overflow: hidden;
     margin-bottom: 20px;
     padding: 10px;
-    border: none;
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: var(--border-soft);
+    backdrop-filter: blur(12px);
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        background-color 0.3s ease;
+    box-shadow: var(--shadow-soft);
 }
 
 .container:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lift);
+    background-color: var(--card-bg-strong);
 }
 
 .title {
+    position: relative;
     display: block;
-    border-left: #6e6e6e 5px solid;
-    padding-left: 10px;
+    padding-left: 14px;
     height: 20px;
     line-height: 20px;
+    font-size: 15px;
     font-weight: 700;
+    letter-spacing: 0.5px;
     margin-bottom: 10px;
-    color: #3a3a3a;
+    color: var(--text-color);
+}
+
+.title::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 16px;
+    border-radius: 2px;
+    background: linear-gradient(
+        180deg,
+        var(--primary-color),
+        var(--secondary-color)
+    );
 }
 
 .content {

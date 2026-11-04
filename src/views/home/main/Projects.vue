@@ -35,7 +35,7 @@ import config from "virtual:yaml-config";
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 15px;
+    gap: 16px;
 }
 
 .project {
@@ -43,16 +43,16 @@ import config from "virtual:yaml-config";
     transition: all 0.3s ease;
     margin-bottom: 0;
     font-weight: 500;
-    color: #2d3748;
+    color: var(--text-color);
     cursor: pointer;
-    background: rgba(255, 255, 255, 0.7);
+    background: var(--card-bg);
     backdrop-filter: blur(10px);
 }
 
 .project:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lift);
+    background: var(--card-bg-strong);
 }
 
 .title {

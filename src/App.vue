@@ -99,8 +99,7 @@ imageLoad.onload = () => (loadingFlag.value = true);
 
 /* 容器 */
 .container {
-    padding-top: 2vw;
-    padding-bottom: 40px;
+    padding: 32px 20px 60px;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -114,28 +113,30 @@ imageLoad.onload = () => (loadingFlag.value = true);
 /* 页脚 */
 .siteInfo {
     width: 100%;
-    height: 40px;
-    line-height: 40px;
+    height: 44px;
+    line-height: 44px;
     text-align: center;
     position: fixed;
     bottom: 0;
-    backdrop-filter: blur(30px);
-    color: white;
+    backdrop-filter: blur(20px);
+    color: rgba(255, 255, 255, 0.9);
     -webkit-user-select: none;
-    background: rgba(0, 0, 0, 0.2);
-    font-size: 14px;
+    background: rgba(15, 23, 42, 0.45);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 13px;
+    letter-spacing: 0.3px;
     z-index: 100;
 }
 
 .siteInfo a {
-    color: white;
+    color: rgba(255, 255, 255, 0.9);
     text-decoration: none;
     transition: all 0.3s ease;
 }
 
 .siteInfo a:hover {
-    color: #a777e3;
-    text-decoration: underline;
+    color: #c4b5fd;
+    text-decoration: none;
 }
 
 /* 背景图片 */
@@ -156,6 +157,11 @@ imageLoad.onload = () => (loadingFlag.value = true);
     width: 100%;
     height: 100%;
     position: fixed;
-    background: rgba(124, 124, 124, 0.5);
+    background: linear-gradient(
+        160deg,
+        rgba(15, 23, 42, 0.55) 0%,
+        rgba(30, 41, 59, 0.4) 45%,
+        rgba(76, 29, 149, 0.3) 100%
+    );
 }
 </style>
