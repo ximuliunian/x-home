@@ -43,7 +43,7 @@ import config from "virtual:yaml-config";
 <style scoped>
 .social-links {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 14px;
     margin-top: 28px;
 
@@ -120,6 +120,11 @@ import config from "virtual:yaml-config";
 }
 
 @media only screen and (max-width: 800px) {
+    .social-links {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
     .welcome {
         font-size: 9vw;
         margin: 2vw 0;
