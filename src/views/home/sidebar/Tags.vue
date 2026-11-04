@@ -1,13 +1,11 @@
 <template>
     <container :height="height" :title="title" :width="width">
         <span
-            v-for="(item, index) in barrageList"
-            :key="index"
-            :data-id="item.text + item.top"
+            v-for="item in barrageList"
+            :key="item.id"
             :style="{ top: item.top + 'px', background: item.gradient }"
             class="tags-content"
-            @animationend="removeBarrage($event, item.text + item.top)"
-            @blur="removeBarrage($event, item.text + item.top)"
+            @animationend="finishBarrage(item.id)"
         >
             {{ item.text }}
         </span>
@@ -15,7 +13,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onBeforeUnmount, onMounted, ref } from "vue";
 import useLCG from "@/composition/useLCG";
 import Container from "@/components/Container.vue";
 import config from "virtual:yaml-config";
@@ -27,7 +25,13 @@ const width = "100%";
 // 高度
 const height = "160px";
 // 弹幕生成时间
-const barrageTime = 1500;
+const barrageTime = 1600;
+// 轨道数量（每条轨道互不重叠）
+const trackCount = 4;
+// 轨道间距
+const trackGap = 38;
+// 单条弹幕动画时长（与样式中的 animation 保持一致）
+const animationTime = 9000;
 
 // 渐变色列表
 const gradients = [
@@ -45,65 +49,71 @@ const barrageList = ref([]);
 // 伪随机数生成
 const { randomInt } = useLCG();
 
-// 上一次弹幕的位置
-let lastPosition = 0;
 // 上一次弹幕的下标
-let lastIndex = 0;
-// 容器高度
-const containerHeight = 160;
+let lastIndex = -1;
+// 弹幕唯一标识
+let uid = 0;
+// 定时器
+let timer = null;
 
 // 创建弹幕元素
 function createBarrage() {
-    // 获取弹幕数据
+    if (!config.tags.length) return;
+
+    // 随机取一个与上一条不同的标签
     let index = randomInt(0, config.tags.length - 1);
-    while (index === lastIndex) {
-        index = randomInt(0, config.tags.length - 1);
+    if (config.tags.length > 1) {
+        while (index === lastIndex) {
+            index = randomInt(0, config.tags.length - 1);
+        }
     }
     lastIndex = index;
     const text = config.tags[index];
 
-    // 获取展示位置
-    let position = randomInt(0, containerHeight - 30);
-    // 弹幕高度大概在30左右，如果这次生成的位置和上一次的位置差不多，就重新生成
-    while (Math.abs(position - lastPosition) < 30) {
-        position = randomInt(0, containerHeight - 30);
+    // 找出当前空闲的轨道，全部占用时跳过本次生成
+    const usedTracks = new Set(barrageList.value.map((item) => item.track));
+    const freeTracks = [];
+    for (let i = 0; i < trackCount; i++) {
+        if (!usedTracks.has(i)) freeTracks.push(i);
     }
-    lastPosition = position;
+    if (!freeTracks.length) return;
 
-    // 随机选择一个渐变色
+    const track = freeTracks[randomInt(0, freeTracks.length - 1)];
     const gradient = gradients[randomInt(0, gradients.length - 1)];
+    const id = ++uid;
 
     barrageList.value.push({
-        id: text + position,
+        id,
         text,
-        top: position,
+        track,
+        top: track * trackGap,
         gradient,
     });
+
+    // 兜底：动画事件未触发时也移除，避免残留
+    setTimeout(() => finishBarrage(id), animationTime + 500);
 }
 
-// 移除弹幕元素
-function removeBarrage(event, dataId) {
-    let el = event.target;
-    if (el.dataset.id === dataId) {
-        el.remove();
-    }
+// 移除已经播放完成的弹幕
+function finishBarrage(id) {
+    barrageList.value = barrageList.value.filter((item) => item.id !== id);
+}
+
+// 页面隐藏时清空弹幕，恢复时重新生成
+function handleVisibilityChange() {
+    barrageList.value = [];
+    if (!document.hidden) createBarrage();
 }
 
 onMounted(() => {
     createBarrage();
+    timer = setInterval(createBarrage, barrageTime);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+});
 
-    setInterval(() => {
-        createBarrage();
-    }, barrageTime);
-
-    // 切换窗口时清空弹幕
-    window.onblur = (e) => {
-        barrageList.value = [];
-    };
-    // 切换窗口时清空弹幕
-    window.onfocus = (e) => {
-        barrageList.value = [];
-    };
+onBeforeUnmount(() => {
+    clearInterval(timer);
+    document.removeEventListener("visibilitychange", handleVisibilityChange);
 });
 </script>
 
@@ -117,7 +127,7 @@ onMounted(() => {
     top: 50%;
     left: 100%;
     white-space: nowrap;
-    animation: moveLeft 10s linear;
+    animation: moveLeft 9s linear;
     animation-fill-mode: forwards;
     font-size: 14px;
     font-weight: 500;
