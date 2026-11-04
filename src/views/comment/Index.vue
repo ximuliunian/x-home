@@ -12,7 +12,7 @@
         </div>
         <Router />
         <div class="content">
-            <Comment />
+            <Comment mapping="specific" term="/comments" />
         </div>
     </div>
 

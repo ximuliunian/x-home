@@ -95,7 +95,7 @@
         </div>
 
         <div class="description">
-            <Comment />
+            <Comment mapping="specific" term="/friendLinks" />
         </div>
     </div>
 
